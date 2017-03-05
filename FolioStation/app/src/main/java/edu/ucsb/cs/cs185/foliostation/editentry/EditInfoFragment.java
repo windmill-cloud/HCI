@@ -55,7 +55,7 @@ public class EditInfoFragment extends Fragment {
                 List<String> res = new ArrayList<>();
                 for(String str: tags){
                     if(!str.equals("")){
-                        res.add(str);
+                        res.add(str.toLowerCase());
                     }
                 }
                 mItemCard.setTags(res);

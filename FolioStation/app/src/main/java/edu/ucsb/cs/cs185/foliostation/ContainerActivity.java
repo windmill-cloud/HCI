@@ -29,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
@@ -39,6 +40,7 @@ import com.lzy.imagepicker.view.CropImageView;
 
 import java.util.ArrayList;
 
+import edu.ucsb.cs.cs185.foliostation.discover.DiscoverFragment;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
@@ -60,6 +62,11 @@ public class ContainerActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle("");
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -220,10 +227,6 @@ public class ContainerActivity extends AppCompatActivity
                 .commit();
 
         mFragment = fragment;
-        ActionBar toolbar = getSupportActionBar();
-        if(toolbar != null){
-            toolbar.setTitle("Collections");
-        }
 
         ImageButton addCollection = (ImageButton) findViewById(R.id.add_collection);
         addCollection.setVisibility(View.VISIBLE);
@@ -284,6 +287,16 @@ public class ContainerActivity extends AppCompatActivity
         ImageButton addCollection = (ImageButton) findViewById(R.id.add_collection);
         addCollection.setVisibility(View.GONE);
         addCollection.setEnabled(false);
+        TextView toolBarTitle = (TextView) findViewById(R.id.collectios_toolbar_title);
+        toolBarTitle.setText("Discover");
+
+
+        DiscoverFragment fragment = new DiscoverFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment, TAG_FRAGMENT)
+                .commit();
+
+        mFragment = fragment;
     }
 
 

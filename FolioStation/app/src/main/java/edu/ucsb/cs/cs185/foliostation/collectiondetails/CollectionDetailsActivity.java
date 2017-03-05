@@ -48,6 +48,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
     private GridLayoutManager mLayoutManager;
 
     private static int IMAGE_PICKER = 1234;
+    private static int EDIT_RESULT = 2345;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,8 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(CollectionDetailsActivity.this, EditTabsActivity.class);
                 intent.putExtra("CARD_INDEX", mCardIndex);
                 intent.putExtra("EDIT", true);
-                startActivity(intent);
+                intent.putExtra("FROM", "DETAILS");
+                startActivityForResult(intent, EDIT_RESULT);
             }
         });
 
@@ -179,6 +181,10 @@ public class CollectionDetailsActivity extends AppCompatActivity {
 
             } else {
                 Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == EDIT_RESULT){
+            if (resultCode == RESULT_OK) {
+                this.finish();
             }
         }
     }
