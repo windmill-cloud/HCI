@@ -31,14 +31,15 @@
         <activity
             android:name=".ContainerActivity"
             android:label="@string/title_activity_collect"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".LoginSignupActivity" />
         <activity
             android:name=".editentry.EditTabsActivity"
             android:label="@string/title_activity_edit_tabs"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".collectiondetails.CollectionDetailsActivity"></activity>
+        <activity android:name=".collectiondetails.CollectionDetailsActivity" />
+        <activity android:name=".InspireActivity"></activity>
     </application>
 
 </manifest>
