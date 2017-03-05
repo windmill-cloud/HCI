@@ -140,6 +140,15 @@ public class Cards {
             }
         }
 
+        public boolean hasTag(String t){
+            for(String tag: tags){
+                if(tag.startsWith(t) || tag.equals(t)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
         List<String> tags = new ArrayList<>();
         public int coverIndex = 0;
         String mTitle = "";
@@ -234,15 +243,25 @@ public class Cards {
         cards.addFirst(newCard);
     }
 
-    public List<CardImage> searchByTag(String tag){
+    public List<CardImage> searchByTag(String query){
         List<CardImage> res = new ArrayList<>();
         for(Map.Entry<String, List<CardImage>> entry: tagMap.entrySet()){
             String key = entry.getKey();
-            if(key.startsWith(tag) || key.equals(tag)) {
+            if(key.startsWith(query) || key.equals(query)) {
                 res.addAll(entry.getValue());
             }
         }
         return res;
+    }
+
+    public boolean hasTagsBeginWithQuery(String query){
+        for(Map.Entry<String, List<CardImage>> entry: tagMap.entrySet()){
+            String key = entry.getKey();
+            if(key.startsWith(query) || key.equals(query)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<CardImage> getFlattenedImages(){

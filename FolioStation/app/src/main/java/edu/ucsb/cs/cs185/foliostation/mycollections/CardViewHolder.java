@@ -34,6 +34,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
     public Toolbar toolbar;
     public MenuItem editMenuItem;
     public MenuItem deleteMenuItem;
+    public RecyclerView rv;
 
 
     public CardViewHolder(View itemView) {
@@ -48,5 +49,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         editMenuItem = (MenuItem) itemView.findViewById(R.id.card_toolbar_edit);
         deleteMenuItem = (MenuItem) itemView.findViewById(R.id.card_toolbar_delete);
         hasMultiPics = (ImageView) itemView.findViewById(R.id.card_is_multiimages);
+        rv = (RecyclerView) itemView.findViewById(R.id.rv);
     }
 }

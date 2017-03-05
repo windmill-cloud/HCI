@@ -14,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -34,7 +33,6 @@ import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
-import com.lzy.imagepicker.ui.ImageBaseActivity;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 
@@ -42,6 +40,7 @@ import java.util.ArrayList;
 
 import edu.ucsb.cs.cs185.foliostation.discover.DiscoverFragment;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
+import edu.ucsb.cs.cs185.foliostation.inspire.InspireActivity;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment;
 import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
@@ -291,8 +290,22 @@ public class ContainerActivity extends AppCompatActivity
 
     protected void setSearchFragment(){
         ImageButton addCollection = (ImageButton) findViewById(R.id.add_collection);
+        /*
         addCollection.setVisibility(View.GONE);
         addCollection.setEnabled(false);
+        */
+
+        addCollection.setVisibility(View.GONE);
+        addCollection.setEnabled(false);
+        /*
+        addCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ContainerActivity.this, InspireActivity.class);
+                startActivity(intent);
+            }
+        });*/
+
         TextView toolBarTitle = (TextView) findViewById(R.id.collectios_toolbar_title);
         toolBarTitle.setText("Search by Tag");
 

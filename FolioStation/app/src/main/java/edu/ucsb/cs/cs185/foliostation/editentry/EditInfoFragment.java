@@ -51,7 +51,7 @@ public class EditInfoFragment extends Fragment {
             }
             if(mTags != null){
                 String tagsString = mTags.getText().toString();
-                String[] tags = tagsString.replaceAll("^[,\\s]+", "").split("[\\s]*,[\\s]+");
+                String[] tags = tagsString.replaceAll("^[,\\s]+", "").replaceAll("[,\\s]*$", "").split("[\\s]*,[\\s]*");
                 List<String> res = new ArrayList<>();
                 for(String str: tags){
                     if(!str.equals("")){

@@ -10,19 +10,26 @@
 package edu.ucsb.cs.cs185.foliostation.search;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
+
+import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.inspire.InspireActivity;
+import edu.ucsb.cs.cs185.foliostation.utilities.ImageUtilities;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +38,8 @@ public class SearchByTagFragment extends Fragment {
     SearchAdapter mAdapter;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-
+    Button mInspireButton;
+    String mTagForSearch = "";
 
     public SearchByTagFragment() {
         // Required empty public constructor
@@ -67,6 +75,12 @@ public class SearchByTagFragment extends Fragment {
         /*
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(mRecyclerView);*/
+
+        mInspireButton = (Button) rootView.findViewById(R.id.inspire_by);
+        mInspireButton.setLayoutParams(
+               new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
+
+
         ItemCards itemCards = ItemCards.getInstance(getContext());
         itemCards.setAdapter(mAdapter);
 
@@ -83,6 +97,7 @@ public class SearchByTagFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Log.i("query", query);
                 searchAndUpdateRecycler(query);
+                setInspireButtonVisibilityAndBehavior(query);
                 return false;
             }
 
@@ -90,6 +105,7 @@ public class SearchByTagFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 Log.i("chage", newText);
                 searchAndUpdateRecycler(newText);
+                setInspireButtonVisibilityAndBehavior(newText);
                 return false;
             }
         });
@@ -100,6 +116,30 @@ public class SearchByTagFragment extends Fragment {
     protected void searchAndUpdateRecycler(String query){
         mAdapter.updateImages(ItemCards.getInstance(getContext()).searchByTag(query));
         mAdapter.notifyDataSetChanged();
+        mTagForSearch = query;
+    }
+
+    protected void setInspireButtonVisibilityAndBehavior(final String query){
+        if(query!= null && query.equals("")){
+            mInspireButton.setLayoutParams(
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
+        } else if(ItemCards.getInstance(getContext()).hasTagsBeginWithQuery(query)) {
+            int margin = ImageUtilities.convertDpToPixel(getContext(), 8);
+            LinearLayout.LayoutParams visible =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+            visible.setMargins(margin, margin, margin, margin);
+            mInspireButton.setLayoutParams(visible);
+            mInspireButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), InspireActivity.class);
+                    intent.putExtra("QUERY", query);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 }
