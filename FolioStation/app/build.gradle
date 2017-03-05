@@ -11,7 +11,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "edu.ucsb.cs.cs185.foliostation"
         minSdkVersion 16
@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        renderscriptTargetApi 22
+        renderscriptTargetApi 25
         renderscriptSupportModeEnabled true
     }
     buildTypes {

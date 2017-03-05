@@ -61,6 +61,11 @@ public class ContainerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle("");
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -220,10 +225,8 @@ public class ContainerActivity extends AppCompatActivity
                 .commit();
 
         mFragment = fragment;
-        ActionBar toolbar = getSupportActionBar();
-        if(toolbar != null){
-            toolbar.setTitle("Collections");
-        }
+
+
 
         ImageButton addCollection = (ImageButton) findViewById(R.id.add_collection);
         addCollection.setVisibility(View.VISIBLE);

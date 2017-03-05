@@ -54,6 +54,7 @@ public class EditTabsActivity extends AppCompatActivity {
 
     int cardIndex = 0;
     boolean isEdit = false;
+    String from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class EditTabsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         cardIndex = intent.getIntExtra("CARD_INDEX", 0);
         isEdit = intent.getBooleanExtra("EDIT", false);
+        from = intent.getStringExtra("FROM");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -163,6 +165,9 @@ public class EditTabsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Log.d("Index", String.valueOf(cardIndex));
                     ItemCards.getInstance(getApplicationContext()).cards.remove(cardIndex);
+                    if(from != null && from.equals("DETAILS")){
+                        setResult(RESULT_OK, null);
+                    }
                     finish();
                 }
             });

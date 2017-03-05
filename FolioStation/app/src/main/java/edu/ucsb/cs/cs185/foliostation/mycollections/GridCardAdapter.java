@@ -64,7 +64,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
         if(mContext == null){
             Log.e("mContext", "null");
         }
-        ItemCards.Card card = ItemCards.getInstance(mContext).cards.get(i);
+        final ItemCards.Card card = ItemCards.getInstance(mContext).cards.get(i);
 
         // TODO: refactor picture loading
         if(card.getCoverImage().isFromPath()) {
@@ -114,7 +114,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
                         break;
                     case R.id.card_toolbar_delete:
                         Log.i("selected", "delete");
-                        ItemCards.deleteIthCard(position);
+                        ItemCards.getInstance(mContext).deleteIthCard(position);
                         GridCardAdapter.this.notifyDataSetChanged();
                         break;
                 }
