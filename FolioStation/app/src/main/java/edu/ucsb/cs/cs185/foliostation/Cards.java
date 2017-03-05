@@ -16,8 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 
@@ -27,6 +29,8 @@ import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 
 public class Cards {
     public LinkedList<Card> cards = new LinkedList<>();
+    public List<CardImage> flattenedImages = new ArrayList<>();
+    public Map<String, List<CardImage>> tagMap = new HashMap<>();
     private static Context mContext = null;
     private static RecyclerView.Adapter<CardViewHolder> mAdapter;
 
@@ -62,13 +66,10 @@ public class Cards {
         public boolean isFromPath(){
             return mType == PATH;
         }
-
         public boolean isFromUrl(){
             return mType == URL;
         }
-
     }
-
 
     public class Card{
         List<CardImage> mImages = new ArrayList<>();
@@ -98,7 +99,6 @@ public class Cards {
             this.mNumLike = mNumLike;
         }
 
-
         public void decreaseLikes(){
             if(mNumLike > 0){
                 mNumLike--;
@@ -108,7 +108,6 @@ public class Cards {
         public void increaseLikes() {
             mNumLike++;
         }
-
 
         int mNumLike = 0;
 
@@ -129,6 +128,16 @@ public class Cards {
 
         public void setTags(List<String> tags) {
             this.tags = tags;
+            for(String tag: tags){
+                List<CardImage> list = null;
+                if(!tagMap.containsKey(tag)){
+                    list = new ArrayList<>();
+                } else {
+                    list = tagMap.get(tag);
+                }
+                list.addAll(mImages);
+                tagMap.put(tag, list);
+            }
         }
 
         List<String> tags = new ArrayList<>();
@@ -143,7 +152,7 @@ public class Cards {
         }
 
         public Card(String url, int type,  String title, String description){
-            mImages.add(new CardImage(url, type));
+            addImage(new CardImage(url, type));
             mTitle = title;
             mDescription =  description;
         }
@@ -172,9 +181,20 @@ public class Cards {
             return mImages.size() >= 24;
         }
 
+        public void addImage(CardImage cardImage){
+            mImages.add(cardImage);
+            flattenedImages.add(cardImage);
+        }
+
+        public void addImage(ImageItem imageItem){
+            CardImage cardImage = new CardImage(imageItem.path, PATH);
+            mImages.add(cardImage);
+            flattenedImages.add(cardImage);
+        }
+
         public void addImages(List<ImageItem> images){
             for(ImageItem imageItem: images) {
-                mImages.add(new CardImage(imageItem.path, PATH));
+                addImage(imageItem);
             }
         }
 
@@ -209,9 +229,23 @@ public class Cards {
         Card newCard = new Card();
 
         for(ImageItem imageItem: imageItemList){
-            newCard.mImages.add(new CardImage(imageItem.path, PATH));
+            newCard.addImage(new CardImage(imageItem.path, PATH));
         }
         cards.addFirst(newCard);
     }
 
+    public List<CardImage> searchByTag(String tag){
+        List<CardImage> res = new ArrayList<>();
+        for(Map.Entry<String, List<CardImage>> entry: tagMap.entrySet()){
+            String key = entry.getKey();
+            if(key.startsWith(tag) || key.equals(tag)) {
+                res.addAll(entry.getValue());
+            }
+        }
+        return res;
+    }
+
+    public List<CardImage> getFlattenedImages(){
+        return flattenedImages;
+    }
 }

@@ -62,5 +62,4 @@ public class ItemCards extends Cards{
                 "女のいない男たち", "村上 春樹"));
     }
 
-
 }
