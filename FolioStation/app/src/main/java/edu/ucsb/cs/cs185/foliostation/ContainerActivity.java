@@ -295,15 +295,16 @@ public class ContainerActivity extends AppCompatActivity
         addCollection.setEnabled(false);
         */
 
-        addCollection.setVisibility(View.VISIBLE);
-        addCollection.setEnabled(true);
+        addCollection.setVisibility(View.GONE);
+        addCollection.setEnabled(false);
+        /*
         addCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ContainerActivity.this, InspireActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         TextView toolBarTitle = (TextView) findViewById(R.id.collectios_toolbar_title);
         toolBarTitle.setText("Search by Tag");

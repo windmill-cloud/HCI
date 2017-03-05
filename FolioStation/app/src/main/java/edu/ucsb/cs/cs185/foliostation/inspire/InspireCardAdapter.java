@@ -10,16 +10,19 @@
 package edu.ucsb.cs.cs185.foliostation.inspire;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.List;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.Cards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 
@@ -27,23 +30,23 @@ import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
  * Created by xuanwang on 3/5/17.
  */
 
-public class InspireAdapter extends RecyclerView.Adapter<CardViewHolder>
+public class InspireCardAdapter extends RecyclerView.Adapter<CardViewHolder>
         implements View.OnClickListener {
 
-    List<ItemCards.TagAndImages> mTagAndImages;
+    List<Cards.CardImage> mCardImages;
 
     Context mContext = null;
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public InspireAdapter(Context context, List<ItemCards.TagAndImages> images){
+    public InspireCardAdapter(Context context, List<Cards.CardImage> images){
         mContext = context;
-        mTagAndImages = images;
+        mCardImages = images;
     }
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_inspire, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_search, parent, false);
         CardViewHolder cardViewHolder = new CardViewHolder(v);
 
         return cardViewHolder;
@@ -55,37 +58,30 @@ public class InspireAdapter extends RecyclerView.Adapter<CardViewHolder>
         if(mContext == null){
             Log.e("mContext", "null");
         }
-        holder.title.setText(mTagAndImages.get(position).tag);
 
-        RecyclerView rv = holder.rv;
-        rv.setHasFixedSize(true);
-        rv.setNestedScrollingEnabled(false);
+        Cards.CardImage cardImage = mCardImages.get(position);
+        ImageView imageView = holder.imageView;
 
-        InspireCardAdapter adapter =
-                new InspireCardAdapter(mContext, mTagAndImages.get(position).cardImages);
-        adapter.setHasStableIds(true);
-
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false);
-        layoutManager.setItemPrefetchEnabled(true);
-
-        rv.setLayoutManager(layoutManager);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        adapter.setOnItemClickListener(new InspireCardAdapter.OnRecyclerViewItemClickListener(){
-            @Override
-            public void onItemClick(View view , int position){
-
-            }
-        });
-
-        rv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if(cardImage.isFromPath()) {
+            Picasso.with(mContext)
+                    .load(new File(cardImage.mUrl))
+                    .resize(450, 450)
+                    .centerCrop()
+                    .noFade()
+                    .into(imageView);
+        } else {
+            Picasso.with(mContext)
+                    .load(cardImage.mUrl)
+                    .resize(450, 450)
+                    .centerCrop()
+                    .noFade()
+                    .into(holder.imageView);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mTagAndImages.size();
+        return mCardImages.size();
     }
 
     @Override

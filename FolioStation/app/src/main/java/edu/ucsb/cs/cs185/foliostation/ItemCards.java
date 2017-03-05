@@ -92,8 +92,10 @@ public class ItemCards extends Cards{
                 String t = tagQueue.poll();
 
                 TagAndImages tai = new TagAndImages(t, level);
-                tai.addAll(tagMap.get(t));
-                res.add(tai);
+                if(tagMap.containsKey(t)) {
+                    tai.addAll(tagMap.get(t));
+                    res.add(tai);
+                }
 
                 for(int j = 0; j < cards.size(); j++){
                     Card card = cards.get(j);

@@ -14,22 +14,33 @@
     tools:context="edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <SearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/search_view"
-            android:queryHint="Search by tag"/>
+            android:queryHint="Search by tag"
+        />
+
+        <Button
+            android:id="@+id/inspire_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:background="@drawable/custom_button"
+            android:layout_margin="8dp"
+            android:text="Search Related Tags" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/search_view"
             android:id="@+id/search_rv"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>

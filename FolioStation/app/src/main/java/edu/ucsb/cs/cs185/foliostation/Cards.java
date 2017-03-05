@@ -243,15 +243,25 @@ public class Cards {
         cards.addFirst(newCard);
     }
 
-    public List<CardImage> searchByTag(String tag){
+    public List<CardImage> searchByTag(String query){
         List<CardImage> res = new ArrayList<>();
         for(Map.Entry<String, List<CardImage>> entry: tagMap.entrySet()){
             String key = entry.getKey();
-            if(key.startsWith(tag) || key.equals(tag)) {
+            if(key.startsWith(query) || key.equals(query)) {
                 res.addAll(entry.getValue());
             }
         }
         return res;
+    }
+
+    public boolean hasTagsBeginWithQuery(String query){
+        for(Map.Entry<String, List<CardImage>> entry: tagMap.entrySet()){
+            String key = entry.getKey();
+            if(key.startsWith(query) || key.equals(query)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<CardImage> getFlattenedImages(){
