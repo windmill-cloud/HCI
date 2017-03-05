@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import edu.ucsb.cs.cs185.foliostation.discover.DiscoverFragment;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment;
 import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 
@@ -154,6 +155,12 @@ public class ContainerActivity extends AppCompatActivity
             }
             setGridsFragment();
 
+        } else if (id == R.id.nav_search){
+            if(mFragment != null) {
+                destroyFragments();
+            }
+            setSearchFragment();
+
         } else if (id == R.id.nav_shared) {
             if(mFragment != null) {
                 destroyFragments();
@@ -220,6 +227,13 @@ public class ContainerActivity extends AppCompatActivity
         startActivityForResult(intent, IMAGE_PICKER);
     }
 
+    protected void destroyFragments(){
+        for(Fragment fragment:getSupportFragmentManager().getFragments()){
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+        mFragment = null;
+    }
+
     protected void setGridsFragment() {
         CardsFragment fragment = new CardsFragment();
         getSupportFragmentManager().beginTransaction()
@@ -275,11 +289,19 @@ public class ContainerActivity extends AppCompatActivity
         mNavigationID = R.id.nav_collections;
     }
 
-    protected void destroyFragments(){
-        for(Fragment fragment:getSupportFragmentManager().getFragments()){
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        }
-        mFragment = null;
+    protected void setSearchFragment(){
+        ImageButton addCollection = (ImageButton) findViewById(R.id.add_collection);
+        addCollection.setVisibility(View.GONE);
+        addCollection.setEnabled(false);
+        TextView toolBarTitle = (TextView) findViewById(R.id.collectios_toolbar_title);
+        toolBarTitle.setText("Search by Tag");
+
+        SearchByTagFragment fragment = new SearchByTagFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment, TAG_FRAGMENT)
+                .commit();
+
+        mFragment = fragment;
     }
 
     protected void setDiscoverFragment(){
