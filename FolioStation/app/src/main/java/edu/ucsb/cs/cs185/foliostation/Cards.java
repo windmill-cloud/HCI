@@ -140,6 +140,15 @@ public class Cards {
             }
         }
 
+        public boolean hasTag(String t){
+            for(String tag: tags){
+                if(tag.startsWith(t) || tag.equals(t)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
         List<String> tags = new ArrayList<>();
         public int coverIndex = 0;
         String mTitle = "";

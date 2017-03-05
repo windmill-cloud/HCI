@@ -7,10 +7,15 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation;
+package edu.ucsb.cs.cs185.foliostation.inspire;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.util.List;
+
+import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.R;
 
 public class InspireActivity extends AppCompatActivity {
 
@@ -18,5 +23,8 @@ public class InspireActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspire);
+
+        List<ItemCards.TagAndImages> list = ItemCards.getInstance(getApplicationContext()).getInspired("a");
+        int i = 1;
     }
 }

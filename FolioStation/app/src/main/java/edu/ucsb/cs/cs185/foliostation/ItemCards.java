@@ -10,20 +10,18 @@
 package edu.ucsb.cs.cs185.foliostation;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
-import android.support.v7.widget.RecyclerView;
-
-import com.lzy.imagepicker.bean.ImageItem;
+import android.nfc.Tag;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
-import edu.ucsb.cs.cs185.foliostation.utilities.ImageUtilities;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by xuanwang on 2/19/17.
@@ -62,4 +60,63 @@ public class ItemCards extends Cards{
                 "女のいない男たち", "村上 春樹"));
     }
 
+    public class TagAndImages{
+        public String tag = "";
+        public int level = 0;
+        public List<CardImage> cardImages =  new ArrayList<>();
+
+        public TagAndImages(String tag, int level){
+            this.tag = tag;
+            this.level = level;
+        }
+
+        public void addAll(List<CardImage> all){
+            cardImages.addAll(all);
+        }
+
+    }
+
+    public List<TagAndImages> getInspired(String tag){
+
+        Set<String> visitedTags = new HashSet<>();
+        visitedTags.add(tag);
+        Queue<String> tagQueue = new LinkedList<>();
+        tagQueue.offer(tag);
+
+        List<TagAndImages> res = new ArrayList<>();
+        int level = 0;
+
+        while(!tagQueue.isEmpty()){
+            int n = tagQueue.size();
+            for(int i = 0; i < n; i++){
+                String t = tagQueue.poll();
+
+                TagAndImages tai = new TagAndImages(t, level);
+                tai.addAll(tagMap.get(t));
+                res.add(tai);
+
+                for(int j = 0; j < cards.size(); j++){
+                    Card card = cards.get(j);
+                    if(card.hasTag(t)){
+                        for(String tt: card.getTags()){
+                            if(!visitedTags.contains(tt)){
+                                visitedTags.add(tt);
+                                tagQueue.offer(tt);
+                            }
+                        }
+                    }
+                }
+            }
+            level++;
+        }
+
+        Collections.sort(res, new Comparator<TagAndImages>() {
+            @Override
+            public int compare(TagAndImages t0, TagAndImages t1) {
+                return t0.level - t1.level;
+            }
+        });
+
+        return res;
+    }
 }

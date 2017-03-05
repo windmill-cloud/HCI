@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".collectiondetails.CollectionDetailsActivity" />
-        <activity android:name=".InspireActivity"></activity>
+        <activity android:name=".inspire.InspireActivity"></activity>
     </application>
 
 </manifest>
