@@ -47,8 +47,8 @@ dependencies {
 
     // Provide the Android support library (you might already have this or a similar dependency)
 
-    compile 'com.facebook.fresco:webpsupport:1.1.0'
 
+    compile 'com.facebook.fresco:webpsupport:1.1.0'
     compile 'com.facebook.fresco:webpsupport:1.1.0'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
@@ -70,6 +70,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha6'
     testCompile 'junit:junit:4.12'
 }
+
+
 
 
 apply plugin: 'com.google.gms.google-services'
