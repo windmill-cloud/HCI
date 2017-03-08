@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.List;
 
-import edu.ucsb.cs.cs185.foliostation.Cards;
+import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 

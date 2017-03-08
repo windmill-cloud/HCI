@@ -40,7 +40,7 @@ import java.util.ArrayList;
 
 import edu.ucsb.cs.cs185.foliostation.discover.DiscoverFragment;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
-import edu.ucsb.cs.cs185.foliostation.inspire.InspireActivity;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment;
 import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;

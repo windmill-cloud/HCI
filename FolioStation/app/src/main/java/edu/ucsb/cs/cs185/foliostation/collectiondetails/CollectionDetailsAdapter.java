@@ -21,10 +21,9 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.List;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 
 /**
  * Created by xuanwang on 3/3/17.

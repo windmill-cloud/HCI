@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 
 /**
@@ -60,6 +60,7 @@ public class EditInfoFragment extends Fragment {
                 }
                 mItemCard.setTags(res);
             }
+            mItemCard.writeToDB();
         }
     }
 

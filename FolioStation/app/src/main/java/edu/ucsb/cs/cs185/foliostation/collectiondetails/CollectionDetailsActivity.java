@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,12 +32,11 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 
 public class CollectionDetailsActivity extends AppCompatActivity {
 
@@ -83,10 +81,6 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         helper.attachToRecyclerView(mRecyclerView);*/
         ItemCards itemCards = ItemCards.getInstance(getApplicationContext());
         itemCards.setAdapter(mAdapter);
-
-        if(itemCards.cards.size() == 0){
-            itemCards.inflateDummyContent();
-        }
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
@@ -177,6 +171,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                         data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 ItemCards.Card card = ItemCards.getInstance(getApplicationContext()).cards.get(mCardIndex);
                 card.addImages(images);
+                card.writeToDB();
                 mAdapter.notifyDataSetChanged();
 
             } else {

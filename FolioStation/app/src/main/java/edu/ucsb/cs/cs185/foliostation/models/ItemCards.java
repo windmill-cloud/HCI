@@ -7,21 +7,20 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation;
+package edu.ucsb.cs.cs185.foliostation.models;
 
 import android.content.Context;
-import android.nfc.Tag;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+
+import edu.ucsb.cs.cs185.foliostation.databasehandlers.DatabaseOperator;
 
 /**
  * Created by xuanwang on 2/19/17.
@@ -37,8 +36,14 @@ public class ItemCards extends Cards{
     public static synchronized ItemCards getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new ItemCards(context);
+            mInstance.inflateFromDB();
         }
         return mInstance;
+    }
+
+    private void inflateFromDB(){
+        DatabaseOperator.getInstance(mContext).
+                getItemCardDBOperator().populateCards(mContext);
     }
 
     public void inflateDummyContent(){

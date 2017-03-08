@@ -10,21 +10,16 @@
 package edu.ucsb.cs.cs185.foliostation.discover;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.ucsb.cs.cs185.foliostation.DiscoverCards;
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.DiscoverCards;
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.collectiondetails.CollectionDetailsActivity;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,9 +73,6 @@ public class DiscoverFragment extends Fragment {
         DiscoverCards discoverCards = DiscoverCards.getInstance(getContext());
         discoverCards.setAdapter(mAdapter);
 
-        if(discoverCards.cards.size() == 0){
-            discoverCards.inflateDummies();
-        }
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();

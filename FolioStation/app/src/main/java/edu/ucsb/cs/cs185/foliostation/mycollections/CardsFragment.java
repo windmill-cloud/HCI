@@ -32,7 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.collectiondetails.CollectionDetailsActivity;
 
@@ -96,10 +96,6 @@ public class CardsFragment extends Fragment {
         helper.attachToRecyclerView(mRecyclerView);*/
         ItemCards itemCards = ItemCards.getInstance(getContext());
         itemCards.setAdapter(mGridCardAdapter);
-
-        if(itemCards.cards.size() == 0){
-            itemCards.inflateDummyContent();
-        }
 
         mRecyclerView.setAdapter(mGridCardAdapter);
         mGridCardAdapter.notifyDataSetChanged();

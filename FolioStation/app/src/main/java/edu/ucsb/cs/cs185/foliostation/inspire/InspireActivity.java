@@ -18,10 +18,8 @@ import android.view.View;
 
 import java.util.List;
 
-import edu.ucsb.cs.cs185.foliostation.DiscoverCards;
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.discover.DiscoverAdapter;
 
 public class InspireActivity extends AppCompatActivity {
 
