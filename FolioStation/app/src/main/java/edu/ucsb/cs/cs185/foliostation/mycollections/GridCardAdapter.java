@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.List;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 

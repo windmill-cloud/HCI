@@ -21,12 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
-import java.util.List;
-
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.inspire.InspireActivity;
 import edu.ucsb.cs.cs185.foliostation.utilities.ImageUtilities;
@@ -83,10 +80,6 @@ public class SearchByTagFragment extends Fragment {
 
         ItemCards itemCards = ItemCards.getInstance(getContext());
         itemCards.setAdapter(mAdapter);
-
-        if(itemCards.cards.size() == 0){
-            itemCards.inflateDummyContent();
-        }
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();

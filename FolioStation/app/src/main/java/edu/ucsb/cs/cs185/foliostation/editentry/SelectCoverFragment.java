@@ -13,7 +13,6 @@ package edu.ucsb.cs.cs185.foliostation.editentry;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,7 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 
-import edu.ucsb.cs.cs185.foliostation.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 
 /**
@@ -119,10 +118,6 @@ public class SelectCoverFragment extends Fragment {
 
         ItemCards itemCards = ItemCards.getInstance(getContext());
         itemCards.setAdapter(mAdapter);
-
-        if(itemCards.cards.size() == 0){
-            itemCards.inflateDummyContent();
-        }
 
         mRecyclerView.setAdapter(mAdapter);
 

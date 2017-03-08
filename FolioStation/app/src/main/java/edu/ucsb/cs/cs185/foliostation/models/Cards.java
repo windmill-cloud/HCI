@@ -7,12 +7,13 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation;
+package edu.ucsb.cs.cs185.foliostation.models;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.ArrayList;
@@ -20,7 +21,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import edu.ucsb.cs.cs185.foliostation.databasehandlers.DatabaseOperator;
+import edu.ucsb.cs.cs185.foliostation.databasehandlers.ItemCardsDBHelper;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 
 /**
@@ -31,7 +35,7 @@ public class Cards {
     public LinkedList<Card> cards = new LinkedList<>();
     public List<CardImage> flattenedImages = new ArrayList<>();
     public Map<String, List<CardImage>> tagMap = new HashMap<>();
-    private static Context mContext = null;
+    protected static Context mContext = null;
     private static RecyclerView.Adapter<CardViewHolder> mAdapter;
 
     final static int URL = 0;
@@ -73,7 +77,6 @@ public class Cards {
 
     public class Card{
         List<CardImage> mImages = new ArrayList<>();
-        public List<Bitmap> mThumbnails = new ArrayList<>();
 
         public boolean isUserLiked() {
             return userLiked;
@@ -126,6 +129,11 @@ public class Cards {
             return sb.toString();
         }
 
+        public String getTagsJson(){
+            String json = new Gson().toJson(tags);
+            return json;
+        }
+
         public void setTags(List<String> tags) {
             this.tags = tags;
             for(String tag: tags){
@@ -151,6 +159,12 @@ public class Cards {
 
         List<String> tags = new ArrayList<>();
         public int coverIndex = 0;
+
+        public String getUUID() {
+            return mUUID;
+        }
+
+        String mUUID = "";
         String mTitle = "";
         String mDescription = "";
 
@@ -160,19 +174,32 @@ public class Cards {
             mUserProfile = profile;
         }
 
+        public Card(String UUID, String title, String descriptions,  List<String> tags,
+                    List<CardImage> images) {
+            mUUID = UUID;
+            mTitle = title;
+            mDescription = descriptions;
+            this.tags = tags;
+            this.mImages = images;
+        }
+
         public Card(String url, int type,  String title, String description){
+            this(title, description);
+
             addImage(new CardImage(url, type));
+            mUUID = UUID.randomUUID().toString();
             mTitle = title;
             mDescription =  description;
         }
 
         public Card( String title, String description){
+            mUUID = UUID.randomUUID().toString();
             mTitle = title;
             mDescription =  description;
         }
 
         public Card(){
-
+            mUUID = UUID.randomUUID().toString();
         }
 
         public CardImage getCoverImage(){
@@ -183,7 +210,6 @@ public class Cards {
         public void setCoverIndex(int index){
             int i = 0;
             coverIndex = index;
-
         }
 
         public boolean hasMaxNumOfImages(){
@@ -205,6 +231,11 @@ public class Cards {
             for(ImageItem imageItem: images) {
                 addImage(imageItem);
             }
+        }
+
+        public String getImagesJson(){
+            String json =  new Gson().toJson(mImages);
+            return json;
         }
 
         public boolean hasMultiPics(){
@@ -230,17 +261,26 @@ public class Cards {
         public void setTitle(String mTitle) {
             this.mTitle = mTitle;
         }
+
+        public void writeToDB(){
+            DatabaseOperator.getInstance(mContext)
+                    .getItemCardDBOperator().updateCards(this);
+        }
     }
 
-
     public void addNewCardFromImages(List<ImageItem> imageItemList){
-
         Card newCard = new Card();
 
         for(ImageItem imageItem: imageItemList){
             newCard.addImage(new CardImage(imageItem.path, PATH));
         }
         cards.addFirst(newCard);
+        DatabaseOperator.getInstance(mContext).getItemCardDBOperator().insertCard(newCard);
+    }
+
+    public void addNewCardFromDB(String UUID, String title, String descriptions,  List<String> tags,
+                                 List<CardImage> images){
+        cards.add(new Card(UUID, title, descriptions, tags, images));
     }
 
     public List<CardImage> searchByTag(String query){

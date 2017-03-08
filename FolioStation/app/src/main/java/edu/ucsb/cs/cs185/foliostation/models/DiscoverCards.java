@@ -7,15 +7,9 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation;
+package edu.ucsb.cs.cs185.foliostation.models;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.ucsb.cs.cs185.foliostation.utilities.ImageUtilities;
 
 /**
  * Created by xuanwang on 3/4/17.
