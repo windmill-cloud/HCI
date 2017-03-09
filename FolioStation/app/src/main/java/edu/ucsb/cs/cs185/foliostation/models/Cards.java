@@ -181,6 +181,7 @@ public class Cards {
             mDescription = descriptions;
             this.tags = tags;
             this.mImages = images;
+            this.setTags(tags);
         }
 
         public Card(String url, int type,  String title, String description){
@@ -280,7 +281,9 @@ public class Cards {
 
     public void addNewCardFromDB(String UUID, String title, String descriptions,  List<String> tags,
                                  List<CardImage> images){
-        cards.add(new Card(UUID, title, descriptions, tags, images));
+        Card newCard = new Card(UUID, title, descriptions, tags, images);
+        flattenedImages.addAll(newCard.getImages());
+        cards.add(newCard);
     }
 
     public List<CardImage> searchByTag(String query){
