@@ -240,7 +240,6 @@ public class ContainerActivity extends AppCompatActivity
                 .commit();
 
         mFragment = fragment;
-
         ImageButton addCollection = (ImageButton) findViewById(R.id.add_collection);
         addCollection.setVisibility(View.VISIBLE);
         addCollection.setEnabled(true);

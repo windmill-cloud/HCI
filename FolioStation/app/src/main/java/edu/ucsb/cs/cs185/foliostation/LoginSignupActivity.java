@@ -62,10 +62,10 @@ public class LoginSignupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent collectIntent = new Intent(LoginSignupActivity.this,
-                        ContainerActivity.class);
-                collectIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                LoginSignupActivity.this.startActivity(collectIntent);
+                Intent intent = new Intent(LoginSignupActivity.this,
+                        MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                LoginSignupActivity.this.startActivity(intent);
                 LoginSignupActivity.this.finish();
             }
         });

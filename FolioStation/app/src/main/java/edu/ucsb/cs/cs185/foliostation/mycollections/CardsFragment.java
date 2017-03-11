@@ -9,33 +9,50 @@
 
 package edu.ucsb.cs.cs185.foliostation.mycollections;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+
+import java.util.ArrayList;
+
+import edu.ucsb.cs.cs185.foliostation.ContainerActivity;
+import edu.ucsb.cs.cs185.foliostation.MainActivity;
+import edu.ucsb.cs.cs185.foliostation.SplashScreenActivity;
+import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.collectiondetails.CollectionDetailsActivity;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +62,7 @@ public class CardsFragment extends Fragment {
     GridCardAdapter mGridCardAdapter;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
+    Toolbar toolbar;
 
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 7654;
     private static final int IMAGE_PICKER = 1234;
@@ -61,9 +79,14 @@ public class CardsFragment extends Fragment {
 
         //getCardImages();
 
+        toolbar = (Toolbar) rootView.findViewById(R.id.card_fragment_toolbar);
+
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.cards_recycler);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(onMenuItemClick);
 
         GridCardAdapter.setContext(getContext());
         mGridCardAdapter = new GridCardAdapter(ItemCards.getInstance(getContext()).cards);
@@ -74,7 +97,6 @@ public class CardsFragment extends Fragment {
         mLayoutManager.setItemPrefetchEnabled(true);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mGridCardAdapter.setOnItemClickListener(new GridCardAdapter.OnRecyclerViewItemClickListener(){
             @Override
@@ -126,6 +148,17 @@ public class CardsFragment extends Fragment {
         background.setImageDrawable(draw);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     @Override
     public void onResume() {
@@ -172,6 +205,92 @@ public class CardsFragment extends Fragment {
             tmpOut.copyTo(outputBitmap);
 
             return outputBitmap;
+        }
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            String msg = "";
+            switch (menuItem.getItemId()) {
+                case R.id.action_adding:
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED
+                            || ContextCompat.checkSelfPermission(getActivity(),
+                            android.Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        // Should we show an explanation?
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
+
+                        } else {
+
+                            // No explanation needed, we can request the permission.
+
+                            ActivityCompat.requestPermissions(getActivity(),
+                                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                            android.Manifest.permission.CAMERA},
+                                    ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+
+                            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                            // app-defined int constant. The callback method gets the
+                            // result of the request.
+                        }
+                    } else {
+
+                        ImagePicker imagePicker = ImagePicker.getInstance();
+                        imagePicker.setShowCamera(true);
+                        startImagesPicking();
+                    }
+                    msg += "Click edit";
+                    break;
+                case R.id.action_shared:
+                    msg += "Click share";
+                    break;
+                case R.id.action_settings:
+                    msg += "Click setting";
+                    break;
+                case R.id.action_logout:
+                    Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                    break;
+            }
+
+            if(!msg.equals("")) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+    };
+
+    protected void startImagesPicking() {
+        Intent intent = new Intent(getActivity(), ImageGridActivity.class);
+        startActivityForResult(intent, IMAGE_PICKER);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == IMAGE_PICKER) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                ItemCards itemCards = ItemCards.getInstance(getContext());
+                itemCards.addNewCardFromImages(images);
+                Intent intent = new Intent(getActivity(), EditTabsActivity.class);
+                intent.putExtra("CARD_INDEX", 0);
+
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(getActivity(), "No picture selected", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

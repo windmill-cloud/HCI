@@ -82,10 +82,8 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
                     .noFade()
                     .into(holder.imageView);
         }
-        //holder.imageView.setImageDrawable(card.mImages.get(0).mDrawable);
 
         holder.imageView.setTag(i);
-        //holder.imageView.setBackgroundResource(R.drawable.placeholder);
 
         holder.imageView.setOnClickListener(this);
         holder.imageView.setOnLongClickListener(new View.OnLongClickListener(){
