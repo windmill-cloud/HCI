@@ -75,6 +75,9 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         rv.setLayoutManager(layoutManager);
 
+        holder.toolbar.getMenu().clear();
+        holder.toolbar.inflateMenu(R.menu.menu_rank);
+
         adapter.setOnItemClickListener(new RankInnerAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
