@@ -23,6 +23,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SplashScreenActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ContainerActivity"
@@ -42,11 +47,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
     </application>
