@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 
+import java.util.LinkedList;
+
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment;
 import edu.ucsb.cs.cs185.foliostation.searchbyranking.SearchByRankingFragment;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     Fragment mFragment;
+    int prevFragmentpPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,28 @@ public class MainActivity extends AppCompatActivity {
 
         setImagePicker();
         Toast.makeText(this, "Slide right to search", Toast.LENGTH_SHORT).show();
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    prevFragmentpPosition = -1;
+                } else {
+                    prevFragmentpPosition = position - 1;
+                }
+                Log.d("page", String.valueOf(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -179,6 +204,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
             return null;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (prevFragmentpPosition >= 0) {
+            mViewPager.setCurrentItem(prevFragmentpPosition);
+        } else {
+            super.onBackPressed();
         }
     }
 }

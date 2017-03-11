@@ -48,6 +48,7 @@ import java.util.ArrayList;
 
 import edu.ucsb.cs.cs185.foliostation.ContainerActivity;
 import edu.ucsb.cs.cs185.foliostation.MainActivity;
+import edu.ucsb.cs.cs185.foliostation.SplashScreenActivity;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
@@ -96,7 +97,6 @@ public class CardsFragment extends Fragment {
         mLayoutManager.setItemPrefetchEnabled(true);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mGridCardAdapter.setOnItemClickListener(new GridCardAdapter.OnRecyclerViewItemClickListener(){
             @Override
@@ -255,6 +255,11 @@ public class CardsFragment extends Fragment {
                     break;
                 case R.id.action_settings:
                     msg += "Click setting";
+                    break;
+                case R.id.action_logout:
+                    Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
                     break;
             }
 
