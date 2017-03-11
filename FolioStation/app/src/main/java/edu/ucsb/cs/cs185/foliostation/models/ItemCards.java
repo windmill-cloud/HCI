@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -75,46 +76,80 @@ public class ItemCards extends Cards{
             this.level = level;
         }
 
+        public TagAndImages(String tag, List<CardImage> cardImages){
+            this.tag = tag;
+            this.cardImages = cardImages;
+        }
+
         public void addAll(List<CardImage> all){
             cardImages.addAll(all);
         }
 
     }
 
-    public List<TagAndImages> getInspired(String tag){
+    public List<TagAndImages> getFrequentTags(){
+        List<TagAndImages> res = new ArrayList<>();
+        for(String tag: tagMap.keySet()){
+            res.add(new TagAndImages(tag, tagMap.get(tag)));
+        }
 
-        Set<String> visitedTags = new HashSet<>();
-        visitedTags.add(tag);
-        Queue<String> tagQueue = new LinkedList<>();
-        tagQueue.offer(tag);
+        // number of images in reverse order
+        Collections.sort(res, new Comparator<TagAndImages>() {
+            @Override
+            public int compare(TagAndImages t1, TagAndImages t2) {
+                return t2.cardImages.size() - t1.cardImages.size();
+            }
+        });
+
+        return res;
+    }
+
+    public List<TagAndImages> getInspired(String rawTag){
+
+        List<String> matchedTags = new ArrayList<>();
+
+        for(Map.Entry<String, List<CardImage>> entry: tagMap.entrySet()){
+            String key = entry.getKey();
+            if(key.startsWith(rawTag) || key.equals(rawTag)) {
+                matchedTags.add(key);
+            }
+        }
 
         List<TagAndImages> res = new ArrayList<>();
-        int level = 0;
 
-        while(!tagQueue.isEmpty()){
-            int n = tagQueue.size();
-            for(int i = 0; i < n; i++){
-                String t = tagQueue.poll();
+        for(String tag: matchedTags) {
+            Set<String> visitedTags = new HashSet<>();
+            visitedTags.add(tag);
+            Queue<String> tagQueue = new LinkedList<>();
+            tagQueue.offer(tag);
 
-                TagAndImages tai = new TagAndImages(t, level);
-                if(tagMap.containsKey(t)) {
-                    tai.addAll(tagMap.get(t));
-                    res.add(tai);
-                }
+            int level = 0;
 
-                for(int j = 0; j < cards.size(); j++){
-                    Card card = cards.get(j);
-                    if(card.hasTag(t)){
-                        for(String tt: card.getTags()){
-                            if(!visitedTags.contains(tt)){
-                                visitedTags.add(tt);
-                                tagQueue.offer(tt);
+            while (!tagQueue.isEmpty()) {
+                int n = tagQueue.size();
+                for (int i = 0; i < n; i++) {
+                    String t = tagQueue.poll();
+
+                    TagAndImages tai = new TagAndImages(t, level);
+                    if (tagMap.containsKey(t)) {
+                        tai.addAll(tagMap.get(t));
+                        res.add(tai);
+                    }
+
+                    for (int j = 0; j < cards.size(); j++) {
+                        Card card = cards.get(j);
+                        if (card.hasTag(t)) {
+                            for (String tt : card.getTags()) {
+                                if (!visitedTags.contains(tt)) {
+                                    visitedTags.add(tt);
+                                    tagQueue.offer(tt);
+                                }
                             }
                         }
                     }
                 }
+                level++;
             }
-            level++;
         }
 
         Collections.sort(res, new Comparator<TagAndImages>() {
