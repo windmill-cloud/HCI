@@ -11,6 +11,8 @@ package edu.ucsb.cs.cs185.foliostation.models;
 
 import android.content.Context;
 
+import com.lzy.imagepicker.bean.ImageItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -84,7 +86,6 @@ public class ItemCards extends Cards{
         public void addAll(List<CardImage> all){
             cardImages.addAll(all);
         }
-
     }
 
     public List<TagAndImages> getFrequentTags(){
@@ -103,6 +104,16 @@ public class ItemCards extends Cards{
 
         return res;
     }
+
+    public void addNewCardFromTagAndImages(TagAndImages tagAndImages){
+        Card newCard = new Card();
+
+        newCard.mImages.addAll(tagAndImages.cardImages);
+        newCard.tags.add(tagAndImages.tag);
+        cards.addFirst(newCard);
+        DatabaseOperator.getInstance(mContext).getItemCardDBOperator().insertCard(newCard);
+    }
+
 
     public List<TagAndImages> getInspired(String rawTag){
 
