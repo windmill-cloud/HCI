@@ -92,7 +92,6 @@ public class CardsFragment extends Fragment {
         mGridCardAdapter = new GridCardAdapter(ItemCards.getInstance(getContext()).cards);
         mGridCardAdapter.setHasStableIds(true);
 
-
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         mLayoutManager.setItemPrefetchEnabled(true);
 

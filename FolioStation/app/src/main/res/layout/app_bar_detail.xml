@@ -38,7 +38,11 @@
             android:elevation="6dp"
             app:layout_scrollFlags="scroll|enterAlways"
             app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextColor="@color/black"
+            app:title="Collection Details"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <!--
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -78,6 +82,7 @@
                     app:srcCompat="@drawable/ic_edit_black_24dp" />
 
             </RelativeLayout>
+            -->
         </android.support.v7.widget.Toolbar>
             <FrameLayout
                 android:layout_width="match_parent"

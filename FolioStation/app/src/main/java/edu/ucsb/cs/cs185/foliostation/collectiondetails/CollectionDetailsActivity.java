@@ -18,6 +18,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -53,6 +56,9 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_details);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.details_toolbar);
+        setSupportActionBar(toolbar);
+
         Intent intent= getIntent();
         mCardIndex = intent.getIntExtra("CARD_INDEX", 0);
 
@@ -85,6 +91,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
+        /*
         ImageButton addPic = (ImageButton) findViewById(R.id.add_image_to_collection);
         if(card.getImages().size() < 24) {
 
@@ -114,6 +121,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                 startActivityForResult(intent, EDIT_RESULT);
             }
         });
+        */
 
         inflateInfoBar();
     }
@@ -122,6 +130,13 @@ public class CollectionDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         inflateInfoBar();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_collection_details, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     protected void inflateInfoBar(){
