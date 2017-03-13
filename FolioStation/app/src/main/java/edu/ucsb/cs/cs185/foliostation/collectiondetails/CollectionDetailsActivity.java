@@ -94,6 +94,10 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.details_toolbar);
         setSupportActionBar(mToolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         if(card.getImages().size() >= 24) {
             canAddImage = false;
         }
@@ -138,6 +142,12 @@ public class CollectionDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         inflateInfoBar();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

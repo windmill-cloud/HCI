@@ -70,6 +70,8 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         tag = Character.toUpperCase(tag.charAt(0)) + tag.substring(1);
         holder.title.setText(tag);
+        holder.title.setTag(position);
+        holder.title.setOnClickListener(this);
 
         RecyclerView rv = holder.rv;
         rv.setHasFixedSize(true);
