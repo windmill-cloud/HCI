@@ -92,7 +92,6 @@ public class CardsFragment extends Fragment {
         mGridCardAdapter = new GridCardAdapter(ItemCards.getInstance(getContext()).cards);
         mGridCardAdapter.setHasStableIds(true);
 
-
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         mLayoutManager.setItemPrefetchEnabled(true);
 
@@ -251,6 +250,7 @@ public class CardsFragment extends Fragment {
                     msg += "Click edit";
                     break;
                 case R.id.action_shared:
+                    // TODO: implement get shared content functionality
                     msg += "Click share";
                     break;
                 case R.id.action_settings:

@@ -65,7 +65,11 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         if(mContext == null){
             Log.e("mContext", "null");
         }
-        holder.title.setText(mTagAndImages.get(position).tag);
+
+        String tag = mTagAndImages.get(position).tag;
+
+        tag = Character.toUpperCase(tag.charAt(0)) + tag.substring(1);
+        holder.title.setText(tag);
 
         RecyclerView rv = holder.rv;
         rv.setHasFixedSize(true);

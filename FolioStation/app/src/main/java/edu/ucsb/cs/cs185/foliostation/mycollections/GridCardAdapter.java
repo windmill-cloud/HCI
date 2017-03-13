@@ -26,6 +26,7 @@ import java.util.List;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
+import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 /**
  * Created by xuanwang on 2/19/17.
@@ -106,6 +107,9 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
+                    case R.id.card_toolbar_share:
+                        startShareActivity(holder.imageView, position);
+                        break;
                     case R.id.card_toolbar_edit:
                         Log.i("selected", "edit");
                         startEditActivity(holder.imageView, position);
@@ -125,6 +129,12 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
         } else {
             holder.hasMultiPics.setVisibility(View.GONE);
         }
+    }
+
+    public void startShareActivity(View view, int position){
+        Intent intent = new Intent(view.getContext(), ShareActivity.class);
+        intent.putExtra("CARD_INDEX", position);
+        view.getContext().startActivity(intent);
     }
 
     public void startEditActivity(View view, int position){

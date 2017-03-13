@@ -11,6 +11,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/card_toolbar_share"
+        android:orderInCategory="100"
+        android:title="Share"
+        app:showAsAction="never"
+        />
+
+    <item
         android:id="@+id/card_toolbar_edit"
         android:orderInCategory="100"
         android:title="Edit"
