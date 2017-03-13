@@ -52,6 +52,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
     private CollectionDetailsAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
     private boolean canAddImage = true;
+    private Toolbar mToolbar;
 
     private static int IMAGE_PICKER = 1234;
     private static int EDIT_RESULT = 2345;
@@ -90,15 +91,15 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.details_toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.details_toolbar);
+        setSupportActionBar(mToolbar);
 
         if(card.getImages().size() >= 24) {
             canAddImage = false;
         }
 
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
@@ -192,7 +193,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                 card.addImages(images);
                 card.writeToDB();
                 mAdapter.notifyDataSetChanged();
-
+                this.onPrepareOptionsMenu(mToolbar.getMenu());
             } else {
                 Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
             }
