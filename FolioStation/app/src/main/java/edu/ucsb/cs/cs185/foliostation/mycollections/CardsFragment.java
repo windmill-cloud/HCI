@@ -250,6 +250,7 @@ public class CardsFragment extends Fragment {
                     msg += "Click edit";
                     break;
                 case R.id.action_shared:
+                    // TODO: implement get shared content functionality
                     msg += "Click share";
                     break;
                 case R.id.action_settings:

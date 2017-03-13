@@ -19,8 +19,10 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,6 +42,8 @@ import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
+import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
+import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 public class CollectionDetailsActivity extends AppCompatActivity {
 
@@ -47,6 +51,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private CollectionDetailsAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
+    private boolean canAddImage = true;
 
     private static int IMAGE_PICKER = 1234;
     private static int EDIT_RESULT = 2345;
@@ -55,9 +60,6 @@ public class CollectionDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_details);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.details_toolbar);
-        setSupportActionBar(toolbar);
 
         Intent intent= getIntent();
         mCardIndex = intent.getIntExtra("CARD_INDEX", 0);
@@ -82,46 +84,51 @@ public class CollectionDetailsActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        SnapHelper helper = new LinearSnapHelper();
-        helper.attachToRecyclerView(mRecyclerView);*/
         ItemCards itemCards = ItemCards.getInstance(getApplicationContext());
         itemCards.setAdapter(mAdapter);
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        /*
-        ImageButton addPic = (ImageButton) findViewById(R.id.add_image_to_collection);
-        if(card.getImages().size() < 24) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.details_toolbar);
+        setSupportActionBar(toolbar);
 
-            addPic.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    ImagePicker.getInstance().setSelectLimit(24 - card.getImages().size());
-                    Intent intent = new Intent(CollectionDetailsActivity.this, ImageGridActivity.class);
-                    startActivityForResult(intent, IMAGE_PICKER);
-                }
-            });
-        }else {
-            addPic.setVisibility(View.GONE);
+        if(card.getImages().size() >= 24) {
+            canAddImage = false;
         }
 
 
-        ImageButton editDetails = (ImageButton) findViewById(R.id.edit_collection_infop);
-        editDetails.setOnClickListener(new View.OnClickListener() {
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(CollectionDetailsActivity.this, EditTabsActivity.class);
-                intent.putExtra("CARD_INDEX", mCardIndex);
-                intent.putExtra("EDIT", true);
-                intent.putExtra("FROM", "DETAILS");
-                startActivityForResult(intent, EDIT_RESULT);
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.details_add_image:
+                        ImagePicker.getInstance().setSelectLimit(24 - card.getImages().size());
+                        Intent imagePickerIntent = new Intent(CollectionDetailsActivity.this, ImageGridActivity.class);
+                        startActivityForResult(imagePickerIntent, IMAGE_PICKER);
+                        break;
+                    case R.id.details_edit:
+                        Intent editIntent = new Intent(CollectionDetailsActivity.this, EditTabsActivity.class);
+                        editIntent.putExtra("CARD_INDEX", mCardIndex);
+                        editIntent.putExtra("EDIT", true);
+                        editIntent.putExtra("FROM", "DETAILS");
+                        startActivityForResult(editIntent, EDIT_RESULT);
+                        Log.i("selected", "edit");
+                        break;
+                    case R.id.details_share_collection:
+                        Intent shareIntent = new Intent(CollectionDetailsActivity.this, ShareActivity.class);
+                        shareIntent.putExtra("CARD_INDEX", mCardIndex);
+                        startActivity(shareIntent);
+                        Log.i("selected", "share");
+                        break;
+                    case R.id.details_delete_collection:
+                        Log.i("selected", "delete");
+                        ItemCards.getInstance(getApplicationContext()).deleteIthCard(mCardIndex);
+                        break;
+                }
+                return true;
             }
         });
-        */
 
         inflateInfoBar();
     }
@@ -134,8 +141,12 @@ public class CollectionDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_collection_details, menu);
-
+        menu.clear();
+        if(canAddImage) {
+            getMenuInflater().inflate(R.menu.menu_collection_details, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_collection_details_noadd, menu);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -174,14 +185,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
-                /*
-                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                ItemCards itemCards = ItemCards.getInstance(getApplicationContext());
-                itemCards.addNewCardFromImages(images);
-                Intent intent = new Intent(getApplicationContext(), EditTabsActivity.class);
-                intent.putExtra("CARD_INDEX", 0);
-                startActivity(intent);
-                */
+
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>)
                         data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 ItemCards.Card card = ItemCards.getInstance(getApplicationContext()).cards.get(mCardIndex);
