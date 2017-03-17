@@ -87,6 +87,7 @@ public class CardsFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
+        toolbar.getBackground().setAlpha(0);
 
         GridCardAdapter.setContext(getContext());
         mGridCardAdapter = new GridCardAdapter(ItemCards.getInstance(getContext()).cards);

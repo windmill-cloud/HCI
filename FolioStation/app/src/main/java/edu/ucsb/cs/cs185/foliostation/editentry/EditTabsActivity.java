@@ -9,7 +9,9 @@
 
 package edu.ucsb.cs.cs185.foliostation.editentry;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -197,7 +199,21 @@ public class EditTabsActivity extends AppCompatActivity {
             mDeleteButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    ItemCards.getInstance(getApplicationContext()).cards.remove(cardIndex);
+                    new AlertDialog.Builder(getApplicationContext())
+                            .setTitle("Delete entry")
+                            .setMessage("Are you sure you want to delete this entry?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    ItemCards.getInstance(getApplicationContext()).cards.remove(cardIndex);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .show();
                 }
             });
 
