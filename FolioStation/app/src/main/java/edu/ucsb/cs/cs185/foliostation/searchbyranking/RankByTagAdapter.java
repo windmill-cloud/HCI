@@ -47,8 +47,9 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         mTagAndImages = images;
     }
 
-    public void updateImages(List<ItemCards.TagAndImages> images){
-        mTagAndImages=images;
+    public void updateImages(List<ItemCards.TagAndImages> tagAndImages){
+        mTagAndImages = tagAndImages;
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -94,12 +95,6 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.action_adding:
-                        Log.i("selected", "edit");
-                        ItemCards.getInstance(mContext)
-                                .addNewCardFromTagAndImages(mTagAndImages.get(position));
-                        startEditActivity(holder.rv, 0);
-                        break;
                     case R.id.action_shared:
                         Log.i("selected", "delete");
                         Intent intent = new Intent(holder.rv.getContext(), ShareActivity.class);

@@ -46,6 +46,11 @@ public class TagsAdapter extends RecyclerView.Adapter<CardViewHolder>
         mTagAndImages = tagsAndImages;
     }
 
+    public void updateImages(List<ItemCards.TagAndImages> tagAndImages){
+        mTagAndImages = tagAndImages;
+        this.notifyDataSetChanged();
+    }
+
     protected String getTag(int position){
         if (mTagAndImages != null){
             return mTagAndImages.get(position).tag;

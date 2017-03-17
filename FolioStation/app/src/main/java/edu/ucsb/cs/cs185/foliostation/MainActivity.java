@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    Fragment mFragment;
+    Fragment mGridFragment;
+    Fragment mSearchFragment;
+
     int prevFragmentpPosition = -1;
 
     @Override
@@ -65,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     prevFragmentpPosition = -1;
                 } else {
                     prevFragmentpPosition = position - 1;
+                    ((SearchByRankingFragment) mSearchFragment).updateContents();
                 }
                 Log.d("page", String.valueOf(position));
             }
@@ -166,11 +167,14 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position) {
                 case 0:
-                    return new CardsFragment();
+                    mGridFragment = new CardsFragment();
+                    return mGridFragment;
                 case 1:
-                    return new SearchByRankingFragment();
+                    mSearchFragment = new SearchByRankingFragment();
+                    return mSearchFragment;
             }
-            return new CardsFragment();
+            mGridFragment = new CardsFragment();
+            return mGridFragment;
         }
 
         @Override
