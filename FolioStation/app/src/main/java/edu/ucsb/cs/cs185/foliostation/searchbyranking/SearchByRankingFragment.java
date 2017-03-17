@@ -9,6 +9,7 @@
 
 package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -104,7 +106,14 @@ public class SearchByRankingFragment extends Fragment {
         mTagsAdapter.setOnItemClickListener(new TagsAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                searchViewListener.onQueryTextSubmit(mTagsAdapter.getTag(position));
+                String tag = mTagsAdapter.getTag(position);
+                searchViewListener.onQueryTextChange(tag);
+                //searchView.setFocus
+                searchView.setQuery(tag, true);
+                searchView.setIconified(false);
+                searchView.clearFocus();
+                mLayoutManager.scrollToPosition(0);
+
             }
         });
 
