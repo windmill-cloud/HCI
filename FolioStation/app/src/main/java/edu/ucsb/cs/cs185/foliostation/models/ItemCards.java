@@ -166,7 +166,10 @@ public class ItemCards extends Cards{
         Collections.sort(res, new Comparator<TagAndImages>() {
             @Override
             public int compare(TagAndImages t0, TagAndImages t1) {
-                return t0.level - t1.level;
+                if(t0.level != t1.level){
+                    return t0.level - t1.level;
+                }
+                return t1.cardImages.size() - t0.cardImages.size();
             }
         });
 

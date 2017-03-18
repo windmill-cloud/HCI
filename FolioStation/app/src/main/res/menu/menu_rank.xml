@@ -12,12 +12,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.ucsb.cs.cs185.foliostation.MainActivity">
 
-    <item android:id="@+id/action_adding"
-        android:title="@string/action_add"
-        android:orderInCategory="80"
-        android:icon="@drawable/ic_add_to_photos_black_24dp"
-        app:showAsAction="ifRoom" />
-
     <item android:id="@+id/action_shared"
         android:title="@string/action_notifications"
         android:orderInCategory="90"

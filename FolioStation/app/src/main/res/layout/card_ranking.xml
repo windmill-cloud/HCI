@@ -12,6 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="0dp"
     card_view:cardUseCompatPadding="true"
@@ -29,14 +30,18 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme">
+            android:theme="?attr/actionBarTheme"
+            app:contentInsetLeft="4dp"
+            app:contentInsetStart="4dp"
+            >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentTop="true">
+                android:layout_alignParentTop="true"
+                >
 
                 <TextView
                     android:id="@+id/card_title"
@@ -49,7 +54,8 @@
                     android:paddingTop="4dp"
                     android:text="Tag"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="18sp"
+                    android:layout_alignParentTop="true" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 

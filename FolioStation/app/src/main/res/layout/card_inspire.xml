@@ -51,14 +51,14 @@
                     android:paddingTop="4dp"
                     android:text="Tag"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="16sp" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_inspire_toolbar"
+            android:layout_below="@+id/card_toolbar"
             android:id="@+id/rv">
 
         </android.support.v7.widget.RecyclerView>

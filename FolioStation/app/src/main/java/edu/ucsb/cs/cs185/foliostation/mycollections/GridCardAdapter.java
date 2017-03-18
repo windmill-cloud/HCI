@@ -71,14 +71,14 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
         if(card.getCoverImage().isFromPath()) {
             Picasso.with(mContext)
                     .load(new File(card.getCoverImage().mUrl))
-                    .resize(300, 450)
+                    .resize(450, 450)
                     .centerCrop()
                     .noFade()
                     .into(holder.imageView);
         } else {
             Picasso.with(mContext)
                     .load(card.getCoverImage().mUrl)
-                    .resize(300, 450)
+                    .resize(450, 450)
                     .centerCrop()
                     .noFade()
                     .into(holder.imageView);

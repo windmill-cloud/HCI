@@ -11,6 +11,7 @@ package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -47,8 +48,9 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         mTagAndImages = images;
     }
 
-    public void updateImages(List<ItemCards.TagAndImages> images){
-        mTagAndImages=images;
+    public void updateImages(List<ItemCards.TagAndImages> tagAndImages){
+        mTagAndImages = tagAndImages;
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -81,11 +83,21 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
                 new RankInnerAdapter(mContext, mTagAndImages.get(position).cardImages);
         adapter.setHasStableIds(true);
 
+        GridLayoutManager gridLayoutManager;
+        if(mTagAndImages.get(position).cardImages.size() < 12) {
+            gridLayoutManager = new GridLayoutManager(mContext, 1, LinearLayoutManager.HORIZONTAL,
+                    false);
+        } else {
+            gridLayoutManager = new GridLayoutManager(mContext, 2, LinearLayoutManager.HORIZONTAL,
+                    false);
+        }
+
+        gridLayoutManager.setItemPrefetchEnabled(true);
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setItemPrefetchEnabled(true);
 
-        rv.setLayoutManager(layoutManager);
+        rv.setLayoutManager(gridLayoutManager);
 
         // set toolbar behaviors
         holder.toolbar.getMenu().clear();
@@ -94,12 +106,6 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.action_adding:
-                        Log.i("selected", "edit");
-                        ItemCards.getInstance(mContext)
-                                .addNewCardFromTagAndImages(mTagAndImages.get(position));
-                        startEditActivity(holder.rv, 0);
-                        break;
                     case R.id.action_shared:
                         Log.i("selected", "delete");
                         Intent intent = new Intent(holder.rv.getContext(), ShareActivity.class);

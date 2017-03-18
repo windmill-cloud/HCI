@@ -44,8 +44,9 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing"></activity>
-        <activity android:name=".share.ShareActivity"></activity>
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".share.ShareActivity" />
+        <activity android:name=".tagandimages.TagAndImagesActivity"></activity>
     </application>
 
 </manifest>

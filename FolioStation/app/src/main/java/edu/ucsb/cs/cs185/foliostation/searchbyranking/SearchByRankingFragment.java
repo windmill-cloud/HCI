@@ -9,21 +9,19 @@
 
 package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
-
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -31,17 +29,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
-import edu.ucsb.cs.cs185.foliostation.search.SearchAdapter;
+import edu.ucsb.cs.cs185.foliostation.tagandimages.TagAndImagesActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchByRankingFragment extends Fragment {
 
-    RankByTagAdapter mAdapter;
-    RecyclerView mRecyclerView;
+    RankByTagAdapter mInspireAdapter;
+    TagsAdapter mTagsAdapter;
+    RecyclerView mTagRecyclerView;
+    RecyclerView mInspireRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     String mTagForSearch = "";
     List<ItemCards.TagAndImages> frequentTags;
@@ -51,7 +50,7 @@ public class SearchByRankingFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_search_by_ranking, container, false);
@@ -65,35 +64,74 @@ public class SearchByRankingFragment extends Fragment {
         searchEditText.setHintTextColor(Color.GRAY);
         searchView.setOnQueryTextListener(searchViewListener);
         searchView.setMaxWidth( Integer.MAX_VALUE );
+        searchView.setOnClickListener(new View.OnClickListener(){
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.search_rv);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setNestedScrollingEnabled(false);
+            @Override
+            public void onClick(View view) {
+                searchView.setFocusable(true);
+                searchView.setIconified(false);
+                searchView.requestFocusFromTouch();
+            }
+        });
+
+        mInspireRecyclerView = (RecyclerView) rootView.findViewById(R.id.search_rv);
+        mInspireRecyclerView.setHasFixedSize(true);
+        mInspireRecyclerView.setNestedScrollingEnabled(false);
 
         frequentTags = ItemCards.getInstance(getContext()).getFrequentTags();
 
-        mAdapter = new RankByTagAdapter(getContext(), frequentTags);
-        mAdapter.setHasStableIds(true);
+        mInspireAdapter = new RankByTagAdapter(getContext(), frequentTags);
+        mInspireAdapter.setHasStableIds(true);
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setItemPrefetchEnabled(true);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mInspireRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter.setOnItemClickListener(new RankByTagAdapter.OnRecyclerViewItemClickListener(){
+        mInspireAdapter.setOnItemClickListener(new RankByTagAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-                //TODO:
                 TextView tv = (TextView) view;
-                searchView.setQuery(tv.getText().toString().toLowerCase(), true);
+                Intent intent = new Intent(getActivity(), TagAndImagesActivity.class);
+                intent.putExtra("TAG", tv.getText());
+                startActivity(intent);
             }
         });
 
         ItemCards itemCards = ItemCards.getInstance(getContext());
-        itemCards.setAdapter(mAdapter);
+        itemCards.setAdapter(mInspireAdapter);
 
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        mInspireRecyclerView.setAdapter(mInspireAdapter);
+        mInspireAdapter.notifyDataSetChanged();
+
+        // Set Tag recycler view
+        mTagRecyclerView = (RecyclerView) rootView.findViewById(R.id.search_tags_rv);
+        mTagRecyclerView.setHasFixedSize(true);
+        mTagRecyclerView.setNestedScrollingEnabled(false);
+        mTagsAdapter = new TagsAdapter(getContext(), frequentTags);
+        mTagsAdapter.setHasStableIds(true);
+        RecyclerView.LayoutManager tagsLayoutManager =
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        tagsLayoutManager.setItemPrefetchEnabled(true);
+
+        mTagRecyclerView.setLayoutManager(tagsLayoutManager);
+
+        mTagsAdapter.setOnItemClickListener(new TagsAdapter.OnRecyclerViewItemClickListener(){
+            @Override
+            public void onItemClick(View view, int position) {
+                String tag = mTagsAdapter.getTag(position);
+                searchViewListener.onQueryTextChange(tag);
+                //searchView.setFocus
+                searchView.setQuery(tag, true);
+                searchView.setIconified(false);
+                searchView.clearFocus();
+                mLayoutManager.scrollToPosition(0);
+
+            }
+        });
+
+        mTagRecyclerView.setAdapter(mTagsAdapter);
+        mTagsAdapter.notifyDataSetChanged();
 
         return rootView;
     }
@@ -118,6 +156,12 @@ public class SearchByRankingFragment extends Fragment {
         }
     };
 
+    public void updateContents(){
+        frequentTags = ItemCards.getInstance(getContext()).getFrequentTags();
+        mInspireAdapter.updateImages(frequentTags);
+        mTagsAdapter.updateImages(frequentTags);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,13 +169,13 @@ public class SearchByRankingFragment extends Fragment {
     }
 
     protected void fillSearchResultWithFreqTags(){
-        mAdapter.updateImages(frequentTags);
-        mAdapter.notifyDataSetChanged();
+        mInspireAdapter.updateImages(frequentTags);
+        mInspireAdapter.notifyDataSetChanged();
     }
 
     protected void searchAndUpdateRecycler(String query){
-        mAdapter.updateImages(ItemCards.getInstance(getContext()).getInspired(query));
-        mAdapter.notifyDataSetChanged();
+        mInspireAdapter.updateImages(ItemCards.getInstance(getContext()).getInspired(query));
+        mInspireAdapter.notifyDataSetChanged();
         mTagForSearch = query;
     }
 }

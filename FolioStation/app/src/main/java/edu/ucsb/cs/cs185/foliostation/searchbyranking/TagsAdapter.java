@@ -10,78 +10,86 @@
 package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.models.Cards;
+import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 /**
  * Created by xuanwang on 3/5/17.
  */
 
-public class RankInnerAdapter extends RecyclerView.Adapter<CardViewHolder>
+public class TagsAdapter extends RecyclerView.Adapter<CardViewHolder>
         implements View.OnClickListener {
 
-    List<Cards.CardImage> mCardImages;
+    List<ItemCards.TagAndImages> mTagAndImages;
 
     Context mContext = null;
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public RankInnerAdapter(Context context, List<Cards.CardImage> images){
+    public TagsAdapter(Context context, List<ItemCards.TagAndImages> tagsAndImages){
         mContext = context;
-        mCardImages = images;
+        mTagAndImages = tagsAndImages;
+    }
+
+    public void updateImages(List<ItemCards.TagAndImages> tagAndImages){
+        mTagAndImages = tagAndImages;
+        this.notifyDataSetChanged();
+    }
+
+    protected String getTag(int position){
+        if (mTagAndImages != null){
+            return mTagAndImages.get(position).tag;
+        }
+        return "";
     }
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_search, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_tag, parent, false);
         CardViewHolder cardViewHolder = new CardViewHolder(v);
 
         return cardViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(final CardViewHolder holder, final int position) {
 
         if(mContext == null){
             Log.e("mContext", "null");
         }
 
-        Cards.CardImage cardImage = mCardImages.get(position);
-        ImageView imageView = holder.imageView;
+        String tag = mTagAndImages.get(position).tag;
+        holder.title.setText(tag);
+        holder.title.setTag(position);
+        holder.title.setOnClickListener(this);
 
-        if(cardImage.isFromPath()) {
-            Picasso.with(mContext)
-                    .load(new File(cardImage.mUrl))
-                    .resize(220, 220)
-                    .centerCrop()
-                    .noFade()
-                    .into(imageView);
-        } else {
-            Picasso.with(mContext)
-                    .load(cardImage.mUrl)
-                    .resize(220, 220)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        }
+    }
+
+    public void startEditActivity(View view, int position){
+        Intent intent = new Intent(view.getContext(), EditTabsActivity.class);
+        intent.putExtra("CARD_INDEX", position);
+        intent.putExtra("EDIT", true);
+        view.getContext().startActivity(intent);
     }
 
     @Override
     public int getItemCount() {
-        return mCardImages.size();
+        return mTagAndImages.size();
     }
 
     @Override
