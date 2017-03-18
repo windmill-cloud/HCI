@@ -41,6 +41,9 @@
         <activity android:name=".collectiondetails.CollectionDetailsActivity" />
         <activity android:name=".inspire.InspireActivity" />
         <activity
+            android:name=".InboxActivity"
+            android:label="inbox_activity"/>
+        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme"
