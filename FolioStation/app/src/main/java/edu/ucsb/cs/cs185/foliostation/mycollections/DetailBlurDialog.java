@@ -119,7 +119,6 @@ public class DetailBlurDialog extends DialogFragment {
 
                 title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
                 description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
-
             }
         }
 
