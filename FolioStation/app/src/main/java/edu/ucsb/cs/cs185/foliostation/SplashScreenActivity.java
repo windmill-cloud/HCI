@@ -41,7 +41,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     final Handler myHandler = new Handler();
     List<Integer> backgroundImgList = new ArrayList<>();
     private final int SHIMMER_DURATION = 1000;
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
 
     private final String TAG = "Splash";
     private FirebaseAuth mAuth;
@@ -74,7 +74,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         final Button signUpButton = (Button) findViewById(R.id.sign_up);
         signUpButton.getBackground().setColorFilter(
-                ContextCompat.getColor(getApplicationContext(), R.color.splashGreenTransparent),
+                ContextCompat.getColor(getApplicationContext(), R.color.splashDarkTransparent),
                 PorterDuff.Mode.MULTIPLY);
         final Button logInButton = (Button) findViewById(R.id.log_in);
         logInButton.getBackground().setColorFilter(
@@ -90,6 +90,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 signUpIntent.putExtra("TYPE", "SIGN_UP");
                 SplashScreenActivity.this.startActivity(signUpIntent);
                 SplashScreenActivity.this.finish();
+                signUpButton.getBackground().setColorFilter(
+                        ContextCompat.getColor(getApplicationContext(), R.color.MyPink),
+                        PorterDuff.Mode.MULTIPLY);
             }
         });
 
@@ -102,6 +105,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 logInIntent.putExtra("TYPE", "LOG_IN");
                 SplashScreenActivity.this.startActivity(logInIntent);
                 SplashScreenActivity.this.finish();
+                logInButton.getBackground().setColorFilter(
+                        ContextCompat.getColor(getApplicationContext(), R.color.MyPink),
+                        PorterDuff.Mode.MULTIPLY);
             }
         });
 
@@ -132,7 +138,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     signUpButton.getBackground().setColorFilter(
-                            ContextCompat.getColor(getApplicationContext(), R.color.splashGreenTransparent),
+                            ContextCompat.getColor(getApplicationContext(), R.color.splashWhiteTransparent),
                             PorterDuff.Mode.MULTIPLY);
                     logInButton.getBackground().setColorFilter(
                             ContextCompat.getColor(getApplicationContext(), R.color.splashWhiteTransparent),
@@ -162,10 +168,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void inflateBackgroundPicList() {
+        backgroundImgList.add(R.drawable.back0);
         backgroundImgList.add(R.drawable.back1);
-        backgroundImgList.add(R.drawable.back2);
-        backgroundImgList.add(R.drawable.back3);
-        backgroundImgList.add(R.drawable.back4);
+        //backgroundImgList.add(R.drawable.back2);
+        //backgroundImgList.add(R.drawable.back3);
+        //backgroundImgList.add(R.drawable.back4);
     }
 
     private void updateBackground() {
