@@ -18,10 +18,22 @@
     <color name="colorPrimaryDark">#dcdcdc</color>
     <color name="colorAccent">#3eb489</color>
     <color name="colorDark">#2b8162</color>
-    <color name="colorGrayTransparent">#a5424242</color>
+    <color name="colorGrayTransparent">#75424242</color>
 
-    <color name="splashGreenTransparent">#952b8162</color>
-    <color name="splashWhiteTransparent">#4fffffff</color>
-    <color name="splashDarkTransparent">#95000000</color>
+    <color name="splashGreenTransparent">#02a7c7</color>
+    <color name="splashWhiteTransparent">#c3ffffff</color>
+    <color name="splashDarkTransparent">#9c384359</color>
+
+    <color name="MyLightBlue">#02a7c7</color>
+    <color name="MyDarkBlue">#242E3E</color>
+    <color name="MyMediumBlue">#384359</color>
+    <color name="MyPink">#E73B5A</color>
+    <color name="MyRed">#D25353</color>
+    <color name="MyLightGreen">#C5E1DB</color>
+    <color name="MyGreen">#79C5C3</color>
+    <color name="MyTransparentWhite">#d2ffffff</color>
+    <color name="MyWhite">#ffffff</color>
+
+
 
 </resources>
