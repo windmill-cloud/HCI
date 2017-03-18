@@ -12,9 +12,13 @@ package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,14 +27,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
 import edu.ucsb.cs.cs185.foliostation.tagandimages.TagAndImagesActivity;
+
+import static edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment.takeScreenShot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,7 +90,7 @@ public class SearchByRankingFragment extends Fragment {
 
         frequentTags = ItemCards.getInstance(getContext()).getFrequentTags();
 
-        mInspireAdapter = new RankByTagAdapter(getContext(), frequentTags);
+        mInspireAdapter = new RankByTagAdapter(getContext(), this, frequentTags);
         mInspireAdapter.setHasStableIds(true);
 
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -177,5 +187,29 @@ public class SearchByRankingFragment extends Fragment {
         mInspireAdapter.updateImages(ItemCards.getInstance(getContext()).getInspired(query));
         mInspireAdapter.notifyDataSetChanged();
         mTagForSearch = query;
+    }
+
+    protected void startDetailDialog(Cards.CardImage cardImage){
+
+        Bundle arguments = new Bundle();
+        arguments.putString("FROM", "SINGLE_IMAGE");
+        arguments.putString("URL", cardImage.mUrl);
+        arguments.putInt("TYPE", cardImage.mType);
+        DetailBlurDialog fragment = new DetailBlurDialog();
+
+        fragment.setArguments(arguments);
+        FragmentManager ft = getActivity().getSupportFragmentManager();
+
+        fragment.show(ft, "dialog");
+        //TODO: move takeScreenShot method to somewhere else from CardsFragment
+
+        Bitmap map = CardsFragment.takeScreenShot(getActivity());
+        Bitmap fast = CardsFragment.BlurBuilder.blur(getContext(), map);
+        final Drawable draw = new BitmapDrawable(getResources(), fast);
+
+        ImageView background = (ImageView) getActivity().findViewById(R.id.activity_background);
+        background.bringToFront();
+        background.setScaleType(ImageView.ScaleType.FIT_XY);
+        background.setImageDrawable(draw);
     }
 }
