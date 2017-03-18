@@ -42,8 +42,23 @@ public class Cards {
     final static int PATH = 1;
 
     public void deleteIthCard(int i){
-        if(cards.size() > 0){
+        if(cards != null && cards.size() > 0){
+            Card card = cards.get(i);
+            DatabaseOperator.getInstance(mContext).getItemCardDBOperator().deleteCard(card);
             cards.remove(i);
+            rebuildTagsMap();
+        }
+    }
+
+    public void rebuildTagsMap(){
+        tagMap.clear();
+        for(Card card: cards){
+            for(String tag: card.tags){
+                if(!tagMap.containsKey(tag)){
+                    tagMap.put(tag, new ArrayList<CardImage>());
+                }
+                tagMap.get(tag).addAll(card.getImages());
+            }
         }
     }
 
@@ -219,12 +234,24 @@ public class Cards {
 
         public void addImage(CardImage cardImage){
             mImages.add(cardImage);
+            for(String tag: this.tags){
+                if(!tagMap.containsKey(tag)){
+                    tagMap.put(tag, new ArrayList<CardImage>());
+                }
+                tagMap.get(tag).add(cardImage);
+            }
             flattenedImages.add(cardImage);
         }
 
         public void addImage(ImageItem imageItem){
             CardImage cardImage = new CardImage(imageItem.path, PATH);
             mImages.add(cardImage);
+            for(String tag: this.tags){
+                if(!tagMap.containsKey(tag)){
+                    tagMap.put(tag, new ArrayList<CardImage>());
+                }
+                tagMap.get(tag).add(cardImage);
+            }
             flattenedImages.add(cardImage);
         }
 

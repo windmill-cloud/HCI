@@ -104,7 +104,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteCards(ItemCards.Card card) {
+    public Integer deleteCard(ItemCards.Card card) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "id='" + card.getUUID() + "'", null);
     }
@@ -135,5 +135,6 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
 
             res.moveToNext();
         }
+        ItemCards.getInstance(context).rebuildTagsMap();
     }
 }

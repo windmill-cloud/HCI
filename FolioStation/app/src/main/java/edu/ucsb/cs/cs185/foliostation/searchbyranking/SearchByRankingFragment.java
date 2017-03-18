@@ -11,6 +11,7 @@ package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.tagandimages.TagAndImagesActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +50,7 @@ public class SearchByRankingFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_search_by_ranking, container, false);
@@ -62,6 +64,15 @@ public class SearchByRankingFragment extends Fragment {
         searchEditText.setHintTextColor(Color.GRAY);
         searchView.setOnQueryTextListener(searchViewListener);
         searchView.setMaxWidth( Integer.MAX_VALUE );
+        searchView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                searchView.setFocusable(true);
+                searchView.setIconified(false);
+                searchView.requestFocusFromTouch();
+            }
+        });
 
         mInspireRecyclerView = (RecyclerView) rootView.findViewById(R.id.search_rv);
         mInspireRecyclerView.setHasFixedSize(true);
@@ -80,9 +91,10 @@ public class SearchByRankingFragment extends Fragment {
         mInspireAdapter.setOnItemClickListener(new RankByTagAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-                //TODO:
-                //TextView tv = (TextView) view;
-                //searchView.setQuery(tv.getText().toString().toLowerCase(), true);
+                TextView tv = (TextView) view;
+                Intent intent = new Intent(getActivity(), TagAndImagesActivity.class);
+                intent.putExtra("TAG", tv.getText());
+                startActivity(intent);
             }
         });
 

@@ -1,0 +1,133 @@
+package edu.ucsb.cs.cs185.foliostation.tagandimages;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
+
+import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.models.Cards;
+import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
+import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
+import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
+
+public class TagAndImagesActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tag_and_images);
+
+        // Getting Tag from intent
+        Intent intent = getIntent();
+        String tag = intent.getStringExtra("TAG");
+
+        // Set the TextView in toolbar with the tag
+        TextView tagTextView = (TextView) findViewById(R.id.tag_and_images_tag);
+        tagTextView.setText(tag);
+
+        // Setting the toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tag_and_images_toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setOnMenuItemClickListener(onMenuItemClick);
+
+        // Setting the recyclerview
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.tag_and_images_recycler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        gridLayoutManager.setItemPrefetchEnabled(true);
+
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        List<ItemCards.CardImage> cardImages =
+                ItemCards.getInstance(getApplicationContext()).tagMap.get(tag.toLowerCase());
+
+        TagAndImagesAdapter tagsAndImagesAdapter =
+                new TagAndImagesAdapter(getApplicationContext(), cardImages);
+        recyclerView.setAdapter(tagsAndImagesAdapter);
+        tagsAndImagesAdapter.notifyDataSetChanged();
+        tagsAndImagesAdapter.setOnItemClickListener(
+                new TagAndImagesAdapter.OnRecyclerViewItemClickListener(){
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.i("image", "clicked");
+                    }
+                });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_tag_images, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.action_share:
+                    Log.i("clicked", "share");
+                    Intent intent = new Intent(getApplicationContext(), ShareActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+            return true;
+        }
+    };
+
+    protected void startDetailDialog(int position){
+        /*
+        Bundle arguments = new Bundle();
+        arguments.putInt("CARD_INDEX", mCardIndex);
+        arguments.putInt("IMAGE_INDEX", position);
+
+        arguments.putString("FROM", "DETAILS");
+        DetailBlurDialog fragment = new DetailBlurDialog();
+
+        fragment.setArguments(arguments);
+        FragmentManager ft = getSupportFragmentManager();
+
+        fragment.show(ft, "dialog");
+        //TODO: move takeScreenShot method to somewhere else from CardsFragment
+
+        Bitmap map = CardsFragment.takeScreenShot(this);
+        Bitmap fast = CardsFragment.BlurBuilder.blur(getApplicationContext(), map);
+        final Drawable draw = new BitmapDrawable(getResources(), fast);
+
+        ImageView background = (ImageView) findViewById(R.id.activity_background);
+        background.bringToFront();
+        background.setScaleType(ImageView.ScaleType.FIT_XY);
+        background.setImageDrawable(draw);
+        */
+    }
+}

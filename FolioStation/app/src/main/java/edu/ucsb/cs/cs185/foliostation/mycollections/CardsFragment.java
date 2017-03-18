@@ -77,8 +77,6 @@ public class CardsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_cards, container, false);
 
-        //getCardImages();
-
         toolbar = (Toolbar) rootView.findViewById(R.id.card_fragment_toolbar);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.cards_recycler);
