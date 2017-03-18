@@ -47,6 +47,7 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import java.util.ArrayList;
 
 import edu.ucsb.cs.cs185.foliostation.ContainerActivity;
+import edu.ucsb.cs.cs185.foliostation.InboxActivity;
 import edu.ucsb.cs.cs185.foliostation.MainActivity;
 import edu.ucsb.cs.cs185.foliostation.SplashScreenActivity;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
@@ -251,14 +252,13 @@ public class CardsFragment extends Fragment {
                 case R.id.action_shared:
                     // TODO: implement get shared content functionality
                     msg += "Click share";
+                    startInboxActivity();
                     break;
                 case R.id.action_settings:
                     msg += "Click setting";
                     break;
                 case R.id.action_logout:
-                    Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                    startSplashScreen();
                     break;
             }
 
@@ -269,6 +269,16 @@ public class CardsFragment extends Fragment {
         }
     };
 
+    protected void startInboxActivity(){
+        Intent intent = new Intent(getActivity(), InboxActivity.class);
+        startActivity(intent);
+    }
+
+    protected void startSplashScreen(){
+        Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
     protected void startImagesPicking() {
         Intent intent = new Intent(getActivity(), ImageGridActivity.class);
         startActivityForResult(intent, IMAGE_PICKER);
