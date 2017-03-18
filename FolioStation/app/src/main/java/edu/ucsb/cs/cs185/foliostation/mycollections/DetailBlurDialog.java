@@ -106,13 +106,35 @@ public class DetailBlurDialog extends DialogFragment {
                 if(card.getImages().get(imageIndex).isFromPath()) {
                     Picasso.with(getContext())
                             .load(new File(card.getImages().get(imageIndex).mUrl))
-                            .resize(300, 450)
+                            .resize(600, 600)
                             .centerCrop()
                             .into(imageView);
                 } else {
                     Picasso.with(getContext())
                             .load(card.getImages().get(imageIndex).mUrl)
-                            .resize(300, 450)
+                            .resize(600, 600)
+                            .centerCrop()
+                            .into(imageView);
+                }
+
+                title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
+                description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
+            } else if(from.equals("SINGLE_IMAGE")){
+                // TODO: refactor picture loading
+
+                int type = getArguments().getInt("TYPE");
+                String url = getArguments().getString("URL");
+
+                if(type == ItemCards.PATH) {
+                    Picasso.with(getContext())
+                            .load(new File(url))
+                            .resize(600, 600)
+                            .centerCrop()
+                            .into(imageView);
+                } else {
+                    Picasso.with(getContext())
+                            .load(url)
+                            .resize(600, 600)
                             .centerCrop()
                             .into(imageView);
                 }
