@@ -84,7 +84,7 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         adapter.setHasStableIds(true);
 
         GridLayoutManager gridLayoutManager;
-        if(mTagAndImages.size() < 12) {
+        if(mTagAndImages.get(position).cardImages.size() < 12) {
             gridLayoutManager = new GridLayoutManager(mContext, 1, LinearLayoutManager.HORIZONTAL,
                     false);
         } else {

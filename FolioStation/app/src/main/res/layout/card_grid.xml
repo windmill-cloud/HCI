@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <edu.ucsb.cs.cs185.foliostation.utilities.SquareImageView
                 android:id="@+id/card_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

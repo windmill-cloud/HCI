@@ -90,7 +90,12 @@ public class MainActivity extends AppCompatActivity {
                     prevFragmentpPosition = -1;
                 } else {
                     prevFragmentpPosition = position - 1;
-                    ((SearchByRankingFragment) mSearchFragment).updateContents();
+                    SearchByRankingFragment searchFragment =
+                            (SearchByRankingFragment) mSearchFragment;
+
+                    if(searchFragment != null){
+                        searchFragment.updateContents();
+                    }
                 }
                 Log.d("page", String.valueOf(position));
             }

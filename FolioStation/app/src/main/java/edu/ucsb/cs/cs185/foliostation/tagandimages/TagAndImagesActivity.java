@@ -57,7 +57,7 @@ public class TagAndImagesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         gridLayoutManager.setItemPrefetchEnabled(true);
 
         recyclerView.setLayoutManager(gridLayoutManager);
