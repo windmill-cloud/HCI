@@ -38,8 +38,8 @@ public class Cards {
     protected static Context mContext = null;
     private static RecyclerView.Adapter<CardViewHolder> mAdapter;
 
-    final static int URL = 0;
-    final static int PATH = 1;
+    public final static int URL = 0;
+    public final static int PATH = 1;
 
     public void deleteIthCard(int i){
         if(cards != null && cards.size() > 0){

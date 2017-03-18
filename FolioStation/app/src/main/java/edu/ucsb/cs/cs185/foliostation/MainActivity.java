@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
     }
 
     protected void setImagePicker(){
@@ -196,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     getSupportActionBar().hide();
                     return "SECTION 2";
-
             }
             return null;
         }

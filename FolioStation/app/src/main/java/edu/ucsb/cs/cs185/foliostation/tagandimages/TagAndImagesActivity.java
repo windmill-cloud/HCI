@@ -29,6 +29,8 @@ import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 public class TagAndImagesActivity extends AppCompatActivity {
 
+    private List<ItemCards.CardImage> mCardImages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +64,10 @@ public class TagAndImagesActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        List<ItemCards.CardImage> cardImages =
-                ItemCards.getInstance(getApplicationContext()).tagMap.get(tag.toLowerCase());
+        mCardImages = ItemCards.getInstance(getApplicationContext()).tagMap.get(tag.toLowerCase());
 
         TagAndImagesAdapter tagsAndImagesAdapter =
-                new TagAndImagesAdapter(getApplicationContext(), cardImages);
+                new TagAndImagesAdapter(getApplicationContext(), mCardImages);
         recyclerView.setAdapter(tagsAndImagesAdapter);
         tagsAndImagesAdapter.notifyDataSetChanged();
         tagsAndImagesAdapter.setOnItemClickListener(
@@ -74,6 +75,7 @@ public class TagAndImagesActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Log.i("image", "clicked");
+                        startDetailDialog(position);
                     }
                 });
     }
@@ -106,12 +108,11 @@ public class TagAndImagesActivity extends AppCompatActivity {
     };
 
     protected void startDetailDialog(int position){
-        /*
-        Bundle arguments = new Bundle();
-        arguments.putInt("CARD_INDEX", mCardIndex);
-        arguments.putInt("IMAGE_INDEX", position);
 
-        arguments.putString("FROM", "DETAILS");
+        Bundle arguments = new Bundle();
+        arguments.putString("FROM", "SINGLE_IMAGE");
+        arguments.putString("URL", mCardImages.get(position).mUrl);
+        arguments.putInt("TYPE", mCardImages.get(position).mType);
         DetailBlurDialog fragment = new DetailBlurDialog();
 
         fragment.setArguments(arguments);
@@ -128,6 +129,6 @@ public class TagAndImagesActivity extends AppCompatActivity {
         background.bringToFront();
         background.setScaleType(ImageView.ScaleType.FIT_XY);
         background.setImageDrawable(draw);
-        */
+
     }
 }

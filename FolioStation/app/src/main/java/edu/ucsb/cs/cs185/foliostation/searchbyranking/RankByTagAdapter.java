@@ -11,6 +11,7 @@ package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,6 @@ import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 /**
@@ -39,11 +39,14 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     List<ItemCards.TagAndImages> mTagAndImages;
 
+    SearchByRankingFragment mFragment;
+
     Context mContext = null;
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public RankByTagAdapter(Context context, List<ItemCards.TagAndImages> images){
+    public RankByTagAdapter(Context context, Fragment fragment, List<ItemCards.TagAndImages> images){
+        mFragment = (SearchByRankingFragment) fragment;
         mContext = context;
         mTagAndImages = images;
     }
@@ -80,7 +83,7 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         rv.setNestedScrollingEnabled(false);
 
         RankInnerAdapter adapter =
-                new RankInnerAdapter(mContext, mTagAndImages.get(position).cardImages);
+                new RankInnerAdapter(mContext, mFragment, mTagAndImages.get(position).cardImages);
         adapter.setHasStableIds(true);
 
         GridLayoutManager gridLayoutManager;
@@ -116,12 +119,6 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         });
 
-        adapter.setOnItemClickListener(new RankInnerAdapter.OnRecyclerViewItemClickListener(){
-            @Override
-            public void onItemClick(View view , int position){
-                // TODO:
-            }
-        });
 
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
