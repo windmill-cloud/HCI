@@ -81,13 +81,13 @@ public class DetailBlurDialog extends DialogFragment {
                 if(card.getCoverImage().isFromPath()) {
                     Picasso.with(getContext())
                             .load(new File(card.getCoverImage().mUrl))
-                            .resize(300, 450)
+                            .resize(600, 600)
                             .centerCrop()
                             .into(imageView);
                 } else {
                     Picasso.with(getContext())
                             .load(card.getCoverImage().mUrl)
-                            .resize(300, 450)
+                            .resize(600, 600)
                             .centerCrop()
                             .into(imageView);
                 }
