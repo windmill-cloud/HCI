@@ -1,7 +1,6 @@
 package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,22 +9,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import edu.ucsb.cs.cs185.foliostation.Inbox.InboxGridAdapter;
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.collectiondetails.CollectionDetailsActivity;
 import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
-import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
-import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
-
+import edu.ucsb.cs.cs185.foliostation.collections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.collections.DetailBlurDialog;
 
 
 public class InboxActivity extends AppCompatActivity {
@@ -33,7 +26,7 @@ public class InboxActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-    InboxGridAdapter mGridCardAdapter;
+    InboxAdapter mGridCardAdapter;
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,10 +50,10 @@ public class InboxActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //TODO: replace with your own adapter
-        mGridCardAdapter = new InboxGridAdapter(InboxCards.getInstance(this).cards, mInboxActivity);
+        mGridCardAdapter = new InboxAdapter(InboxCards.getInstance(this).cards, mInboxActivity);
         mGridCardAdapter.setHasStableIds(true);
 
-        mGridCardAdapter.setOnItemClickListener(new InboxGridAdapter.OnRecyclerViewItemClickListener(){
+        mGridCardAdapter.setOnItemClickListener(new InboxAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
 

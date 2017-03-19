@@ -7,7 +7,7 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation.mycollections;
+package edu.ucsb.cs.cs185.foliostation.collections;
 
 import android.app.Activity;
 import android.content.Context;
@@ -327,6 +327,7 @@ public class CardsFragment extends Fragment {
 
             // other 'case' lines to check for other
             // permissions this app might request
+
         }
     }
 }

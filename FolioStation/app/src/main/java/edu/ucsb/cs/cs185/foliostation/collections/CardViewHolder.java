@@ -7,7 +7,7 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation.mycollections;
+package edu.ucsb.cs.cs185.foliostation.collections;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

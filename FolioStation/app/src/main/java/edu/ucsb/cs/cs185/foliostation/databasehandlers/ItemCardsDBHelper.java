@@ -32,6 +32,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "ItemCards.db";
     public final String TABLE_NAME = "itemcards";
+    private boolean hasTable = false;
 
     public static final int UUID = 0;
     public static final int TITLE = 1;
@@ -61,6 +62,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
                 "images text)";
 
         sqLiteDatabase.execSQL(sql);
+        hasTable = true;
     }
 
     @Override
@@ -116,6 +118,9 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
     public void populateCards(Context context) {
 
         SQLiteDatabase db = this.getReadableDatabase();
+        if(!hasTable){
+            this.onCreate(db);
+        }
         Cursor res =  db.rawQuery( "select * from " + TABLE_NAME, null );
         res.moveToFirst();
 

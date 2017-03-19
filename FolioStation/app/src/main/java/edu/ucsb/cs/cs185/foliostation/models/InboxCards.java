@@ -32,18 +32,21 @@ public class InboxCards extends Cards{
         dbHelper.populateCards(mContext);
     }
 
-    public void addNewCardFromDetails(String UUID, String title, String descriptions, int coverIndex,
-                                 String username, CardImage profileImage, List<String> tags,
-                                 List<CardImage> images){
+    public void addNewCardFromDetails(String UUID, String title, String descriptions,
+                                      int coverIndex, String username, CardImage profileImage,
+                                      boolean read, List<String> tags, List<CardImage> images){
         Card newCard = new Card(UUID, title, descriptions, coverIndex,
                 username, profileImage, tags, images);
+        if(read) {
+            newCard.setRead();
+        }
         flattenedImages.addAll(newCard.getImages());
         cards.add(newCard);
     }
 
     public void addNewCardFromDetails(String title, String descriptions, int coverIndex,
-                                      String username, CardImage profileImage, List<String> tags,
-                                      List<CardImage> images){
+                                      String username, CardImage profileImage,
+                                      List<String> tags, List<CardImage> images){
         Card newCard = new Card(title, descriptions, coverIndex,
                 username, profileImage, tags, images);
         flattenedImages.addAll(newCard.getImages());
