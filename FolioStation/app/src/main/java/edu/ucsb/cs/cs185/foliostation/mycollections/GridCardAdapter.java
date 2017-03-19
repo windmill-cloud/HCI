@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -98,11 +100,38 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         });
 
+        // set title
         holder.title.setText(card.getTitle());
-        holder.description.setText(card.getDescription());
+
+        // set description
+        if(card.getDescription().equals("")){
+            holder.description.setText(card.getDescription());
+        }else {  // limit description size
+            String[] limitText = card.getDescription().split("\\s+");
+            StringBuilder sb = new StringBuilder();
+            for (int t = 0; t < Math.min(limitText.length, 10); t++) {
+                sb.append(limitText[t]).append(" ");
+            }
+            sb.setLength(sb.length() - 2);
+            sb.append("...");
+            holder.description.setText(sb.toString());
+        }
+
+        //if(card.getTags().size()==0){
+            //holder.tags.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,0));
+
+        //}else {
+            // set Tags
+            StringBuilder sb_tag = new StringBuilder();
+            for(int g = 0; g < card.getTags().size(); g++){
+                sb_tag.append(card.getTags().get(g)).append(" ");
+            }
+            holder.tags.setText(sb_tag.toString());
+        //}
+
+
 
         holder.toolbar.getMenu().clear();
-
         holder.toolbar.inflateMenu(R.menu.card_toolbar);
 
         holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
@@ -49,7 +50,7 @@ public class EditTabsActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    Button mLeftButton, mRightButton, mDeleteButton;
+    ImageButton mLeftButton,mRightButton,mDeleteButton;
     TextView mTitle;
     Fragment mSelectCoverFragment;
     Fragment mEditInfoFragment;
@@ -77,9 +78,9 @@ public class EditTabsActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mLeftButton = (Button) findViewById(R.id.edit_toolbar_leftbutton);
-        mDeleteButton = (Button) findViewById(R.id.edit_toolbar_deletebutton);
-        mRightButton = (Button) findViewById(R.id.edit_toolbar_rightbutton);
+        mLeftButton = (ImageButton) findViewById(R.id.edit_toolbar_leftbutton);
+        mDeleteButton = (ImageButton) findViewById(R.id.edit_toolbar_deletebutton);
+        mRightButton = (ImageButton) findViewById(R.id.edit_toolbar_rightbutton);
         mTitle = (TextView) findViewById(R.id.edit_toolbar_title);
 
         setSelectCoverToolbar();
@@ -156,7 +157,8 @@ public class EditTabsActivity extends AppCompatActivity {
     }
 
     public void setSelectCoverToolbar(){
-        mLeftButton.setText("Back");
+        //mLeftButton.setText("Back");
+        mLeftButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigate_before_white_24dp));
         mLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +169,7 @@ public class EditTabsActivity extends AppCompatActivity {
 
         mTitle.setText("Select a Cover");
 
+        mDeleteButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete_forever_white_24dp));
         if(isEdit){
             mDeleteButton.setVisibility(View.VISIBLE);
 
@@ -209,7 +212,9 @@ public class EditTabsActivity extends AppCompatActivity {
             mDeleteButton.setVisibility(View.GONE);
         }
 
-        mRightButton.setText("Next");
+        //mRightButton.setText("Next");
+        mRightButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigate_next_white_24dp));
+
         mRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -226,11 +231,13 @@ public class EditTabsActivity extends AppCompatActivity {
             }
         });
 
-        mTitle.setText("Enter Details");
+        mTitle.setText("Edit Details");
 
         mDeleteButton.setVisibility(View.GONE);
 
-        mRightButton.setText("Publish");
+        //mRightButton.setText("Publish");
+        mRightButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_white_24dp));
+
         mRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

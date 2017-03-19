@@ -79,7 +79,7 @@ public class SelectCoverAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         ItemCards.CardImage image =  mCard.getImages().get(i);
         if(i == mCard.coverIndex){
-            holder.checked.setImageResource(R.mipmap.checkbox_checked);
+            holder.checked.setImageResource(R.drawable.ic_check_circle_white_24dp);
             sendViewToBack(holder.mask);
 
             holder.mask.setColorFilter(android.R.color.transparent);
