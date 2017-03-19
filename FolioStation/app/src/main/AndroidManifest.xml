@@ -41,7 +41,7 @@
         <activity android:name=".collectiondetails.CollectionDetailsActivity" />
         <activity android:name=".inspire.InspireActivity" />
         <activity
-            android:name=".InboxActivity"
+            android:name=".Inbox.InboxActivity"
             android:label="inbox_activity"
             android:parentActivityName=".MainActivity"/>
         <activity

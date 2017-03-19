@@ -150,6 +150,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public void startShareActivity(View view, int position){
         Intent intent = new Intent(view.getContext(), ShareActivity.class);
         intent.putExtra("CARD_INDEX", position);
+        intent.putExtra("FROM", "GRID");
         view.getContext().startActivity(intent);
     }
 

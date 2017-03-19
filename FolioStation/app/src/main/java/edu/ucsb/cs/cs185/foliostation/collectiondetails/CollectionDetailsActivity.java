@@ -125,6 +125,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                     case R.id.details_share_collection:
                         Intent shareIntent = new Intent(CollectionDetailsActivity.this, ShareActivity.class);
                         shareIntent.putExtra("CARD_INDEX", mCardIndex);
+                        shareIntent.putExtra("FROM", "DETAILS");
                         startActivity(shareIntent);
                         Log.i("selected", "share");
                         break;

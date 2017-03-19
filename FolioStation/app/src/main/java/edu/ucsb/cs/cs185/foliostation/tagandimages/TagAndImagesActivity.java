@@ -30,6 +30,7 @@ import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 public class TagAndImagesActivity extends AppCompatActivity {
 
     private List<ItemCards.CardImage> mCardImages;
+    private String mTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,11 @@ public class TagAndImagesActivity extends AppCompatActivity {
 
         // Getting Tag from intent
         Intent intent = getIntent();
-        String tag = intent.getStringExtra("TAG");
+        mTag = intent.getStringExtra("TAG");
 
         // Set the TextView in toolbar with the tag
         TextView tagTextView = (TextView) findViewById(R.id.tag_and_images_tag);
-        tagTextView.setText(tag);
+        tagTextView.setText(mTag);
 
         // Setting the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.tag_and_images_toolbar);
@@ -64,7 +65,7 @@ public class TagAndImagesActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        mCardImages = ItemCards.getInstance(getApplicationContext()).tagMap.get(tag.toLowerCase());
+        mCardImages = ItemCards.getInstance(getApplicationContext()).tagMap.get(mTag.toLowerCase());
 
         TagAndImagesAdapter tagsAndImagesAdapter =
                 new TagAndImagesAdapter(getApplicationContext(), mCardImages);
@@ -100,6 +101,8 @@ public class TagAndImagesActivity extends AppCompatActivity {
                 case R.id.action_share:
                     Log.i("clicked", "share");
                     Intent intent = new Intent(getApplicationContext(), ShareActivity.class);
+                    intent.putExtra("TAG", mTag.toLowerCase());
+                    intent.putExtra("FROM", "SEARCH");
                     startActivity(intent);
                     break;
             }

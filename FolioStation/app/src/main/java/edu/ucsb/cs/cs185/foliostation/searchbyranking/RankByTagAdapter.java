@@ -74,6 +74,7 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         String tag = mTagAndImages.get(position).tag;
 
         tag = Character.toUpperCase(tag.charAt(0)) + tag.substring(1);
+        final String lowerCaseTag = tag;
         holder.title.setText(tag);
         holder.title.setTag(position);
         holder.title.setOnClickListener(this);
@@ -96,10 +97,6 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
 
         gridLayoutManager.setItemPrefetchEnabled(true);
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false);
-        layoutManager.setItemPrefetchEnabled(true);
-
         rv.setLayoutManager(gridLayoutManager);
 
         // set toolbar behaviors
@@ -112,6 +109,8 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
                     case R.id.action_shared:
                         Log.i("selected", "delete");
                         Intent intent = new Intent(holder.rv.getContext(), ShareActivity.class);
+                        intent.putExtra("FROM", "SEARCH");
+                        intent.putExtra("TAG", lowerCaseTag);
                         holder.rv.getContext().startActivity(intent);
                         break;
                 }
@@ -119,17 +118,10 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         });
 
-
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    public void startEditActivity(View view, int position){
-        Intent intent = new Intent(view.getContext(), EditTabsActivity.class);
-        intent.putExtra("CARD_INDEX", position);
-        intent.putExtra("EDIT", true);
-        view.getContext().startActivity(intent);
-    }
 
     @Override
     public int getItemCount() {

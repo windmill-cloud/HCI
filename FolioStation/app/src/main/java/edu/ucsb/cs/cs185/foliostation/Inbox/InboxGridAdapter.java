@@ -1,6 +1,8 @@
 package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,9 +18,11 @@ import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.models.Cards;
+import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
+import edu.ucsb.cs.cs185.foliostation.searchbyranking.RankInnerAdapter;
 
 /**
  * Created by Hilda on 18/03/2017.
@@ -27,8 +31,8 @@ import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
                                 implements View.OnClickListener {
     private Activity mActivity;
-    List<ItemCards.Card> mCards;
-    private GridCardAdapter.OnRecyclerViewItemClickListener mOnItemClickListener = null;
+    List<InboxCards.Card> mCards;
+    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
     public InboxGridAdapter(List<ItemCards.Card> cards, Activity callingActivity){
         mCards = cards;
@@ -37,56 +41,48 @@ public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, final int position) {
-        final ItemCards.Card card = ItemCards.getInstance(mActivity).cards.get(position);
+        final InboxCards.Card card = InboxCards.getInstance(mActivity).cards.get(position);
 
-        // TODO: refactor picture loading
-        if(card.getCoverImage().isFromPath()) {
+        if(card.getProfile().isFromPath()) {
             Picasso.with(mActivity)
-                    .load(new File(card.getCoverImage().mUrl))
-                    .resize(450, 450)
+                    .load(new File(card.getProfile().mUrl))
+                    .resize(200, 200)
                     .centerCrop()
                     .noFade()
-                    .into(holder.imageView);
+                    .into(holder.profileImage);
         } else {
             Picasso.with(mActivity)
-                    .load(card.getCoverImage().mUrl)
-                    .resize(450, 450)
+                    .load(card.getProfile().mUrl)
+                    .resize(200, 200)
                     .centerCrop()
                     .noFade()
-                    .into(holder.imageView);
+                    .into(holder.profileImage);
         }
-
-        holder.imageView.setTag(position);
-
-        holder.imageView.setOnClickListener(this);
 
         holder.title.setText(card.getTitle());
+        holder.tags.setText(card.getTagsString());
+        holder.username.setText(card.getUsername());
         holder.description.setText(card.getDescription());
 
-        holder.toolbar.getMenu().clear();
+        RecyclerView rv = holder.rv;
+        InboxInnerAdapter adapter =
+                new InboxInnerAdapter(mActivity, mCards.get(position).getImages());
+        adapter.setHasStableIds(true);
 
-        holder.toolbar.inflateMenu(R.menu.inbox_options);
-
-        holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.inbox_option_add:
-                        addToMyCollection(position);
-                        break;
-                    case R.id.inbox_option_ignore:
-                        deleteSharedItemFromDB(position);
-                        break;
-                }
-                return true;
-            }
-        });
-
-        if (card.hasMultiPics()){
-            holder.hasMultiPics.setVisibility(View.VISIBLE);
+        GridLayoutManager gridLayoutManager;
+        if(mCards.get(position).getImages().size() < 12) {
+            gridLayoutManager = new GridLayoutManager(mActivity, 1, LinearLayoutManager.HORIZONTAL,
+                    false);
         } else {
-            holder.hasMultiPics.setVisibility(View.GONE);
+            gridLayoutManager = new GridLayoutManager(mActivity, 2, LinearLayoutManager.HORIZONTAL,
+                    false);
         }
+
+        gridLayoutManager.setItemPrefetchEnabled(true);
+        rv.setLayoutManager(gridLayoutManager);
+        rv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 
     //TODO: finish implementation in database
@@ -114,13 +110,18 @@ public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_grid, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_inbox, parent, false);
         CardViewHolder cardViewHolder = new CardViewHolder(v);
 
         return cardViewHolder;
     }
 
-    public void setOnItemClickListener(GridCardAdapter.OnRecyclerViewItemClickListener listener) {
+    //define Item click interface
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
 }
