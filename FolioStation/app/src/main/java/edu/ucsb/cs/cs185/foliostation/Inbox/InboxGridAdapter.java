@@ -1,6 +1,8 @@
 package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,6 +28,7 @@ import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
 import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 import edu.ucsb.cs.cs185.foliostation.searchbyranking.RankInnerAdapter;
+import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 /**
  * Created by Hilda on 18/03/2017.
@@ -59,10 +65,35 @@ public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
                     .into(holder.profileImage);
         }
 
-        holder.title.setText(card.getTitle());
-        holder.tags.setText(card.getTagsString());
+        setTextView(holder.title, card.getTitle());
+        setTextView(holder.tags, card.getTagsString());
+        setTextView(holder.description, card.getDescription());
+
         holder.username.setText(card.getUsername());
-        holder.description.setText(card.getDescription());
+
+        // set toolbar behaviors
+        holder.toolbar.getMenu().clear();
+        holder.toolbar.inflateMenu(R.menu.menu_inbox);
+        holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_add:
+
+                        break;
+                    case R.id.action_mark_as_read:
+                        break;
+                    case R.id.action_delete:
+                        break;
+                }
+                return true;
+            }
+        });
+
+        if(card.isRead()){
+            holder.toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.colorLightGray));
+            holder.cv.setCardBackgroundColor(mActivity.getResources().getColor(R.color.colorLightGray));
+        }
 
         RecyclerView rv = holder.rv;
         InboxInnerAdapter adapter =
@@ -83,6 +114,20 @@ public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+    }
+
+    private void setTextView(TextView textview, String content){
+        if(content.equals("")){
+            textview.setLayoutParams(
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        } else {
+            textview.setLayoutParams(
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
+            textview.setText(content);
+        }
     }
 
     //TODO: finish implementation in database

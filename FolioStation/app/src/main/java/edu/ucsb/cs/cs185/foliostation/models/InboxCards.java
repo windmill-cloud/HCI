@@ -47,7 +47,7 @@ public class InboxCards extends Cards{
         Card newCard = new Card(title, descriptions, coverIndex,
                 username, profileImage, tags, images);
         flattenedImages.addAll(newCard.getImages());
-        cards.add(newCard);
+        cards.addFirst(newCard);
         DatabaseOperator.getInstance(mContext).getInboxCardsDBOperator().insertCard(newCard);
     }
 }

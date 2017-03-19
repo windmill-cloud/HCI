@@ -42,6 +42,10 @@ public class InboxActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.tool_bar);
         mToolbar.setTitle("Inbox");
+        setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.cards_recycler);
         mRecyclerView.setHasFixedSize(true);

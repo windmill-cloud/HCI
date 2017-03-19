@@ -202,6 +202,16 @@ public class Cards {
         public String mUsername = "";
         public CardImage mUserProfile = new CardImage();
 
+        boolean mMarkedRead = false;
+
+        public boolean isRead(){
+            return mMarkedRead;
+        }
+
+        public void setRead(){
+            mMarkedRead = true;
+        }
+
         public void setUsername(String username){
             mUsername = username;
         }
