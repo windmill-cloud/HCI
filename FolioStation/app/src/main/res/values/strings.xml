@@ -26,6 +26,7 @@
     <string name="action_logout">Log out</string>
     <string name="search_by_tag">Search</string>
     <string name="collections">Collections</string>
+    <string name="collectionsCap">COLLECTIONS</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

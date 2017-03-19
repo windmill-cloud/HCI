@@ -28,6 +28,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
     public ImageView imageView;
     public TextView title;
     public TextView description;
+    public TextView tags;
     public ImageView checked;
     public ImageView mask;
     public ImageView hasMultiPics;
@@ -43,6 +44,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         imageView = (ImageView) itemView.findViewById(R.id.card_photo);
         title = (TextView) itemView.findViewById(R.id.card_title);
         description = (TextView) itemView.findViewById(R.id.card_description);
+        tags = (TextView) itemView.findViewById(R.id.card_tags);
         checked = (ImageView) itemView.findViewById(R.id.cover_checked);
         mask = (ImageView) itemView.findViewById(R.id.card_mask);
         toolbar = (Toolbar) itemView.findViewById(R.id.card_toolbar);

@@ -18,75 +18,84 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="32dp">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:weightSum="1">
 
-            <FrameLayout
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="horizontal"
+                android:layout_marginRight="8dp">
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
                     android:id="@+id/edit_info_cover_image"
-                    android:src="@drawable/back1"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:paddingLeft="8dp"
                     android:paddingTop="16dp"
-                    />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/back1" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:inputType="textPersonName"
-                    android:hint="Name Your Project"
-                    android:ems="10"
                     android:id="@+id/edit_title"
-                    android:paddingLeft="120dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_toRightOf="@id/edit_info_cover_image"
+                    android:ems="10"
+                    android:fontFamily="sans-serif"
+                    android:hint="Name Your Project"
+                    android:inputType="textPersonName"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="28dp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toRightOf="@id/edit_info_cover_image"
+                    android:layout_below="@id/edit_title"
+                    android:layout_marginLeft="20dp">
 
 
-            </FrameLayout>
+
+                    <EditText
+                        android:id="@+id/edit_tags"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:ems="10"
+                        android:textAllCaps="true"
+                        android:gravity="top"
+                        android:hint="Tags, Comma, Separated"
+                        android:inputType="textPersonName"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:paddingLeft="10dp" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
+
 
             <EditText
+                android:id="@+id/edit_description"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:inputType="textPersonName"
+                android:layout_height="80dp"
+                android:paddingTop="40dp"
+                android:ems="10"
+                android:gravity="top"
+                android:textSize="16dp"
                 android:hint="Write Your Description"
-                android:gravity="top"
-                android:ems="10"
-                android:id="@+id/edit_description" />
-
-            <FrameLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/tags"
-                    android:layout_marginTop="8dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:inputType="textPersonName"
-                android:gravity="top"
-
-                android:hint="Tags, Comma, Separated"
-                android:ems="10"
-                android:id="@+id/edit_tags"
-                android:paddingLeft="35dp" />
-
-            </FrameLayout>
+                android:textColor="@color/black"
+                android:inputType="textPersonName" />
 
 
         </LinearLayout>

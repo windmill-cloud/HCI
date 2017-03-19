@@ -31,7 +31,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
+            android:background="@color/MyDarkBlue"
             app:layout_scrollFlags="scroll|enterAlways"
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
@@ -43,16 +43,19 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:background="@color/transparent">
 
-                <Button
+                <ImageButton
                     android:text="Back"
+                    android:icon="@drawable/ic_view_module_white_24dp"
                     android:layout_width="61dp"
                     android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
                     android:textAllCaps="false"
                     android:id="@+id/edit_toolbar_leftbutton"
                     android:textSize="14sp"
-                    android:textColor="@color/colorDark"
+                    android:textColor="@color/MyWhite"
                     android:background="@color/transparent" />
 
 
@@ -64,16 +67,18 @@
                     android:gravity="center_vertical"
                     android:textSize="14sp"
                     android:id="@+id/edit_toolbar_title"
+                    android:textColor="@color/MyLightBlue"
                     android:layout_weight="1" />
 
-                <Button
+                <ImageButton
                     android:text="Delete"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
                     android:textAllCaps="false"
                     android:id="@+id/edit_toolbar_deletebutton"
                     android:textSize="14sp"
-                    android:textColor="@color/colorDark"
+                    android:textColor="@color/MyTransparentWhite"
                     android:background="@color/transparent" />
 
                 <TextView
@@ -84,14 +89,15 @@
                     android:textSize="14sp"
                     android:layout_weight="0.1" />
 
-                <Button
+                <ImageButton
                     android:text="Next"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
                     android:textAllCaps="false"
                     android:id="@+id/edit_toolbar_rightbutton"
                     android:textSize="14sp"
-                    android:textColor="@color/colorDark"
+                    android:textColor="@color/MyWhite"
                     android:background="@color/transparent" />
             </LinearLayout>
 
