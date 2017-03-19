@@ -107,6 +107,18 @@ public class Cards {
             }
         }
 
+        public void deleteCoverImage(){
+            int newCoverIndex = coverIndex;
+            if(coverIndex < mImages.size()){
+                if(coverIndex == mImages.size() - 1){
+                    newCoverIndex = mImages.size() - 2;
+                }
+                mImages.remove(coverIndex);
+            }
+            coverIndex = newCoverIndex;
+            writeToDB();
+        }
+
         boolean userLiked = false;
 
         public int getNumLikes() {

@@ -49,6 +49,11 @@ public class SelectCoverAdapter extends RecyclerView.Adapter<CardViewHolder>
         mContext = context;
     }
 
+    public void updateData(ItemCards.Card Card) {
+        mCard = Card;
+    }
+
+
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_edit, parent, false);
