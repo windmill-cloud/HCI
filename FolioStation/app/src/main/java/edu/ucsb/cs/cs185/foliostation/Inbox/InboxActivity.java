@@ -26,7 +26,7 @@ public class InboxActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-    InboxGridAdapter mGridCardAdapter;
+    InboxAdapter mGridCardAdapter;
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +50,10 @@ public class InboxActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //TODO: replace with your own adapter
-        mGridCardAdapter = new InboxGridAdapter(InboxCards.getInstance(this).cards, mInboxActivity);
+        mGridCardAdapter = new InboxAdapter(InboxCards.getInstance(this).cards, mInboxActivity);
         mGridCardAdapter.setHasStableIds(true);
 
-        mGridCardAdapter.setOnItemClickListener(new InboxGridAdapter.OnRecyclerViewItemClickListener(){
+        mGridCardAdapter.setOnItemClickListener(new InboxAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
 

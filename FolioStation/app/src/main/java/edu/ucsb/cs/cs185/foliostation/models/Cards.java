@@ -355,6 +355,10 @@ public class Cards {
             return mImages;
         }
 
+        public void setImages(List<CardImage> images) {
+            mImages = images;
+        }
+
         public String getTitle() {
             return mTitle;
         }

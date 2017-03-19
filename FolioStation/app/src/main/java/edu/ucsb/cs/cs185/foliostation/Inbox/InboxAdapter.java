@@ -1,6 +1,7 @@
 package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -18,6 +20,7 @@ import java.io.File;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.databasehandlers.DatabaseOperator;
 import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
@@ -26,13 +29,13 @@ import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
  * Created by Hilda on 18/03/2017.
  */
 
-public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
+public class InboxAdapter extends RecyclerView.Adapter<CardViewHolder>
                                 implements View.OnClickListener {
     private Activity mActivity;
     List<InboxCards.Card> mCards;
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public InboxGridAdapter(List<ItemCards.Card> cards, Activity callingActivity){
+    public InboxAdapter(List<ItemCards.Card> cards, Activity callingActivity){
         mCards = cards;
         mActivity = callingActivity;
     }
@@ -70,12 +73,46 @@ public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.action_add:
+                    case R.id.action_add:{
+                        InboxCards.Card card = mCards.get(position);
+                        ItemCards.getInstance(mActivity).addNewCardFromInboxCard(card);
+                        InboxAdapter.this.notifyDataSetChanged();
 
+                        Toast toast = Toast.makeText(mActivity, "Saved to local collections",
+                                Toast.LENGTH_SHORT);
+
+                        TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
+                        toastMessage.setTextColor(Color.WHITE);
+                        toast.show();
                         break;
-                    case R.id.action_mark_as_read:
+                    }
+                    case R.id.action_mark_as_read: {
+                        InboxCards.Card card = mCards.get(position);
+                        card.setRead();
+                        InboxAdapter.this.notifyDataSetChanged();
+                        DatabaseOperator.getInstance(mActivity)
+                                .getInboxCardsDBOperator().updateCards(card);
+
+                        Toast toast = Toast.makeText(mActivity, "Set as read",
+                                Toast.LENGTH_SHORT);
+
+                        TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
+                        toastMessage.setTextColor(Color.WHITE);
+                        toast.show();
                         break;
+                    }
                     case R.id.action_delete:
+                        InboxCards.Card card = mCards.get(position);
+                        DatabaseOperator.getInstance(mActivity)
+                                .getInboxCardsDBOperator().deleteCard(card);
+
+                        mCards.remove(position);
+                        if(mCards.size() == 0){
+                            mActivity.finish();
+                        } else {
+                            InboxAdapter.this.notifyDataSetChanged();
+                        }
+
                         break;
                 }
                 return true;
@@ -83,8 +120,10 @@ public class InboxGridAdapter extends RecyclerView.Adapter<CardViewHolder>
         });
 
         if(card.isRead()){
-            holder.toolbar.setBackgroundColor(mActivity.getResources().getColor(R.color.colorLightGray));
-            holder.cv.setCardBackgroundColor(mActivity.getResources().getColor(R.color.colorLightGray));
+            holder.toolbar.setBackgroundColor(
+                    mActivity.getResources().getColor(R.color.colorLightLightGray));
+            holder.cv.setCardBackgroundColor(
+                    mActivity.getResources().getColor(R.color.colorLightLightGray));
         }
 
         RecyclerView rv = holder.rv;

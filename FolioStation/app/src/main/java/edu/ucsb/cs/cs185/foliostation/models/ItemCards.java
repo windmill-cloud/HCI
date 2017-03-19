@@ -114,6 +114,26 @@ public class ItemCards extends Cards{
         DatabaseOperator.getInstance(mContext).getItemCardDBOperator().insertCard(newCard);
     }
 
+    public void addNewCardFromInboxCard(InboxCards.Card inboxCard) {
+        inboxCard.setRead();
+        Card newCard = new Card(inboxCard.getTitle(), inboxCard.getDescription());
+        newCard.setCoverIndex(inboxCard.coverIndex);
+        List<String> tags = new ArrayList<>();
+        tags.addAll(inboxCard.getTags());
+
+        List<CardImage> cardImages = new ArrayList<>();
+        for(InboxCards.CardImage cardImage: inboxCard.getImages()){
+             cardImages.add(new CardImage(cardImage.mUrl, cardImage.mType));
+        }
+
+        newCard.setTags(tags);
+        newCard.setImages(cardImages);
+        cards.add(newCard);
+        flattenedImages.addAll(cardImages);
+        rebuildTagsMap();
+        DatabaseOperator.getInstance(mContext).getItemCardDBOperator().insertCard(newCard);
+    }
+
 
     public List<TagAndImages> getInspired(String rawTag){
 

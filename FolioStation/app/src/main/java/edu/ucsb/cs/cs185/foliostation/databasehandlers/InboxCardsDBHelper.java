@@ -33,11 +33,13 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
     public static final int COVERINDEX = 3;
     public static final int USERNAME = 4;
     public static final int USERPROFILE = 5;
-    public static final int TAGS = 6;
-    public static final int IMAGES = 7;
+    public static final int READ = 6;
+    public static final int TAGS = 7;
+    public static final int IMAGES = 8;
 
     public InboxCardsDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+
     }
 
     public String getTableName() {
@@ -55,10 +57,12 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
                 "coverindex integer, " +
                 "username text, " +
                 "userprofile text, " +
+                "read integer, " +
                 "tags text, " +
                 "images text)";
 
         sqLiteDatabase.execSQL(sql);
+        hasTable = true;
     }
 
     @Override
@@ -77,6 +81,8 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("coverindex", card.getCoverIndex());
         contentValues.put("username", card.getUsername());
         contentValues.put("userprofile", card.getProfileJSon());
+        int read = card.isRead()? 1: 0;
+        contentValues.put("read", read);
         contentValues.put("tags", card.getTagsJson());
         contentValues.put("images", card.getImagesJson());
         db.insert(TABLE_NAME, null, contentValues);
@@ -104,6 +110,8 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("coverindex", card.getCoverIndex());
         contentValues.put("username", card.getUsername());
         contentValues.put("userprofile", card.getProfileJSon());
+        int read = card.isRead()? 1: 0;
+        contentValues.put("read", read);
         contentValues.put("tags", card.getTagsJson());
         contentValues.put("images", card.getImagesJson());
         db.update(TABLE_NAME, contentValues, "id='" + card.getUUID() + "'", null);
@@ -133,6 +141,7 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
             int coverindex = res.getInt(COVERINDEX);
             String username = res.getString(USERNAME);
             String userprofile = res.getString(USERPROFILE);
+            int read = res.getInt(READ);
             String tags = res.getString(TAGS);
             String images = res.getString(IMAGES);
 
@@ -147,9 +156,11 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
             Cards.CardImage profileImage =
                     gson.fromJson(userprofile, Cards.CardImage.class);
 
+            boolean readbool = read > 0;
+
             InboxCards.getInstance(context).
                     addNewCardFromDetails(uuid, title, description, coverindex,
-                            username, profileImage, tagsList, imageList);
+                            username, profileImage, readbool, tagsList, imageList);
 
             res.moveToNext();
         }
