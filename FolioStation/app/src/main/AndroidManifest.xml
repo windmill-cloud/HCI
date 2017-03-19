@@ -42,7 +42,8 @@
         <activity android:name=".inspire.InspireActivity" />
         <activity
             android:name=".InboxActivity"
-            android:label="inbox_activity"/>
+            android:label="inbox_activity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
