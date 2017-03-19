@@ -60,6 +60,7 @@ public class EditInfoFragment extends Fragment {
                 }
                 mItemCard.setTags(res);
             }
+            ItemCards.getInstance(getContext()).rebuildTagsMap();
             mItemCard.writeToDB();
         }
     }
