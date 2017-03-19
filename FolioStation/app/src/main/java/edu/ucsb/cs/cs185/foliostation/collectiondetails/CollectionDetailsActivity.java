@@ -101,7 +101,6 @@ public class CollectionDetailsActivity extends AppCompatActivity {
             canAddImage = false;
         }
 
-
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

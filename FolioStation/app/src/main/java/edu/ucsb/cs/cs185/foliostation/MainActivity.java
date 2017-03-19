@@ -79,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
                     prevFragmentpPosition = -1;
                 } else {
                     prevFragmentpPosition = position - 1;
-                    SearchByRankingFragment searchFragment =
-                            (SearchByRankingFragment) mSearchFragment;
+                }
+                SearchByRankingFragment searchFragment =
+                        (SearchByRankingFragment) mSearchFragment;
 
-                    if(searchFragment != null){
-                        searchFragment.updateContents();
-                    }
+                if(searchFragment != null){
+                    searchFragment.updateContents();
                 }
                 Log.d("page", String.valueOf(position));
             }
