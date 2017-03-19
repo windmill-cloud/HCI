@@ -7,7 +7,7 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation.mycollections;
+package edu.ucsb.cs.cs185.foliostation.collections;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
 

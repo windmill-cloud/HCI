@@ -1,19 +1,15 @@
 package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -22,13 +18,9 @@ import java.io.File;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
-import edu.ucsb.cs.cs185.foliostation.searchbyranking.RankInnerAdapter;
-import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
+import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
 
 /**
  * Created by Hilda on 18/03/2017.

@@ -23,10 +23,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,9 +40,8 @@ import java.util.ArrayList;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
-import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
+import edu.ucsb.cs.cs185.foliostation.collections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.collections.DetailBlurDialog;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 public class CollectionDetailsActivity extends AppCompatActivity {

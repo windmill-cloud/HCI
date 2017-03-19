@@ -25,13 +25,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 
 public class EditTabsActivity extends AppCompatActivity {
 

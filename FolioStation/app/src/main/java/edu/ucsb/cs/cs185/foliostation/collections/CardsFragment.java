@@ -7,7 +7,7 @@
  *
  */
 
-package edu.ucsb.cs.cs185.foliostation.mycollections;
+package edu.ucsb.cs.cs185.foliostation.collections;
 
 import android.app.Activity;
 import android.content.Context;

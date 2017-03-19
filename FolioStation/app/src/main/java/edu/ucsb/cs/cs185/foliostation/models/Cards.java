@@ -10,7 +10,6 @@
 package edu.ucsb.cs.cs185.foliostation.models;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -24,8 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import edu.ucsb.cs.cs185.foliostation.databasehandlers.DatabaseOperator;
-import edu.ucsb.cs.cs185.foliostation.databasehandlers.ItemCardsDBHelper;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
 
 /**
  * Created by xuanwang on 3/4/17.

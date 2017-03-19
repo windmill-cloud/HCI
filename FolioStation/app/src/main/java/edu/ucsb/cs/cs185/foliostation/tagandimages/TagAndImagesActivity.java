@@ -21,10 +21,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
-import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
+import edu.ucsb.cs.cs185.foliostation.collections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.collections.DetailBlurDialog;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 public class TagAndImagesActivity extends AppCompatActivity {

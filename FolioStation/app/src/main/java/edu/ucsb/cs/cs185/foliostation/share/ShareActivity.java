@@ -10,11 +10,13 @@
 package edu.ucsb.cs.cs185.foliostation.share;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,13 @@ public class ShareActivity extends AppCompatActivity {
                 TextView message = (TextView) findViewById(R.id.enter_message);
                 String description = message.getText().toString();
                 prepareAndSendMessage(title, description);
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Successfully Shared",
+                        Toast.LENGTH_SHORT);
+
+                TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
+                toastMessage.setTextColor(Color.WHITE);
+                toast.show();
                 finish();
             }
         });
@@ -102,7 +111,6 @@ public class ShareActivity extends AppCompatActivity {
                     .addNewCardFromDetails(title, description, 0, "Jonathan Ive",
                             profile, tags, newList);
         }
-        int i = 1;
     }
 
     private List<InboxCards.CardImage> getCopiedList(List<Cards.CardImage> images){

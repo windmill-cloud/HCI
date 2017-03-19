@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/MyTransparentGray"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                tools:context="edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment">
+                tools:context="edu.ucsb.cs.cs185.foliostation.collections.CardsFragment">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/cards_recycler"
