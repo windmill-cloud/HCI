@@ -19,6 +19,7 @@ public class DatabaseOperator {
 
     private static DatabaseOperator mInstance;
     private static ItemCardsDBHelper mItemCardDBOperator;
+    private static InboxCardsDBHelper mInboxCardsDBOperator;
 
     private static Context mCtx;
 
@@ -41,5 +42,14 @@ public class DatabaseOperator {
             mItemCardDBOperator = new ItemCardsDBHelper(mCtx.getApplicationContext());
         }
         return mItemCardDBOperator;
+    }
+
+    public InboxCardsDBHelper getInboxCardsDBOperator() {
+        if (mInboxCardsDBOperator == null) {
+            // getApplicationContext() is key, it keeps you from leaking the
+            // Activity or BroadcastReceiver if someone passes one in.
+            mInboxCardsDBOperator = new InboxCardsDBHelper(mCtx.getApplicationContext());
+        }
+        return mInboxCardsDBOperator;
     }
 }

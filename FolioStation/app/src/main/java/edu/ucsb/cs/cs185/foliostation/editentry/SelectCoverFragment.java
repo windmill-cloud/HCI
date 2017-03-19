@@ -75,23 +75,7 @@ public class SelectCoverFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mCoverImage = (ImageView) rootView.findViewById(R.id.cover_image);
-
-        if(mItemCard.getImages().get(0).isFromPath()) {
-            Picasso.with(getContext())
-                    .load(new File(mItemCard.getImages().get(mItemCard.coverIndex).mUrl))
-                    .resize(1500, 1500)
-                    .centerCrop()
-                    .noFade()
-                    .into(mCoverImage);
-        } else {
-            Picasso.with(getContext())
-                    .load(mItemCard.getImages().get(mItemCard.coverIndex).mUrl)
-                    .resize(1500, 1500)
-                    .centerCrop()
-                    .noFade()
-                    .into(mCoverImage);
-        }
+        setCoverImage();
 
         mAdapter.setOnItemClickListener(new SelectCoverAdapter.OnRecyclerViewItemClickListener(){
             @Override
@@ -126,6 +110,26 @@ public class SelectCoverFragment extends Fragment {
         return rootView;
     }
 
+    protected void setCoverImage(){
+        mCoverImage = (ImageView) rootView.findViewById(R.id.cover_image);
+
+        if(mItemCard.getImages().get(0).isFromPath()) {
+            Picasso.with(getContext())
+                    .load(new File(mItemCard.getImages().get(mItemCard.coverIndex).mUrl))
+                    .resize(1500, 1500)
+                    .centerCrop()
+                    .noFade()
+                    .into(mCoverImage);
+        } else {
+            Picasso.with(getContext())
+                    .load(mItemCard.getImages().get(mItemCard.coverIndex).mUrl)
+                    .resize(1500, 1500)
+                    .centerCrop()
+                    .noFade()
+                    .into(mCoverImage);
+        }
+    }
+
     protected void setAddImageButton(){
         // TODO: making a TextView is a walk around, think about another way.
         TextView addPic = (TextView) rootView.findViewById(R.id.add_image);
@@ -145,6 +149,13 @@ public class SelectCoverFragment extends Fragment {
                 }
             });
         }
+    }
+
+    protected void setUpdatedCoverImage(){
+        EditTabsActivity activity = (EditTabsActivity) getActivity();
+        mAdapter.updateData(ItemCards.getInstance(getContext()).cards.get(activity.cardIndex));
+        mAdapter.notifyDataSetChanged();
+        setCoverImage();
     }
 
     @Override

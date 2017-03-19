@@ -1,4 +1,4 @@
-package edu.ucsb.cs.cs185.foliostation;
+package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,13 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
 import edu.ucsb.cs.cs185.foliostation.Inbox.InboxGridAdapter;
+import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.collectiondetails.CollectionDetailsActivity;
+import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
@@ -38,33 +41,33 @@ public class InboxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inbox);
 
         mToolbar = (Toolbar) findViewById(R.id.tool_bar);
-        mToolbar.setTitle("Shared With Me");
+        mToolbar.setTitle("Inbox");
+        setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.cards_recycler);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        mLayoutManager = new GridLayoutManager(this, 2);
+        mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setItemPrefetchEnabled(true);
 
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
         //TODO: replace with your own adapter
-        mGridCardAdapter = new InboxGridAdapter(ItemCards.getInstance(this).cards, mInboxActivity);
+        mGridCardAdapter = new InboxGridAdapter(InboxCards.getInstance(this).cards, mInboxActivity);
         mGridCardAdapter.setHasStableIds(true);
 
-        mGridCardAdapter.setOnItemClickListener(new GridCardAdapter.OnRecyclerViewItemClickListener(){
+        mGridCardAdapter.setOnItemClickListener(new InboxGridAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-                ItemCards.Card card = ItemCards.getInstance(mInboxActivity).cards.get(position);
 
-                if (card.hasMultiPics()){
-                    Intent intent = new Intent(mInboxActivity, CollectionDetailsActivity.class);
-                    intent.putExtra("CARD_INDEX", position);
-                    startActivity(intent);
-                } else {
-                    startDetailDialog(position);
-                }
             }
         });
+
+        mRecyclerView.setAdapter(mGridCardAdapter);
     }
 
     protected void startDetailDialog(int position){

@@ -10,7 +10,9 @@
 package edu.ucsb.cs.cs185.foliostation.mycollections;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -145,8 +147,22 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
                         break;
                     case R.id.card_toolbar_delete:
                         Log.i("selected", "delete");
-                        ItemCards.getInstance(mContext).deleteIthCard(position);
-                        GridCardAdapter.this.notifyDataSetChanged();
+                        new AlertDialog.Builder(mContext)
+                                .setTitle("Delete entry")
+                                .setMessage("Are you sure you want to delete this entry?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        ItemCards.getInstance(mContext).deleteIthCard(position);
+                                        GridCardAdapter.this.notifyDataSetChanged();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .show();
                         break;
                 }
                 return true;
@@ -163,6 +179,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public void startShareActivity(View view, int position){
         Intent intent = new Intent(view.getContext(), ShareActivity.class);
         intent.putExtra("CARD_INDEX", position);
+        intent.putExtra("FROM", "GRID");
         view.getContext().startActivity(intent);
     }
 

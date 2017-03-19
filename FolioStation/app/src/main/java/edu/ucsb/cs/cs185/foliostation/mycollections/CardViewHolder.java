@@ -28,13 +28,16 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
     public ImageView imageView;
     public TextView title;
     public TextView description;
+    public TextView username;
     public TextView tags;
+
     public ImageView checked;
     public ImageView mask;
     public ImageView hasMultiPics;
     public Toolbar toolbar;
     public MenuItem editMenuItem;
     public MenuItem deleteMenuItem;
+    public ImageView profileImage;
     public RecyclerView rv;
 
 
@@ -44,7 +47,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         imageView = (ImageView) itemView.findViewById(R.id.card_photo);
         title = (TextView) itemView.findViewById(R.id.card_title);
         description = (TextView) itemView.findViewById(R.id.card_description);
+        username = (TextView) itemView.findViewById(R.id.card_username);
         tags = (TextView) itemView.findViewById(R.id.card_tags);
+
         checked = (ImageView) itemView.findViewById(R.id.cover_checked);
         mask = (ImageView) itemView.findViewById(R.id.card_mask);
         toolbar = (Toolbar) itemView.findViewById(R.id.card_toolbar);
@@ -52,5 +57,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         deleteMenuItem = (MenuItem) itemView.findViewById(R.id.card_toolbar_delete);
         hasMultiPics = (ImageView) itemView.findViewById(R.id.card_is_multiimages);
         rv = (RecyclerView) itemView.findViewById(R.id.rv);
+        profileImage = (ImageView) itemView.findViewById(R.id.card_profile_image);
     }
 }

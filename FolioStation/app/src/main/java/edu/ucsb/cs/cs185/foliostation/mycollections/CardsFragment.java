@@ -47,9 +47,7 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 
 import java.util.ArrayList;
 
-import edu.ucsb.cs.cs185.foliostation.ContainerActivity;
-import edu.ucsb.cs.cs185.foliostation.InboxActivity;
-import edu.ucsb.cs.cs185.foliostation.MainActivity;
+import edu.ucsb.cs.cs185.foliostation.Inbox.InboxActivity;
 import edu.ucsb.cs.cs185.foliostation.SplashScreenActivity;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;

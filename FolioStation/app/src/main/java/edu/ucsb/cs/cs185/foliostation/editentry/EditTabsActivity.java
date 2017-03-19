@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
 
 public class EditTabsActivity extends AppCompatActivity {
 
@@ -51,7 +52,8 @@ public class EditTabsActivity extends AppCompatActivity {
 
     ImageButton mLeftButton,mRightButton,mDeleteButton;
     TextView mTitle;
-    Fragment mFragment;
+    Fragment mSelectCoverFragment;
+    Fragment mEditInfoFragment;
 
     int cardIndex = 0;
     boolean isEdit = false;
@@ -93,7 +95,9 @@ public class EditTabsActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
-                        setSelectCoverToolbar(); break;
+                        setSelectCoverToolbar();
+                        setCoverImageInCoverTab();
+                        break;
                     case 1:
                         setEnterInfoToolbar();
                         setCoverImageInEditTab();
@@ -109,11 +113,15 @@ public class EditTabsActivity extends AppCompatActivity {
         });
     }
 
-    protected void setCoverImageInEditTab(){
-        EditInfoFragment fragment = (EditInfoFragment) mFragment;
+    protected void setCoverImageInCoverTab(){
+        SelectCoverFragment fragment = (SelectCoverFragment) mSelectCoverFragment;
         fragment.setUpdatedCoverImage();
     }
 
+    protected void setCoverImageInEditTab(){
+        EditInfoFragment fragment = (EditInfoFragment) mEditInfoFragment;
+        fragment.setUpdatedCoverImage();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,15 +171,40 @@ public class EditTabsActivity extends AppCompatActivity {
 
         mDeleteButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete_forever_white_24dp));
         if(isEdit){
+            mDeleteButton.setVisibility(View.VISIBLE);
+
             mDeleteButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
                     Log.d("Index", String.valueOf(cardIndex));
-                    ItemCards.getInstance(getApplicationContext()).cards.remove(cardIndex);
-                    if(from != null && from.equals("DETAILS")){
-                        setResult(RESULT_OK, null);
-                    }
-                    finish();
+
+                    new AlertDialog.Builder(EditTabsActivity.this)
+                            .setTitle("Delete Image")
+                            .setMessage("Are you sure you want to delete this image?")
+                            .setPositiveButton(android.R.string.yes,
+                                    new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    ItemCards.Card card = ItemCards.
+                                            getInstance(getApplicationContext())
+                                            .cards.get(cardIndex);
+                                    card.deleteCoverImage();
+                                    if(card.getImages().size() == 0){
+                                        ItemCards.getInstance(getApplicationContext()).
+                                                deleteIthCard(cardIndex);
+                                        setResult(RESULT_OK, null);
+                                        finish();
+                                    }else {
+                                        setCoverImageInCoverTab();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .show();
                 }
             });
 
@@ -200,31 +233,7 @@ public class EditTabsActivity extends AppCompatActivity {
 
         mTitle.setText("Edit Details");
 
-        if(isEdit){
-            mDeleteButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    new AlertDialog.Builder(getApplicationContext())
-                            .setTitle("Delete entry")
-                            .setMessage("Are you sure you want to delete this entry?")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                    ItemCards.getInstance(getApplicationContext()).cards.remove(cardIndex);
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-                                }
-                            })
-                            .show();
-                }
-            });
-
-        } else {
-            mDeleteButton.setVisibility(View.GONE);
-        }
+        mDeleteButton.setVisibility(View.GONE);
 
         //mRightButton.setText("Publish");
         mRightButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_white_24dp));
@@ -233,7 +242,7 @@ public class EditTabsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //mViewPager.setCurrentItem(1, true);
-                EditInfoFragment fragment = (EditInfoFragment) mFragment;
+                EditInfoFragment fragment = (EditInfoFragment) mEditInfoFragment;
                 fragment.publishCard();
                 finish();
             }
@@ -255,11 +264,11 @@ public class EditTabsActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    mFragment = new SelectCoverFragment();
-                    return mFragment;
+                    mSelectCoverFragment = new SelectCoverFragment();
+                    return mSelectCoverFragment;
                 case 1:
-                    mFragment = new EditInfoFragment();
-                    return mFragment;
+                    mEditInfoFragment = new EditInfoFragment();
+                    return mEditInfoFragment;
             }
             return null;
                 //return PlaceholderFragment.newInstance(position + 1);

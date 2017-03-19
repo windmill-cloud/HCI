@@ -9,11 +9,13 @@
 
 package edu.ucsb.cs.cs185.foliostation.collectiondetails;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -123,11 +125,28 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                     case R.id.details_share_collection:
                         Intent shareIntent = new Intent(CollectionDetailsActivity.this, ShareActivity.class);
                         shareIntent.putExtra("CARD_INDEX", mCardIndex);
+                        shareIntent.putExtra("FROM", "DETAILS");
                         startActivity(shareIntent);
                         Log.i("selected", "share");
                         break;
                     case R.id.details_delete_collection:
                         Log.i("selected", "delete");
+                        new AlertDialog.Builder(CollectionDetailsActivity.this)
+                                .setTitle("Delete collection")
+                                .setMessage("Are you sure you want to delete this collection?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        ItemCards.getInstance(getApplicationContext()).deleteIthCard(mCardIndex);
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .show();
                         ItemCards.getInstance(getApplicationContext()).deleteIthCard(mCardIndex);
                         break;
                 }

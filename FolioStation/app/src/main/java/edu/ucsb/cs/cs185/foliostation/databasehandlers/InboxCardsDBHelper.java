@@ -1,12 +1,3 @@
-/*
- *  Copyright (c) 2017 - present, Xuan Wang
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree.
- *
- */
-
 package edu.ucsb.cs.cs185.foliostation.databasehandlers;
 
 import android.content.ContentValues;
@@ -22,25 +13,30 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.models.Cards;
+import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 
 /**
- * Created by xuanwang on 2/9/17.
+ * Created by xuanwang on 3/18/17.
  */
 
-public class ItemCardsDBHelper extends SQLiteOpenHelper {
+public class InboxCardsDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "ItemCards.db";
-    public final String TABLE_NAME = "itemcards";
+    public final String TABLE_NAME = "inboxcards";
+
+    private boolean hasTable = false;
 
     public static final int UUID = 0;
     public static final int TITLE = 1;
     public static final int DESCRIPTION = 2;
     public static final int COVERINDEX = 3;
-    public static final int TAGS = 4;
-    public static final int IMAGES = 5;
+    public static final int USERNAME = 4;
+    public static final int USERPROFILE = 5;
+    public static final int TAGS = 6;
+    public static final int IMAGES = 7;
 
-    public ItemCardsDBHelper(Context context) {
+    public InboxCardsDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -57,6 +53,8 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
                 "title text, " +
                 "description text, " +
                 "coverindex integer, " +
+                "username text, " +
+                "userprofile text, " +
                 "tags text, " +
                 "images text)";
 
@@ -77,6 +75,8 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("title", card.getTitle());
         contentValues.put("description", card.getDescription());
         contentValues.put("coverindex", card.getCoverIndex());
+        contentValues.put("username", card.getUsername());
+        contentValues.put("userprofile", card.getProfileJSon());
         contentValues.put("tags", card.getTagsJson());
         contentValues.put("images", card.getImagesJson());
         db.insert(TABLE_NAME, null, contentValues);
@@ -102,6 +102,8 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("title", card.getTitle());
         contentValues.put("description", card.getDescription());
         contentValues.put("coverindex", card.getCoverIndex());
+        contentValues.put("username", card.getUsername());
+        contentValues.put("userprofile", card.getProfileJSon());
         contentValues.put("tags", card.getTagsJson());
         contentValues.put("images", card.getImagesJson());
         db.update(TABLE_NAME, contentValues, "id='" + card.getUUID() + "'", null);
@@ -116,6 +118,11 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
     public void populateCards(Context context) {
 
         SQLiteDatabase db = this.getReadableDatabase();
+
+        if(!hasTable){
+            this.onCreate(db);
+        }
+
         Cursor res =  db.rawQuery( "select * from " + TABLE_NAME, null );
         res.moveToFirst();
 
@@ -124,6 +131,8 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
             String title = res.getString(TITLE);
             String description = res.getString(DESCRIPTION);
             int coverindex = res.getInt(COVERINDEX);
+            String username = res.getString(USERNAME);
+            String userprofile = res.getString(USERPROFILE);
             String tags = res.getString(TAGS);
             String images = res.getString(IMAGES);
 
@@ -135,8 +144,12 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
             List<Cards.CardImage> imageList =
                     gson.fromJson(images, new TypeToken<List<Cards.CardImage>>(){}.getType());
 
-            ItemCards.getInstance(context).
-                    addNewCardFromDB(uuid, title, description, coverindex, tagsList, imageList);
+            Cards.CardImage profileImage =
+                    gson.fromJson(userprofile, Cards.CardImage.class);
+
+            InboxCards.getInstance(context).
+                    addNewCardFromDetails(uuid, title, description, coverindex,
+                            username, profileImage, tagsList, imageList);
 
             res.moveToNext();
         }

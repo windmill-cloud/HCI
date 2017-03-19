@@ -75,11 +75,15 @@ public class Cards {
 
     public class CardImage {
         public String mUrl = "";
-        public int mType = PATH;
+        public int mType = URL;
 
         CardImage(String url, int type){
             mUrl = url;
             mType = type;
+        }
+
+        CardImage(){
+
         }
 
         public boolean isFromPath(){
@@ -105,6 +109,18 @@ public class Cards {
                 userLiked = true;
                 increaseLikes();
             }
+        }
+
+        public void deleteCoverImage(){
+            int newCoverIndex = coverIndex;
+            if(coverIndex < mImages.size()){
+                if(coverIndex == mImages.size() - 1){
+                    newCoverIndex = mImages.size() - 2;
+                }
+                mImages.remove(coverIndex);
+            }
+            coverIndex = newCoverIndex;
+            writeToDB();
         }
 
         boolean userLiked = false;
@@ -183,17 +199,72 @@ public class Cards {
         String mTitle = "";
         String mDescription = "";
 
-        public CardImage mUserProfile;
+        public String mUsername = "";
+        public CardImage mUserProfile = new CardImage();
+
+        boolean mMarkedRead = false;
+
+        public boolean isRead(){
+            return mMarkedRead;
+        }
+
+        public void setRead(){
+            mMarkedRead = true;
+        }
+
+        public void setUsername(String username){
+            mUsername = username;
+        }
+
+        public String getUsername(){
+            return mUsername;
+        }
 
         public void setProfile(CardImage profile){
             mUserProfile = profile;
         }
 
-        public Card(String UUID, String title, String descriptions,  List<String> tags,
+        public CardImage getProfile(){
+            return mUserProfile;
+        }
+
+        public String getProfileJSon(){
+            String json = new Gson().toJson(mUserProfile);
+            return json;
+        }
+
+        public Card(String UUID, String title, String descriptions, int coverIndex, List<String> tags,
                     List<CardImage> images) {
             mUUID = UUID;
             mTitle = title;
             mDescription = descriptions;
+            this.coverIndex = coverIndex;
+            this.tags = tags;
+            this.mImages = images;
+            this.setTags(tags);
+        }
+
+        public Card(String title, String descriptions, int coverIndex, String username,
+                    CardImage profileImage, List<String> tags, List<CardImage> images) {
+            mUUID = UUID.randomUUID().toString();
+            mTitle = title;
+            mDescription = descriptions;
+            mUsername = username;
+            mUserProfile = profileImage;
+            this.coverIndex = coverIndex;
+            this.tags = tags;
+            this.mImages = images;
+            this.setTags(tags);
+        }
+
+        public Card(String UUID, String title, String descriptions, int coverIndex, String username,
+                    CardImage profileImage, List<String> tags, List<CardImage> images) {
+            mUUID = UUID;
+            mTitle = title;
+            mDescription = descriptions;
+            mUsername = username;
+            mUserProfile = profileImage;
+            this.coverIndex = coverIndex;
             this.tags = tags;
             this.mImages = images;
             this.setTags(tags);
@@ -226,6 +297,10 @@ public class Cards {
         public void setCoverIndex(int index){
             int i = 0;
             coverIndex = index;
+        }
+
+        public int getCoverIndex(){
+            return coverIndex;
         }
 
         public boolean hasMaxNumOfImages(){
@@ -294,6 +369,18 @@ public class Cards {
             DatabaseOperator.getInstance(mContext)
                     .getItemCardDBOperator().updateCards(this);
         }
+
+
+    }
+
+    public List<CardImage> getCopiedImages(List<CardImage> images){
+        List<CardImage> res = new ArrayList<>();
+
+        for(CardImage cardImage: images){
+            CardImage newCardImage = new CardImage(cardImage.mUrl, cardImage.mType);
+            res.add(newCardImage);
+        }
+        return res;
     }
 
     public void addNewCardFromImages(List<ImageItem> imageItemList){
@@ -306,9 +393,9 @@ public class Cards {
         DatabaseOperator.getInstance(mContext).getItemCardDBOperator().insertCard(newCard);
     }
 
-    public void addNewCardFromDB(String UUID, String title, String descriptions,  List<String> tags,
+    public void addNewCardFromDB(String UUID, String title, String descriptions, int coverIndex, List<String> tags,
                                  List<CardImage> images){
-        Card newCard = new Card(UUID, title, descriptions, tags, images);
+        Card newCard = new Card(UUID, title, descriptions, coverIndex, tags, images);
         flattenedImages.addAll(newCard.getImages());
         cards.add(newCard);
     }
@@ -332,6 +419,10 @@ public class Cards {
             }
         }
         return false;
+    }
+
+    public CardImage makeNewCardImage(String url, int type){
+        return new CardImage(url, type);
     }
 
     public List<CardImage> getFlattenedImages(){
