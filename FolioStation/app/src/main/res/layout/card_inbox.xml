@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (c) 2017 - present, Xuan Wang
   ~  All rights reserved.
   ~
@@ -9,20 +8,24 @@
   -->
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="0dp"
-    card_view:cardUseCompatPadding="true"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="4dp"
-    android:id="@+id/cv">
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="8dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/card_toolbar"
@@ -30,16 +33,14 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
             app:contentInsetLeft="4dp"
             app:contentInsetStart="4dp"
-            >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_profile_image"
@@ -61,38 +62,53 @@
                     android:paddingRight="12dp"
                     android:paddingTop="4dp"
                     android:text="Username"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                     />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
+
 
         <TextView
             android:id="@+id/card_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
-
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
+
 
         <TextView
             android:id="@+id/card_tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:textSize="10sp"
+            android:textAllCaps="true"
+            android:textColor="@color/colorGrayTransparent"
             android:text="tags" />
 
         <TextView
             android:id="@+id/card_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
             android:text="description" />
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rv"/>
+            android:paddingTop="4dp"
+            android:paddingLeft="4dp"/>
 
     </LinearLayout>
 

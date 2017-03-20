@@ -67,7 +67,7 @@
                     android:gravity="center_vertical"
                     android:textSize="14sp"
                     android:id="@+id/edit_toolbar_title"
-                    android:textColor="@color/MyLightBlue"
+                    android:textColor="@color/MyLightGreen"
                     android:layout_weight="1" />
 
                 <ImageButton

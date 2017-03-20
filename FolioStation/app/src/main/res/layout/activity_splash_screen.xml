@@ -22,14 +22,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="@dimen/logo_size"
-        android:layout_height="@dimen/logo_size"
-        android:layout_gravity="start"
-        android:layout_marginLeft="@dimen/logo_marginH"
-        android:layout_marginTop="@dimen/logo_marginV"
-        android:background="@drawable/logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,11 +42,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/logo_marginH"
+                android:gravity="center_horizontal"
                 android:text="@string/splash_text"
                 android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
+                android:textColor="@color/MyWhite"
+                android:textSize="18sp"
+                android:textStyle="normal"
                 android:fontFamily="sans-serif"
 
                 />
@@ -65,7 +58,7 @@
             class="android.support.v4.widget.Space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_weight="1.5" />
 
 
         <LinearLayout
