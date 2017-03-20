@@ -87,16 +87,16 @@
         android:layout_height="35dp" />
 
     <TextView
-        android:text="Forgot password?"
+        android:id="@+id/signup_forgot"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:textColor="@color/MyPink"
-        android:layout_below="@+id/password_again"
-        android:layout_alignRight="@+id/password_text"
         android:layout_alignEnd="@+id/password_text"
-        android:gravity="center"
+        android:layout_alignRight="@+id/password_text"
+        android:layout_below="@+id/password_again"
         android:layout_marginTop="16dp"
-        android:id="@+id/textView5" />
+        android:gravity="center"
+        android:text="Forgot password?"
+        android:textColor="@color/MyPink" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"

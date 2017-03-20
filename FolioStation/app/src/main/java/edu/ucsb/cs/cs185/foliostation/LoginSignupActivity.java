@@ -52,6 +52,8 @@ public class LoginSignupActivity extends AppCompatActivity {
 
         if (type == null || type.equals("SIGN_UP")) {
             loginSignupButton.setText("Sign up");
+            TextView forgotPassword = (TextView) findViewById(R.id.signup_forgot);
+            forgotPassword.setVisibility(View.GONE);
         } else if(type.equals("LOG_IN")) {
             //prompt.setText("Log in");
             reEnterPassword.setHeight(0);
