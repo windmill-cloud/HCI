@@ -43,6 +43,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
 
     public ItemCardsDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        //context.deleteDatabase(DB_NAME);
     }
 
     public String getTableName() {
