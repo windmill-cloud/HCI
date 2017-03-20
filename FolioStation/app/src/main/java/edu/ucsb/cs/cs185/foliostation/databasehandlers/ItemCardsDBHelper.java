@@ -30,7 +30,7 @@ import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 
 public class ItemCardsDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "ItemCards.db";
+    private static final String DB_NAME = "Folios.db";
     public final String TABLE_NAME = "itemcards";
     private boolean hasTable = false;
 

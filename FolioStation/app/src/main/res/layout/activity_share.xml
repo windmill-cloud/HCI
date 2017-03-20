@@ -13,8 +13,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
     tools:context="edu.ucsb.cs.cs185.foliostation.share.ShareActivity">
 
     <FrameLayout
@@ -56,62 +54,70 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <EditText
-            android:id="@+id/enter_email"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="abc@example.com"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
 
-        <EditText
-            android:id="@+id/enter_subject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Subject"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            <EditText
+                android:id="@+id/enter_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="abc@example.com"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
 
-        <EditText
-            android:id="@+id/enter_tags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Tags, Comma, Seperated"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            android:textAllCaps="true"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            <EditText
+                android:id="@+id/enter_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Subject"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
 
-        <EditText
-            android:id="@+id/enter_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Message"
-            android:layout_marginTop="20dp"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            <EditText
+                android:id="@+id/enter_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Tags, Comma, Seperated"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif"
+                android:textAllCaps="true"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
 
+            <EditText
+                android:id="@+id/enter_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Message"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
 
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:id="@+id/rv"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:id="@+id/rv"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 
