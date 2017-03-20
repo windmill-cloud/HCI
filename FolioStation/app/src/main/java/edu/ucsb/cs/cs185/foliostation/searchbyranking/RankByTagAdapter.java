@@ -11,6 +11,7 @@ package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +25,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
-import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
+import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 /**
@@ -39,11 +38,14 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     List<ItemCards.TagAndImages> mTagAndImages;
 
+    SearchByRankingFragment mFragment;
+
     Context mContext = null;
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public RankByTagAdapter(Context context, List<ItemCards.TagAndImages> images){
+    public RankByTagAdapter(Context context, Fragment fragment, List<ItemCards.TagAndImages> images){
+        mFragment = (SearchByRankingFragment) fragment;
         mContext = context;
         mTagAndImages = images;
     }
@@ -71,6 +73,7 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         String tag = mTagAndImages.get(position).tag;
 
         tag = Character.toUpperCase(tag.charAt(0)) + tag.substring(1);
+        final String lowerCaseTag = tag;
         holder.title.setText(tag);
         holder.title.setTag(position);
         holder.title.setOnClickListener(this);
@@ -80,7 +83,7 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         rv.setNestedScrollingEnabled(false);
 
         RankInnerAdapter adapter =
-                new RankInnerAdapter(mContext, mTagAndImages.get(position).cardImages);
+                new RankInnerAdapter(mContext, mFragment, mTagAndImages.get(position).cardImages);
         adapter.setHasStableIds(true);
 
         GridLayoutManager gridLayoutManager;
@@ -93,10 +96,6 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
 
         gridLayoutManager.setItemPrefetchEnabled(true);
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false);
-        layoutManager.setItemPrefetchEnabled(true);
-
         rv.setLayoutManager(gridLayoutManager);
 
         // set toolbar behaviors
@@ -109,6 +108,8 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
                     case R.id.action_shared:
                         Log.i("selected", "delete");
                         Intent intent = new Intent(holder.rv.getContext(), ShareActivity.class);
+                        intent.putExtra("FROM", "SEARCH");
+                        intent.putExtra("TAG", lowerCaseTag);
                         holder.rv.getContext().startActivity(intent);
                         break;
                 }
@@ -116,23 +117,10 @@ public class RankByTagAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         });
 
-        adapter.setOnItemClickListener(new RankInnerAdapter.OnRecyclerViewItemClickListener(){
-            @Override
-            public void onItemClick(View view , int position){
-                // TODO:
-            }
-        });
-
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    public void startEditActivity(View view, int position){
-        Intent intent = new Intent(view.getContext(), EditTabsActivity.class);
-        intent.putExtra("CARD_INDEX", position);
-        intent.putExtra("EDIT", true);
-        view.getContext().startActivity(intent);
-    }
 
     @Override
     public int getItemCount() {

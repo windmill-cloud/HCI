@@ -10,6 +10,7 @@
 package edu.ucsb.cs.cs185.foliostation.searchbyranking;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.models.Cards;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
 
 /**
  * Created by xuanwang on 3/5/17.
@@ -35,11 +36,14 @@ public class RankInnerAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     List<Cards.CardImage> mCardImages;
 
+    SearchByRankingFragment mFragment;
+
     Context mContext = null;
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public RankInnerAdapter(Context context, List<Cards.CardImage> images){
+    public RankInnerAdapter(Context context, Fragment fragment, List<Cards.CardImage> images){
+        mFragment = (SearchByRankingFragment) fragment;
         mContext = context;
         mCardImages = images;
     }
@@ -53,7 +57,7 @@ public class RankInnerAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(CardViewHolder holder, final int position) {
 
         if(mContext == null){
             Log.e("mContext", "null");
@@ -77,6 +81,13 @@ public class RankInnerAdapter extends RecyclerView.Adapter<CardViewHolder>
                     .noFade()
                     .into(holder.imageView);
         }
+        imageView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                mFragment.startDetailDialog(mCardImages.get(position));
+            }
+        });
     }
 
     @Override
@@ -88,7 +99,6 @@ public class RankInnerAdapter extends RecyclerView.Adapter<CardViewHolder>
     public long getItemId(int position) {
         return position;
     }
-
 
     //define Item click interface
     public interface OnRecyclerViewItemClickListener {

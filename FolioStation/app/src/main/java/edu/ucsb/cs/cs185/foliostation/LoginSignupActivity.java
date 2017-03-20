@@ -73,26 +73,5 @@ public class LoginSignupActivity extends AppCompatActivity {
         });
 
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.login_sign_up_toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // TODO Auto-generated method stub
-        if(item.getItemId() == android.R.id.home) {
-            Intent logInIntent = new Intent(this,
-                    SplashScreenActivity.class);
-                this.startActivity(logInIntent);
-                this.finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
 }

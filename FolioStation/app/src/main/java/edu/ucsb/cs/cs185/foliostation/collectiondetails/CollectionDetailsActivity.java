@@ -9,11 +9,13 @@
 
 package edu.ucsb.cs.cs185.foliostation.collectiondetails;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,10 +23,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,9 +40,8 @@ import java.util.ArrayList;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
-import edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment;
-import edu.ucsb.cs.cs185.foliostation.mycollections.DetailBlurDialog;
-import edu.ucsb.cs.cs185.foliostation.mycollections.GridCardAdapter;
+import edu.ucsb.cs.cs185.foliostation.collections.CardsFragment;
+import edu.ucsb.cs.cs185.foliostation.collections.DetailBlurDialog;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
 
 public class CollectionDetailsActivity extends AppCompatActivity {
@@ -102,7 +101,6 @@ public class CollectionDetailsActivity extends AppCompatActivity {
             canAddImage = false;
         }
 
-
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -123,11 +121,28 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                     case R.id.details_share_collection:
                         Intent shareIntent = new Intent(CollectionDetailsActivity.this, ShareActivity.class);
                         shareIntent.putExtra("CARD_INDEX", mCardIndex);
+                        shareIntent.putExtra("FROM", "DETAILS");
                         startActivity(shareIntent);
                         Log.i("selected", "share");
                         break;
                     case R.id.details_delete_collection:
                         Log.i("selected", "delete");
+                        new AlertDialog.Builder(CollectionDetailsActivity.this)
+                                .setTitle("Delete collection")
+                                .setMessage("Are you sure you want to delete this collection?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        ItemCards.getInstance(getApplicationContext()).deleteIthCard(mCardIndex);
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .show();
                         ItemCards.getInstance(getApplicationContext()).deleteIthCard(mCardIndex);
                         break;
                 }
