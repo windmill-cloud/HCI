@@ -39,14 +39,17 @@
                     android:id="@+id/tag_and_images_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_textview"
+                    android:background="@drawable/custom_textview2"
                     android:paddingBottom="4dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
                     android:paddingTop="4dp"
                     android:text="Tag"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/MyWhite"
+                    android:textSize="14sp"
                     android:layout_alignParentTop="true" />
 
             </android.support.v7.widget.Toolbar>
@@ -55,7 +58,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorLightGray"
+                android:background="@color/MyTransparentGray"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 tools:context="edu.ucsb.cs.cs185.foliostation.mycollections.CardsFragment">
 
