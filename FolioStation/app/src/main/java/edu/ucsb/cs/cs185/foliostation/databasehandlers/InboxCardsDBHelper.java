@@ -22,7 +22,7 @@ import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 
 public class InboxCardsDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "Folio.db";
+    private static final String DB_NAME = "Folios.db";
     public final String TABLE_NAME = "inboxcards";
 
     private boolean hasTable = false;

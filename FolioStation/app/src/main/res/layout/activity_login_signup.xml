@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.ucsb.cs.cs185.foliostation.LoginSignupActivity"
-    android:background="@color/MyMediumBlue">
+    android:background="@color/MyWhite">
 
 
 
@@ -77,7 +77,7 @@
     <Button
         android:text="Sign up"
         style="@style/SemiTransparentButton"
-        android:background="@drawable/custom_button"
+        android:background="@drawable/custom_button2"
         android:layout_width="wrap_content"
         android:id="@+id/signup_login_button"
         android:layout_below="@+id/password_again"
@@ -87,22 +87,22 @@
         android:layout_height="35dp" />
 
     <TextView
-        android:text="Forgot password?"
+        android:id="@+id/signup_forgot"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:textColor="@color/MyLightBlue"
-        android:layout_below="@+id/password_again"
-        android:layout_alignRight="@+id/password_text"
         android:layout_alignEnd="@+id/password_text"
-        android:gravity="center"
+        android:layout_alignRight="@+id/password_text"
+        android:layout_below="@+id/password_again"
         android:layout_marginTop="16dp"
-        android:id="@+id/textView5" />
+        android:gravity="center"
+        android:text="Forgot password?"
+        android:textColor="@color/MyPink" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/MyPink"
+        android:background="@color/MyDarkBlue"
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_alignParentTop="true"
@@ -112,7 +112,7 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_navigate_before_white_24dp"
             android:background="@color/transparent"
             android:id="@+id/toolbar_title"
             android:padding="5dp" />

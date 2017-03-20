@@ -60,7 +60,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         final Button signUpButton = (Button) findViewById(R.id.sign_up);
         signUpButton.getBackground().setColorFilter(
-                ContextCompat.getColor(getApplicationContext(), R.color.splashDarkTransparent),
+                ContextCompat.getColor(getApplicationContext(), R.color.splashWhiteTransparent),
                 PorterDuff.Mode.MULTIPLY);
         final Button logInButton = (Button) findViewById(R.id.log_in);
         logInButton.getBackground().setColorFilter(

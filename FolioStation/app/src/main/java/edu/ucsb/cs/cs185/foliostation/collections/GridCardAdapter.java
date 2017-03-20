@@ -147,8 +147,8 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
                     case R.id.card_toolbar_delete:
                         Log.i("selected", "delete");
                         new AlertDialog.Builder(mContext)
-                                .setTitle("Delete entry")
-                                .setMessage("Are you sure you want to delete this entry?")
+                                .setTitle("Delete Collecion")
+                                .setMessage("Are you sure you want to delete this collection?")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // continue with delete
