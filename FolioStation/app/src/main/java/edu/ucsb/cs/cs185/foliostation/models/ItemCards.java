@@ -128,7 +128,7 @@ public class ItemCards extends Cards{
 
         newCard.setTags(tags);
         newCard.setImages(cardImages);
-        cards.add(newCard);
+        cards.addFirst(newCard);
         flattenedImages.addAll(cardImages);
         rebuildTagsMap();
         DatabaseOperator.getInstance(mContext).getItemCardDBOperator().insertCard(newCard);

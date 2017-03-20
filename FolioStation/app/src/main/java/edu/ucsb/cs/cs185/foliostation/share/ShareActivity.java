@@ -88,7 +88,7 @@ public class ShareActivity extends AppCompatActivity {
                     TextView message = (TextView) findViewById(R.id.enter_message);
                     String description = message.getText().toString();
 
-                    TextView tagsView = (TextView) findViewById(R.id.enter_message);
+                    TextView tagsView = (TextView) findViewById(R.id.enter_tags);
                     String tags = tagsView.getText().toString();
 
                     prepareAndSendMessage(title, description, tags);

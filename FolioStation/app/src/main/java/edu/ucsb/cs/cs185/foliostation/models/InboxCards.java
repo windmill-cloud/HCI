@@ -53,4 +53,17 @@ public class InboxCards extends Cards{
         cards.addFirst(newCard);
         DatabaseOperator.getInstance(mContext).getInboxCardsDBOperator().insertCard(newCard);
     }
+
+    public boolean hasUnreadMessage(){
+        for(Card card: cards){
+            if(!card.isRead()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasNoMessage(){
+        return cards.size() == 0;
+    }
 }

@@ -18,8 +18,8 @@
     <color name="colorControlNormal">#000000</color>
 
     <color name="colorPrimaryDark">#dcdcdc</color>
-    <color name="colorAccent">#3eb489</color>
-    <color name="colorDark">#2b8162</color>
+    <color name="colorAccent">#02a7c7</color>
+    <color name="colorDark">#242E3E</color>
     <color name="colorGrayTransparent">#75424242</color>
 
     <color name="splashGreenTransparent">#02a7c7</color>
