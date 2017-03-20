@@ -30,9 +30,9 @@ import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 
 public class ItemCardsDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "ItemCards.db";
+    private static final String DB_NAME = "Folio.db";
     public final String TABLE_NAME = "itemcards";
-    private boolean hasTable = false;
+    //private boolean hasTable = false;
 
     public static final int UUID = 0;
     public static final int TITLE = 1;
@@ -43,6 +43,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
 
     public ItemCardsDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        //context.deleteDatabase(DB_NAME);
     }
 
     public String getTableName() {
@@ -54,15 +55,15 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
         // create table Matches(Id integer primary key, CustomName text, OrderPrice integer, Country text);
         String sql = "create table if not exists " +
                 TABLE_NAME +
-                " (id text primary key, " +
-                "title text, " +
-                "description text, " +
-                "coverindex integer, " +
-                "tags text, " +
+                " (id text primary key," +
+                "title text," +
+                "description text," +
+                "coverindex text," +
+                "tags text," +
                 "images text)";
 
         sqLiteDatabase.execSQL(sql);
-        hasTable = true;
+        //hasTable = true;
     }
 
     @Override
@@ -78,7 +79,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("id", card.getUUID());
         contentValues.put("title", card.getTitle());
         contentValues.put("description", card.getDescription());
-        contentValues.put("coverindex", card.getCoverIndex());
+        contentValues.put("coverindex", String.valueOf(card.getCoverIndex()));
         contentValues.put("tags", card.getTagsJson());
         contentValues.put("images", card.getImagesJson());
         db.insert(TABLE_NAME, null, contentValues);
@@ -103,7 +104,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("id", card.getUUID());
         contentValues.put("title", card.getTitle());
         contentValues.put("description", card.getDescription());
-        contentValues.put("coverindex", card.getCoverIndex());
+        contentValues.put("coverindex", String.valueOf(card.getCoverIndex()));
         contentValues.put("tags", card.getTagsJson());
         contentValues.put("images", card.getImagesJson());
         db.update(TABLE_NAME, contentValues, "id='" + card.getUUID() + "'", null);
@@ -118,9 +119,11 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
     public void populateCards(Context context) {
 
         SQLiteDatabase db = this.getReadableDatabase();
+        /*
         if(!hasTable){
             this.onCreate(db);
-        }
+            return;
+        }*/
         Cursor res =  db.rawQuery( "select * from " + TABLE_NAME, null );
         res.moveToFirst();
 
@@ -128,7 +131,7 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
             String uuid = res.getString(UUID);
             String title = res.getString(TITLE);
             String description = res.getString(DESCRIPTION);
-            int coverindex = res.getInt(COVERINDEX);
+            String coverindex = res.getString(COVERINDEX);
             String tags = res.getString(TAGS);
             String images = res.getString(IMAGES);
 
@@ -141,7 +144,8 @@ public class ItemCardsDBHelper extends SQLiteOpenHelper {
                     gson.fromJson(images, new TypeToken<List<Cards.CardImage>>(){}.getType());
 
             ItemCards.getInstance(context).
-                    addNewCardFromDB(uuid, title, description, coverindex, tagsList, imageList);
+                    addNewCardFromDB(uuid, title, description,
+                            Integer.parseInt(coverindex), tagsList, imageList);
 
             res.moveToNext();
         }

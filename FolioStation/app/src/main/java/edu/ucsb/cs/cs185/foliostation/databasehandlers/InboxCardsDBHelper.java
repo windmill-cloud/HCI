@@ -22,7 +22,7 @@ import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 
 public class InboxCardsDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "ItemCards.db";
+    private static final String DB_NAME = "Folio.db";
     public final String TABLE_NAME = "inboxcards";
 
     private boolean hasTable = false;
@@ -54,7 +54,7 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
                 " (id text primary key, " +
                 "title text, " +
                 "description text, " +
-                "coverindex integer, " +
+                "coverindex text, " +
                 "username text, " +
                 "userprofile text, " +
                 "read integer, " +
@@ -78,7 +78,7 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("id", card.getUUID());
         contentValues.put("title", card.getTitle());
         contentValues.put("description", card.getDescription());
-        contentValues.put("coverindex", card.getCoverIndex());
+        contentValues.put("coverindex", String.valueOf(card.getCoverIndex()));
         contentValues.put("username", card.getUsername());
         contentValues.put("userprofile", card.getProfileJSon());
         int read = card.isRead()? 1: 0;
@@ -107,7 +107,7 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
         contentValues.put("id", card.getUUID());
         contentValues.put("title", card.getTitle());
         contentValues.put("description", card.getDescription());
-        contentValues.put("coverindex", card.getCoverIndex());
+        contentValues.put("coverindex", String.valueOf(card.getCoverIndex()));
         contentValues.put("username", card.getUsername());
         contentValues.put("userprofile", card.getProfileJSon());
         int read = card.isRead()? 1: 0;
@@ -138,7 +138,7 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
             String uuid = res.getString(UUID);
             String title = res.getString(TITLE);
             String description = res.getString(DESCRIPTION);
-            int coverindex = res.getInt(COVERINDEX);
+            String coverindex = res.getString(COVERINDEX);
             String username = res.getString(USERNAME);
             String userprofile = res.getString(USERPROFILE);
             int read = res.getInt(READ);
@@ -159,7 +159,7 @@ public class InboxCardsDBHelper extends SQLiteOpenHelper {
             boolean readbool = read > 0;
 
             InboxCards.getInstance(context).
-                    addNewCardFromDetails(uuid, title, description, coverindex,
+                    addNewCardFromDetails(uuid, title, description, Integer.parseInt(coverindex),
                             username, profileImage, readbool, tagsList, imageList);
 
             res.moveToNext();
