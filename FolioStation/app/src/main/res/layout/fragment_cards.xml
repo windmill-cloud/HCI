@@ -36,6 +36,8 @@
                 android:background="@color/transparent"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="Collections"
+                app:titleTextColor="@color/black"
                 >
 
             </android.support.v7.widget.Toolbar>

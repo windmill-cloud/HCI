@@ -80,7 +80,7 @@ public class CardsFragment extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_cards, container, false);
 
         toolbar = (Toolbar) rootView.findViewById(R.id.card_fragment_toolbar);
-
+        
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.cards_recycler);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
