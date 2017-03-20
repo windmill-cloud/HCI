@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import edu.ucsb.cs.cs185.foliostation.Inbox.InboxActivity;
 import edu.ucsb.cs.cs185.foliostation.SplashScreenActivity;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
+import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.collectiondetails.CollectionDetailsActivity;
@@ -63,6 +64,7 @@ public class CardsFragment extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     Toolbar toolbar;
+    Menu mMenu;
 
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 7654;
     private static final int IMAGE_PICKER = 1234;
@@ -120,7 +122,6 @@ public class CardsFragment extends Fragment {
         mRecyclerView.setAdapter(mGridCardAdapter);
         mGridCardAdapter.notifyDataSetChanged();
 
-
         return rootView;
     }
 
@@ -155,13 +156,24 @@ public class CardsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+
+        mMenu = menu;
+
         super.onCreateOptionsMenu(menu, inflater);
+        if(InboxCards.getInstance(getContext()).hasUnreadMessage()){
+            menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.ic_new_mms_black_24dp));
+        } else if(InboxCards.getInstance(getContext()).hasNoMessage()){
+            menu.getItem(1).setVisible(false);
+        } else {
+            menu.getItem(1).setVisible(true);
+            menu.getItem(1).setIcon(getResources().getDrawable(R.drawable.ic_mms_black_24dp));
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(mGridCardAdapter != null){
+        if (mGridCardAdapter != null) {
             mGridCardAdapter.notifyDataSetChanged();
         }
     }
@@ -209,7 +221,6 @@ public class CardsFragment extends Fragment {
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
-            String msg = "";
             switch (menuItem.getItemId()) {
                 case R.id.action_adding:
                     if (ContextCompat.checkSelfPermission(getActivity(),
@@ -245,24 +256,18 @@ public class CardsFragment extends Fragment {
                         imagePicker.setShowCamera(true);
                         startImagesPicking();
                     }
-                    msg += "Click edit";
                     break;
                 case R.id.action_shared:
                     // TODO: implement get shared content functionality
-                    msg += "Click share";
                     startInboxActivity();
                     break;
                 case R.id.action_settings:
-                    msg += "Click setting";
                     break;
                 case R.id.action_logout:
                     startSplashScreen();
                     break;
             }
 
-            if(!msg.equals("")) {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-            }
             return true;
         }
     };
