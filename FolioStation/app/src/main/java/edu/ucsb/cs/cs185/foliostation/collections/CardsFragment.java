@@ -231,8 +231,7 @@ public class CardsFragment extends Fragment {
 
                             // No explanation needed, we can request the permission.
 
-                            ActivityCompat.requestPermissions(getActivity(),
-                                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                             android.Manifest.permission.CAMERA},
                                     ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
 
