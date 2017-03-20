@@ -79,7 +79,7 @@ public class EditInfoFragment extends Fragment {
                     sb.append(tag).append(", ");
                 }
                 sb.setLength(sb.length()-2);
-                mTags.setText(sb.toString().toUpperCase());
+                mTags.setText(sb.toString());
             }
         }
     }

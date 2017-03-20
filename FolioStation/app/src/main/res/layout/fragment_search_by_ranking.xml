@@ -31,13 +31,14 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@android:color/darker_gray">
+                app:titleTextColor="@color/MyWhite">
 
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/search_by_ranking_search_view"
-                android:queryHint="Search by Tag">
+                android:queryHint="Search by Tag"
+                android:textSize="14sp">
 
             </SearchView>
 
@@ -47,14 +48,14 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightGray"
-
+            android:background="@color/MyTransparentGray"
             tools:context="edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+
                 >
 
                 <android.support.v7.widget.RecyclerView
