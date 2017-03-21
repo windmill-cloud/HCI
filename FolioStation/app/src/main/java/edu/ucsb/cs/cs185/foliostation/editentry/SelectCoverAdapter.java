@@ -23,6 +23,7 @@ import java.io.File;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by xuanwang on 2/24/17.
@@ -89,36 +90,11 @@ public class SelectCoverAdapter extends RecyclerView.Adapter<CardViewHolder>
             holder.mask.bringToFront();
         }
 
-        if(image.isFromPath()) {
-            Picasso.with(mContext)
-                    .load(new File(image.mUrl))
-                    .resize(1500, 1500)
-                    .centerCrop()
-                    .into(holder.imageView);
-        } else {
-            Picasso.with(mContext)
-                    .load(image.mUrl)
-                    .resize(1500, 1500)
-                    .centerCrop()
-                    .into(holder.imageView);
-        }
-
-        //holder.imageView.setImageBitmap(mCardImages.get(i));
+        PicassoImageLoader.loadImageToView(mContext,
+                image, holder.imageView, 450, 450);
 
         holder.imageView.setTag(i);
-        //holder.imageView.setBackgroundResource(R.drawable.placeholder);
-
         holder.imageView.setOnClickListener(this);
-
-        /*
-        holder.title.setText(card.mTitle);
-        holder.description.setText(card.mDescription);
-        /*
-        Button buyBtn = holder.buyAlbum;
-        buyBtn.setText(String.format("See %s on ALLMUSIC", albums.get(i).albumName));
-        holder.buyAlbum.setOnClickListener(this);
-        buyBtn.setTag(albums.get(i).amazonUrl);
-        */
     }
 
     @Override

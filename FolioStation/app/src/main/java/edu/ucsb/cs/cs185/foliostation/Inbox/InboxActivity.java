@@ -49,7 +49,6 @@ public class InboxActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //TODO: replace with your own adapter
         mGridCardAdapter = new InboxAdapter(InboxCards.getInstance(this).cards, mInboxActivity);
         mGridCardAdapter.setHasStableIds(true);
 

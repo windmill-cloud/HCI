@@ -25,6 +25,7 @@ import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by xuanwang on 3/4/17.
@@ -64,22 +65,9 @@ public class SearchAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
 
         Cards.CardImage coverImage=mImages.get(position);
-        // TODO: refactor picture loading
-        if(coverImage.isFromPath()){
-            Picasso.with(mContext)
-                    .load(new File(coverImage.mUrl))
-                    .resize(450,450)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        }else{
-            Picasso.with(mContext)
-                    .load(coverImage.mUrl)
-                    .resize(450,450)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        }
+
+        PicassoImageLoader.loadImageToView(mContext,
+                coverImage, holder.imageView, 450, 450);
 
         holder.imageView.setOnClickListener(this);
         holder.imageView.setTag(position);

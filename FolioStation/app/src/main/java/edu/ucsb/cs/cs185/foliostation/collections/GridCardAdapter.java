@@ -30,6 +30,7 @@ import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by xuanwang on 2/19/17.
@@ -70,22 +71,8 @@ public class GridCardAdapter extends RecyclerView.Adapter<CardViewHolder>
         }
         final ItemCards.Card card = ItemCards.getInstance(mContext).cards.get(i);
 
-        // TODO: refactor picture loading
-        if(card.getCoverImage().isFromPath()) {
-            Picasso.with(mContext)
-                    .load(new File(card.getCoverImage().mUrl))
-                    .resize(450, 450)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        } else {
-            Picasso.with(mContext)
-                    .load(card.getCoverImage().mUrl)
-                    .resize(450, 450)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        }
+        PicassoImageLoader.loadImageToView(mContext,
+                card.getCoverImage(), holder.imageView, 450, 450);
 
         holder.imageView.setTag(i);
 

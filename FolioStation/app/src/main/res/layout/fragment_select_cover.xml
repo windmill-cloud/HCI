@@ -13,7 +13,6 @@
     android:layout_height="match_parent"
     tools:context="edu.ucsb.cs.cs185.foliostation.editentry.SelectCoverFragment">
 
-    <!-- TODO: Update blank fragment bottom_navigation_main -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -26,6 +26,7 @@ import java.io.File;
 
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 
 /**
@@ -75,62 +76,43 @@ public class DetailBlurDialog extends DialogFragment {
 
         if(from != null ){
             if(from.equals("GRID")){
-                // TODO: refactor picture loading
                 ItemCards.Card card = ItemCards.getInstance(getContext()).cards.get(idx);
 
-                if(card.getCoverImage().isFromPath()) {
-                    Picasso.with(getContext())
-                            .load(new File(card.getCoverImage().mUrl))
-                            .resize(600, 600)
-                            .centerCrop()
-                            .into(imageView);
-                } else {
-                    Picasso.with(getContext())
-                            .load(card.getCoverImage().mUrl)
-                            .resize(600, 600)
-                            .centerCrop()
-                            .into(imageView);
-                }
-
-                //imageView.setImageDrawable(card.mImages.get(0).mDrawable);
+                PicassoImageLoader.loadImageToView(getContext(),
+                        card.getCoverImage(), imageView, 600, 600);
 
                 title.setText(card.getTitle());
 
                 description.setText(card.getDescription());
 
             } else if(from.equals("DETAILS")){
-                // TODO: refactor picture loading
                 ItemCards.Card card = ItemCards.getInstance(getContext()).cards.get(idx);
                 int imageIndex = getArguments().getInt("IMAGE_INDEX");
 
-                if(card.getImages().get(imageIndex).isFromPath()) {
-                    Picasso.with(getContext())
-                            .load(new File(card.getImages().get(imageIndex).mUrl))
-                            .resize(600, 600)
-                            .centerCrop()
-                            .into(imageView);
-                } else {
-                    Picasso.with(getContext())
-                            .load(card.getImages().get(imageIndex).mUrl)
-                            .resize(600, 600)
-                            .centerCrop()
-                            .into(imageView);
-                }
+                PicassoImageLoader.loadImageToView(getContext(),
+                        card.getImages().get(imageIndex), imageView, 600, 600);
 
                 title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
                 description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
             } else if(from.equals("SINGLE_IMAGE")){
-                // TODO: refactor picture loading
 
                 int type = getArguments().getInt("TYPE");
                 String url = getArguments().getString("URL");
 
                 if(type == ItemCards.PATH) {
-                    Picasso.with(getContext())
-                            .load(new File(url))
-                            .resize(600, 600)
-                            .centerCrop()
-                            .into(imageView);
+                    File file = new File(url);
+                    if(!file.exists()){
+                        Picasso.with(getContext())
+                                .load(R.drawable.fileremoved)
+                                .fit()
+                                .into(imageView);
+                    } else {
+                        Picasso.with(getContext())
+                                .load(new File(url))
+                                .resize(600, 600)
+                                .centerCrop()
+                                .into(imageView);
+                    }
                 } else {
                     Picasso.with(getContext())
                             .load(url)

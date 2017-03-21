@@ -43,6 +43,7 @@ import edu.ucsb.cs.cs185.foliostation.editentry.EditTabsActivity;
 import edu.ucsb.cs.cs185.foliostation.collections.CardsFragment;
 import edu.ucsb.cs.cs185.foliostation.collections.DetailBlurDialog;
 import edu.ucsb.cs.cs185.foliostation.share.ShareActivity;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 public class CollectionDetailsActivity extends AppCompatActivity {
 
@@ -69,7 +70,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
 
         final ItemCards.Card card = ItemCards.getInstance(getApplicationContext()).cards.get(mCardIndex);
 
-        mAdapter = new CollectionDetailsAdapter(getApplicationContext(), card.getImages());
+        mAdapter = new CollectionDetailsAdapter(this, card.getImages());
         mAdapter.setHasStableIds(true);
 
         mLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
@@ -184,22 +185,8 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         TextView descriptionText = (TextView) findViewById(R.id.details_descriptions);
 
         if(card != null) {
-            // TODO: refactor picture loading
-            if (card.getCoverImage().isFromPath()) {
-                Picasso.with(getApplicationContext())
-                        .load(new File(card.getCoverImage().mUrl))
-                        .resize(600, 600)
-                        .centerCrop()
-                        .noFade()
-                        .into(coverImage);
-            } else {
-                Picasso.with(getApplicationContext())
-                        .load(card.getCoverImage().mUrl)
-                        .resize(600, 600)
-                        .centerCrop()
-                        .noFade()
-                        .into(coverImage);
-            }
+            PicassoImageLoader.loadImageToView(this, card.getCoverImage(), coverImage, 600, 600);
+
             titleText.setText(card.getTitle());
             tagsText.setText(card.getTagsString());
             descriptionText.setText(card.getDescription());
