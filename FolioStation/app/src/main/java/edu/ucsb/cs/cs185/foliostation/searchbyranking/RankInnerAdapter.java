@@ -26,6 +26,7 @@ import java.util.List;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.models.Cards;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by xuanwang on 3/5/17.
@@ -66,21 +67,9 @@ public class RankInnerAdapter extends RecyclerView.Adapter<CardViewHolder>
         Cards.CardImage cardImage = mCardImages.get(position);
         ImageView imageView = holder.imageView;
 
-        if(cardImage.isFromPath()) {
-            Picasso.with(mContext)
-                    .load(new File(cardImage.mUrl))
-                    .resize(220, 220)
-                    .centerCrop()
-                    .noFade()
-                    .into(imageView);
-        } else {
-            Picasso.with(mContext)
-                    .load(cardImage.mUrl)
-                    .resize(220, 220)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        }
+        PicassoImageLoader.loadImageToView(mContext,
+                cardImage, imageView, 220, 220);
+
         imageView.setOnClickListener(new View.OnClickListener(){
 
             @Override

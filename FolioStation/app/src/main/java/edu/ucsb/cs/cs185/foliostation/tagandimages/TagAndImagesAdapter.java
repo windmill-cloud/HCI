@@ -16,6 +16,7 @@ import java.util.List;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by xuanwang on 3/17/17.
@@ -57,25 +58,11 @@ public class TagAndImagesAdapter extends RecyclerView.Adapter<CardViewHolder>
         ImageView imageView = holder.imageView;
         ItemCards.CardImage cardImage = mImages.get(position);
 
-        // TODO: refactor picture loading
-        if(cardImage.isFromPath()) {
-            Picasso.with(mContext)
-                    .load(new File(cardImage.mUrl))
-                    .resize(500, 500)
-                    .centerCrop()
-                    .noFade()
-                    .into(imageView);
-        } else {
-            Picasso.with(mContext)
-                    .load(cardImage.mUrl)
-                    .resize(500, 500)
-                    .centerCrop()
-                    .noFade()
-                    .into(imageView);
-        }
+        PicassoImageLoader.loadImageToView(mContext,
+                cardImage, imageView, 500, 500);
+
         imageView.setTag(position);
         imageView.setOnClickListener(this);
-
     }
 
     @Override
@@ -87,7 +74,6 @@ public class TagAndImagesAdapter extends RecyclerView.Adapter<CardViewHolder>
     public long getItemId(int position) {
         return position;
     }
-
 
     //define Item click interface
     public interface OnRecyclerViewItemClickListener {

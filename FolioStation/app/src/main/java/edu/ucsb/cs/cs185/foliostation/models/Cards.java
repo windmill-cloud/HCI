@@ -399,7 +399,7 @@ public class Cards {
                                  List<CardImage> images){
         Card newCard = new Card(UUID, title, descriptions, coverIndex, tags, images);
         flattenedImages.addAll(newCard.getImages());
-        cards.add(newCard);
+        cards.addFirst(newCard);
     }
 
     public List<CardImage> searchByTag(String query){

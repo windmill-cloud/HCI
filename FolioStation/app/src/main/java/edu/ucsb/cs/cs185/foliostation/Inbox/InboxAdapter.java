@@ -24,6 +24,7 @@ import edu.ucsb.cs.cs185.foliostation.databasehandlers.DatabaseOperator;
 import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by Hilda on 18/03/2017.
@@ -44,21 +45,8 @@ public class InboxAdapter extends RecyclerView.Adapter<CardViewHolder>
     public void onBindViewHolder(CardViewHolder holder, final int position) {
         final InboxCards.Card card = InboxCards.getInstance(mActivity).cards.get(position);
 
-        if(card.getProfile().isFromPath()) {
-            Picasso.with(mActivity)
-                    .load(new File(card.getProfile().mUrl))
-                    .resize(200, 200)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.profileImage);
-        } else {
-            Picasso.with(mActivity)
-                    .load(card.getProfile().mUrl)
-                    .resize(200, 200)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.profileImage);
-        }
+        PicassoImageLoader.loadImageToView(mActivity,
+                card.getProfile(), holder.profileImage, 200, 200);
 
         setTextView(holder.title, card.getTitle());
         setTextView(holder.tags, card.getTagsString());
@@ -93,7 +81,7 @@ public class InboxAdapter extends RecyclerView.Adapter<CardViewHolder>
                         DatabaseOperator.getInstance(mActivity)
                                 .getInboxCardsDBOperator().updateCards(card);
 
-                        Toast toast = Toast.makeText(mActivity, "Set as read",
+                        Toast toast = Toast.makeText(mActivity, "Marked as read",
                                 Toast.LENGTH_SHORT);
 
                         TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
@@ -159,16 +147,6 @@ public class InboxAdapter extends RecyclerView.Adapter<CardViewHolder>
                             LinearLayout.LayoutParams.WRAP_CONTENT));
             textview.setText(content);
         }
-    }
-
-    //TODO: finish implementation in database
-    private void addToMyCollection(int position){
-
-    }
-
-    //TODO: finish implementation in database
-    private void deleteSharedItemFromDB(int position){
-
     }
 
     @Override

@@ -10,15 +10,16 @@
 package edu.ucsb.cs.cs185.foliostation.utilities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.lzy.imagepicker.loader.ImageLoader;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.models.Cards;
 
 /**
  * Created by xuanwang on 2/24/17.
@@ -42,4 +43,33 @@ public class PicassoImageLoader implements ImageLoader {
     public void clearMemoryCache() {
         //这里是清除缓存的方法,根据需要自己实现
     }
+
+    public static void loadImageToView(Context context, Cards.CardImage image, ImageView view, int width, int height) {
+        if (image.isFromPath()) {
+            File file = new File(image.mUrl);
+            if(!file.exists()){
+                Picasso.with(context)
+                        .load(R.drawable.fileremoved)
+                        //.resize(width, height)
+                        .fit()
+                        .noFade()
+                        .into(view);
+            } else {
+                Picasso.with(context)
+                        .load(new File(image.mUrl))
+                        .resize(width, height)
+                        .centerCrop()
+                        .noFade()
+                        .into(view);
+            }
+        } else {
+            Picasso.with(context)
+                    .load(image.mUrl)
+                    .resize(width, height)
+                    .centerCrop()
+                    .noFade()
+                    .into(view);
+        }
+    }
+
 }

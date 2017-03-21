@@ -26,6 +26,7 @@ import java.util.List;
 
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,22 +87,9 @@ public class EditInfoFragment extends Fragment {
 
     public void setUpdatedCoverImage(){
         if(mItemCard != null && mImageView != null){
-            // TODO: refactor picture loading
-            if(mItemCard.getCoverImage().isFromPath()) {
-                Picasso.with(getContext())
-                        .load(new File(mItemCard.getCoverImage().mUrl))
-                        .resize(240, 240)
-                        .centerCrop()
-                        .noFade()
-                        .into(mImageView);
-            } else {
-                Picasso.with(getContext())
-                        .load(mItemCard.getCoverImage().mUrl)
-                        .resize(240, 240)
-                        .centerCrop()
-                        .noFade()
-                        .into(mImageView);
-            }
+            PicassoImageLoader.loadImageToView(getContext(),
+                    mItemCard.getCoverImage(), mImageView, 220, 220);
+
         }
     }
 

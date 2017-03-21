@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/MyTransparentGray"
-            tools:context="edu.ucsb.cs.cs185.foliostation.search.SearchByTagFragment">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"

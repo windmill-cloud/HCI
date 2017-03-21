@@ -9,7 +9,9 @@
 
 package edu.ucsb.cs.cs185.foliostation.collectiondetails;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import java.util.List;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.R;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
+import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
 
 /**
  * Created by xuanwang on 3/3/17.
@@ -34,11 +37,11 @@ public class CollectionDetailsAdapter extends RecyclerView.Adapter<CardViewHolde
 
     List<ItemCards.CardImage> mImages;
 
-    Context mContext = null;
+    Activity mContext = null;
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public CollectionDetailsAdapter(Context context, List<ItemCards.CardImage> images){
+    public CollectionDetailsAdapter(Activity context, List<ItemCards.CardImage> images){
         mContext = context;
         mImages = images;
     }
@@ -56,24 +59,11 @@ public class CollectionDetailsAdapter extends RecyclerView.Adapter<CardViewHolde
 
         if(mContext == null){
             Log.e("mContext", "null");
+            return;
         }
 
-        // TODO: refactor picture loading
-        if(mImages.get(position).isFromPath()) {
-            Picasso.with(mContext)
-                    .load(new File(mImages.get(position).mUrl))
-                    .resize(300, 450)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        } else {
-            Picasso.with(mContext)
-                    .load(mImages.get(position).mUrl)
-                    .resize(300, 450)
-                    .centerCrop()
-                    .noFade()
-                    .into(holder.imageView);
-        }
+        PicassoImageLoader.loadImageToView(mContext,
+                mImages.get(position), holder.imageView, 450, 450);
 
         holder.imageView.setOnClickListener(this);
         holder.imageView.setTag(position);
