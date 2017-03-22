@@ -1,3 +1,12 @@
+/*
+ *  Copyright (c) 2017 - present, Xuan Wang
+ *  All rights reserved.
+ *
+ *  This source code is licensed under the BSD-style license found in the
+ *  LICENSE file in the root directory of this source tree.
+ *
+ */
+
 package edu.ucsb.cs.cs185.foliostation.Inbox;
 
 import android.app.Activity;
@@ -25,10 +34,6 @@ import edu.ucsb.cs.cs185.foliostation.models.InboxCards;
 import edu.ucsb.cs.cs185.foliostation.models.ItemCards;
 import edu.ucsb.cs.cs185.foliostation.collections.CardViewHolder;
 import edu.ucsb.cs.cs185.foliostation.utilities.PicassoImageLoader;
-
-/**
- * Created by Hilda on 18/03/2017.
- */
 
 public class InboxAdapter extends RecyclerView.Adapter<CardViewHolder>
                                 implements View.OnClickListener {

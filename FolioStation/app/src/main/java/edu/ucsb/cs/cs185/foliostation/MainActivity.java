@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment mGridFragment;
     Fragment mSearchFragment;
 
-    int prevFragmentpPosition = -1;
+    int prevFragmentPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if(position == 0){
-                    prevFragmentpPosition = -1;
+                    prevFragmentPosition = -1;
                 } else {
-                    prevFragmentpPosition = position - 1;
+                    prevFragmentPosition = position - 1;
                 }
                 SearchByRankingFragment searchFragment =
                         (SearchByRankingFragment) mSearchFragment;
@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (prevFragmentpPosition >= 0) {
-            mViewPager.setCurrentItem(prevFragmentpPosition);
+        if (prevFragmentPosition >= 0) {
+            mViewPager.setCurrentItem(prevFragmentPosition);
         } else {
             super.onBackPressed();
         }
