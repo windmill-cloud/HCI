@@ -1,0 +1,62 @@
+/*
+ *  Copyright (c) 2017 - present, Xuan Wang
+ *  All rights reserved.
+ *
+ *  This source code is licensed under the BSD-style license found in the
+ *  LICENSE file in the root directory of this source tree.
+ *
+ */
+
+package edu.ucsb.cs.cs185.inspirante.models;
+
+import android.content.Context;
+
+/**
+ * Created by xuanwang on 3/4/17.
+ */
+
+public class DiscoverCards extends Cards {
+    public static DiscoverCards mInstance;
+
+
+    DiscoverCards(Context context) {
+        super(context);
+        inflateDummies();
+    }
+
+    public static synchronized DiscoverCards getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new DiscoverCards(context);
+        }
+        return mInstance;
+    }
+
+    public void inflateDummies(){
+        Card card = new Card("Goleta", "California");
+        card.setProfile(new CardImage("https://upload.wikimedia.org/wikipedia/en/5/56/Goleta_city_seal.jpg", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/3ptRxSM1BX3EfnxesYR0VlJepKxkUHg6L-VyUCMjt8CMr9I1s9MuIcBd_Z-jY-xJA1UpPqt63t9AO6TQQTGCEmIr4aVTuwO5D2igyYm3eEA1sTfzfaEtGrU0QclM-CeCBLD8hxdsHBL2klPhyWAS0ikqVRV6MPgaQBFfpkXkYYoVeTjT5xz_BiCUlNKz14H4-pLRyWQ_5gsZ6L8HKNAN00hVhK486_nq4iLi7220jB8nSkLhsoAKWfWIcUw-emhtPk7rmijdKUxNsDzu9IX3pzVVXLAgz8Uy980HqxJdOWUxzr-q0eYX8l5LmCjJqI6i_3YXXM5M5GhFFPWqUpr-FwLd7elxTlrvvvnkeaGrXEpxarI8Z5G1X3YXPJeG7f7BfISQNqKo5jZvSWBGukEzkhGuibIkTl-5gl3Zlq7LqhWcUzssPwx8-byqGHE5-C0pUOMjal_GndDjcCebDj9DLe48CI5B2wTtjCJvVKHff5m0Zx2FbZSpOLD_41mNxDtE4gy8utfZYplKpGIYZC-JafA-3fINeV4ZF2R61pREXQIQc9Bpo8Z5BRRj3pBiCzxh4tgt4nmSOo8xG59PjRbgrbok8i8AiAicWf3xRBpwwnQdECpx3VdvAW5Fkv4siOdfYPz_qaRkCx7pQJEwJdiYlvFDJucRfOpf0rT95T54iw=w1168-h657-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/nPip93ivy9W2f9S-sS_LzFWZ7vJdEfjmfNW3gTAMN2X7KpZHignBQcdU-40FSBd0MdrvHQcdnrtv-aenbam-PVRvwpPMjCl7sAtF5vSf2OepANyv9oubjH-1qV_qhiXvsDZ1XiYMfgWvjr2gc0hk9xtVnFloOY1ZQUp9WnWcMKDb5bryGLtUFJPJeSGRKCaO32P-11MaknLGRWIzCSPilNy9MNJ-8UDcCm1R15R_pEJhxUqkwP8vFJaHBv3Ya8eDpQFno9DZTTpv8a47mgt81kvwnRLwAU8SjNutV_XhyOSQfQQdE0BRBbNcT4VA6F8_kMN64tqbfxLKF06-cGetd85ezmQMrSqQux2ICBqa_nftTqrHSzAhNwhlH_S4jGchxvhyrwMKXQyrtQtioD0s6z3ZppKN6HhQ-EoAyoVSX4i5iW9fcLf46x6_CGKyXFV0bU6HRevelqylBbaYf6mX8c-dbVXhbUeWCgXLwuJiQAWrq08w3iQ9irVJXrVyO6H6DCZ81RB7KEdyEHh0gq14khQuKMB6zEmRR4aAxCv3UrdbYAT9A4UWTWaIiKI9fxSMZoz-rChVnXwoTH49sLSmqwnlSXUBlvKguXHVr0htDc0CGSbioq6_qLnwSd_n1NBSk9qcd819241vptYURi2aIU3a4oGhqUvEh8RyS9XgMg=w1168-h657-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/sTkT0c4U8_KST6WWKFKJ0aI_9gH7PAR0xR7xoPqx-RIiejkooIV0BRoZdj1qvPzb7hQNqkJA0nLO75vyGK-AaFZRdZoh1oY1h2PjgzqO3q2Q_css9REhsKeolRR6rQ8G7_NvdiF8-6Hn23mFrIWfR-ld6eBRKe6zRHmpxHcWg5iH5lUGKQe2cQzv3PlDcgvqPIPGUykbk8Wuz2UTmH9Z7VejS2lOtNV1kI4RpSGPUiZo53B8Dt9fRH9SOaopGm9gHv7UeBOFTj4VXNEqyk4wzYjiB7T0IHR4IwVR9-dLFdoh_w-kuRgtIvwlmEG5DCawWA66c3uQi6zEhNGoPApEnZTHDijP330LOPa-ShUY-wEC3l4kTA6356i-12NmuAUzO2hydFZLLA8qV9IYpByGqAYkQPXF-PfG3gAIyPVaqzJNaDcHj4adpXX0IeqPy4cmov_3Q4JrGUJwpLvptdxtjM5e4yy16occkE-3kQTKi5mTNOeQYq53ng21aJ15MD7FWIXZSOG6XUYXy3dZu_cXSR4p_E27mOCMytWzivQkaYiai1Y0PrCWrqrJoD3rfCou03-PE3SK624ss3MHBVQFagmIRHuW8kgjsjBYImBxmTaKQbZ93YfIZ7Rzz_rORze4pfY8LXPCns3mhndSxKagdMroe4iIR73ivCunKQckWA=w1168-h657-no", URL));
+        card.setNumLikes(256);
+        cards.add(card);
+
+        card = new Card("UCSB", "California");
+        card.setProfile(new CardImage("https://lh5.googleusercontent.com/proxy/MhT0tjm263lpfStrtVlXnSeavEMuDCGncSnaomEzC2O5xWewFH2AVS2OTe1abnuCEqcMCckxxTmFccMFG_pnm5Jb5u-jmkGF3AqLGZkgtYhf5xnUvVAi2D1VVNeU8kktHpTX_eOWw4HYbnouCdxGYjhTo2cquA=w160-h160", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/aJjXhcR6WsadKeRSCVrrMOOu8d9amFxAfp7pYi8g4aFx7YP056I8_49l8hwBeAGlQD49LIAFDDVIN_cXCmIuYambwWRbEoOvF5UpLzOZ8iyBgsBJTRwLXmjv8gOrcH-bTw7H7PS-kEsJTuLUqdq6irTv1f-oZCWbs0DKyqDLigEZWjKObTSFoQdcCaCS410ZO6F951NZ2xy2JSnCvXIg1KAQXG3jkrMVQsG5s-UlwRxq2HmrV7P3um8BWTQSsz9sdl5_a-ANadCkLn53m0Xt4EqFp6PQnHIaF9v6IO5rnWvAVwXZVOTGQwEgOTlGPOZJCpMy-akkTCxmPRGbALD4GL-HPWUV10rCaTH8RFUSVof5HVExI5obYFOJ66fGtSO2l5YzxIRePbHMBvNmedATkMiZuI26dqJzsk7jqwruNxyOEmFHuyCjsO5YaecydJzAxWRybG8cCydt4qQG7JOSgXhXzfIFWqgIBRR7F2hnwAyVgnirSeoecTCwh6Qpw8rooUZhHMrbEEvij5BrFNlm-qQBtuDD5DvwzSPxzP9Hpeq2QiG3mJhivEgn7FO17p9cg55GOG7W9wEKYiFBkXUST0Gx6ctRJ7D-QLY7pZCMKym1h8fJzQN_balDwbcW-PsXHtxzM18tTLa_iimU4sgjpUT24x6l2lm-TY24jjB3-w=w1168-h663-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/6HGpQRW_JhYNrqA4rFMo5mF9e4H-qRSHoQaJPCEedLRSw86pTbDzVYqwOOZHnyHz87Ye--ASthCdvKRGg3yQNxiN6hmZRCF1glmGmRS7HGB0iYKqWAqCXzHmixR1gU48F21Cg4o48K87Grh3LDokSZlC41cN8MOwSSOxUXkIyou7EBJB2sj8Fi7HCvQa6mVZicPgJwH80eLSbwRm0Tom_cfaxy0vvS3KRsHvmOSihCC5nwk_tK9W1DIzGVO1oRXbKPwlTtsG3sA99xIsWwXR490yofLjy2m5XcNbK7hwyTtHJg2V44eypUMRjE5mJLMfHY5zV_6VPqn9ir15Nq8mijwxyPLr2cdME1VlC_mxwkahsYFghd4BWnRVagRtWvuLdExUT_rk0qn3lhzCRPmP8aoPEaJB4KGurAPp3yee0uEEPs7h8QQf8t5Xp4EKiE1qWxF5f6BtVZWAGXKvfpwSfDtCGDJpD1d6TwQn1jMxj7FH3V3rkxJ0gUfgnW5rGp5K6-PBbq7AgXjTqm1V88La5GbxVpws-2jtFxY7IEGmHqmAvGqIuI9TnnDT7T0Ybbuga7lxWfCvXrMlkwUNDJjgmJEFNnaMPVAcydjSw_6D7eClRy28yWTGH5KjMdwdiFJoIb8_w1JPZSPptdHSoSizwyhaW3lyu9PT9IBtBEE1IA=w1168-h657-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/6HGpQRW_JhYNrqA4rFMo5mF9e4H-qRSHoQaJPCEedLRSw86pTbDzVYqwOOZHnyHz87Ye--ASthCdvKRGg3yQNxiN6hmZRCF1glmGmRS7HGB0iYKqWAqCXzHmixR1gU48F21Cg4o48K87Grh3LDokSZlC41cN8MOwSSOxUXkIyou7EBJB2sj8Fi7HCvQa6mVZicPgJwH80eLSbwRm0Tom_cfaxy0vvS3KRsHvmOSihCC5nwk_tK9W1DIzGVO1oRXbKPwlTtsG3sA99xIsWwXR490yofLjy2m5XcNbK7hwyTtHJg2V44eypUMRjE5mJLMfHY5zV_6VPqn9ir15Nq8mijwxyPLr2cdME1VlC_mxwkahsYFghd4BWnRVagRtWvuLdExUT_rk0qn3lhzCRPmP8aoPEaJB4KGurAPp3yee0uEEPs7h8QQf8t5Xp4EKiE1qWxF5f6BtVZWAGXKvfpwSfDtCGDJpD1d6TwQn1jMxj7FH3V3rkxJ0gUfgnW5rGp5K6-PBbq7AgXjTqm1V88La5GbxVpws-2jtFxY7IEGmHqmAvGqIuI9TnnDT7T0Ybbuga7lxWfCvXrMlkwUNDJjgmJEFNnaMPVAcydjSw_6D7eClRy28yWTGH5KjMdwdiFJoIb8_w1JPZSPptdHSoSizwyhaW3lyu9PT9IBtBEE1IA=w1168-h657-no", URL));
+        card.setNumLikes(128);
+        cards.add(card);
+
+        card = new Card("Santa Barbara Museum", "California");
+        card.setProfile(new CardImage("https://lh3.googleusercontent.com/JJeAL4n0nr2H9X91bz-_0q7HpWWjr2FV2Dx-N2Z1xjWQKaf6wzowecVgfysQvlBS0Ju2MBX-5TMUs3AeqvDCVd58yKopBYFwwJnPEoeGgyjPfXRfnPYHPVXr4CegLUHm9MMOK6WsLSZBOe8b_o2l9cCiPlBSud3odU0wHHAgZzvVpuXqCT7YV78O1IP74daFHfy5BLX54zLDdGgR01Xuzy00KVjIQPVV3Fmw-WgKlWicPj91FVGBKmBFDgoZOsPdmFSaLwTFSrd-y-QTlSwa7MIwtfCNcIvp1Zc6p8ZScP2P78lgFQn6V-BCXcmflaXBJTgaDGd7zaOTV0C8mIvRD32tKYTTyzx1g39K28YQSg9Lbrd3NB3s7yVq9WHxyEWJnBoqYt4KD77VFVuAhXtbrXLXG6u7JaYx-FLYTsvL7ZATkhCpb-XwWRPpjimjKd1-AIBahB8wE6FUsHugYNnMTf9F-siNNs8fnW1jRJzXu0AVxzGiy201-FQ3ybHKl7PZAJ3q9zgrajeI-rRG2-Gy0gk4y6BNforDEFrER7Vvmq_pnL1PnFr78MM7o1eXcj82C495gLGLMkvMTHzs3R3C5TWLdBXo4jSj_WdKbPbgG6RA1-xJM0L8cJisWN1GNxrzq8PkTL_XRxC1STriPhBzystkHG8iEpJVFCA9K39ZUw=w1168-h657-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/7wbPfQgUcYZyQxs5IfVDhYMqJJNS_CTuImWvQdFr8IQ8G618b_Dekphs8obN7nhqa9ZPglsqwdlHtw0UvTPlj9Vo16D3N18x7-YxCnXCqpqaKTaGVhAPaYnaKLg4cL08Od63k_5M86UNIxns0bzK-aQT0Al3OPP3zZaO-_smgWygBcV9Lc1Pq-kLfkzfBOdABWhbCa5PMY022oj9HphGTlbr45w_jcmZjbo2GagivYQPstxcyvoDi-EZwE82vfKn5WEB0LbexCiziBFEdFvAdXcCqegLgwrrueMqs-Kvbc9ccal-RRnWQ2UKrwpN6Em6aGVuqswLL362ZzDW6YPP9Do0SUxFu-yEjDat09qyodMJ7wZWYm-Pujr5tJUt_W9mCDlLcQyOcbxBT7IHkBtoCulVyGUGxrKY4Me1GhSurHcnwr4eGiRAL8UDcNCTaISd4qcEHC7yKx0Lfu9JhQPosK_j099ge1TNILH_Of14JSb75ygFr-g1JevAbNSheziXxx5WhZP92wJWHeW0_kMfBkP7hCRFNhV5bxh911_nNhKiL6Hcd-SKlo_41WNFmJN6kl7xTviDXHqNGp4bHMoUoBk4rfu40NfhZ08fudOGqc69LM6D6YGpeOvZQ0J1RQzNnxm3wvsfV3bj5iLPr1dcQVR2NaMQqmN0X9MYdK2ZqA=w1168-h657-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/MTrm2-o77PmM-Dgv-Tv2EUsP607JLQ0jMJ0RyZG4Mqpt7ZdVEgjEckCc0mh_pIq5pYJoTwuvTSZAHIStPbepW6jnc-HmauvmxVqwg5PxcTE80hcoh0cwIRTtkTo5Kd-ETXFhiPJlostdXdsvUZ6eKTnySU3trrJLtwJpbhtR74jcH1ZHjfhI07VOraFiEVCqWuKcmcyJoCl3PAzXggqfUTXeVfnnusubUrMK7qAn0YPe1QHQYuuROnCzbhrplpZoqch2VqN4uQFvfOP4aIjfMMn2jt40IAMD6YurAKo_pD8nD78rVR3UQMakpU0E9beGuE_7n0LRpZCWHvEXhvydxa0mT4gt0VBohJNBXrNTkCatd5jHAFcwTYaahxvuGlLl_OubhhNF1DcaORy75abJW3rk_NleC1hnYTpSn3X5gsKgwIRcU6qpXgvSwWiZnEx48GTBcFi1cxW2PH89bTJrffiTdjnUP-axcno_FQbY6Rzz3dHC_59hj6BBq5YIhdT9z0SOVuIa_T1XwA-AnpfZhb16MqwCA4QBF-ch4pTc_4fvv6W_IISq6RfXc35IX4c_NarDnmEKiURLwvbZsaGUrs3Ns88jL5qhjtGcBqP1W3H1_NI8-7k-hDHGko4S-8QKV6PD_FuAaBWbUPG25l9t4tFXUEev4MaDo3mfizylGQ=w1168-h657-no", URL));
+        card.getImages().add(new CardImage("https://lh3.googleusercontent.com/KTSdk3Auw_lKx43bVDWqLCgoIgWIV80vujiONv4Kud0hAnc5UXxj2Ea91wozUt5blP_k04qWRRAg-J1P0X5QjLZT2xkm4B-h5oE2CNvC8hdtncoxQF7VY8uTlA4nlBiVgVVhEpdQU1WpxG7K0_xS4ZjqQHAl7hcrMorYqIDNfRXt8UT_w_J5wr5aF7GagbcNUtoRno3ZpZ_rhKm1f-GHQ0U8P3qac9hOIFqBsW_EqdbB8xYdDQyNndti0Dcf8H_sDqVvmrv3NPWsR3P7zVzpOUjryilEfkCYMdZ-WDtqQfI-cSi6eGubrSMHQ3Uje3JuesuqOQ8hLsBFoa1TyQ2uSw047yC3zkiomd1Qp-RU9-FME9RgdBpd2eT3buqcRlvVXEjMN9Q2a1T1K0N8qgp-M0USLB6ymctpwJrV6bxUHrDjFVtibwuoMZzbiQRpm1xJboICtB42dKr4jKSRgQFOh6Afi1m8PTRIb7G80Mtu_RAYl4_3h3w0LU9K1M2G4JbcSPOwuH3jLDtQNTlJHftxcg9i88nCr0oiyD6U5hdjwwZHsKIAcDKcIBQzE7fgwYByg3_eJ2Xvj75QlP-BBqwKU_QoOPjcp1mGvOVPMzH3t3Zstm8RCABYkfNHjDiiQ3cv830Nfnc3gLVlO6ldi28kxFbDZF4O7DsZV1O5ijKnkQ=w1168-h657-no", URL));
+        card.setNumLikes(64);
+        cards.add(card);
+
+        //card.getImages().add(new CardImage("", URL));
+
+    }
+}

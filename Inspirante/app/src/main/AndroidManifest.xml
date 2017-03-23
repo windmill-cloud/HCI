@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2017 - present, Xuan Wang
+  ~  All rights reserved.
+  ~
+  ~  This source code is licensed under the BSD-style license found in the
+  ~  LICENSE file in the root directory of this source tree.
+  ~
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.ucsb.cs.cs185.inspirante">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_mi"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="edu.ucsb.cs.cs185.inspirante.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="edu.ucsb.cs.cs185.inspirante.LoginSignupActivity" />
+        <activity
+            android:name="edu.ucsb.cs.cs185.inspirante.editentry.EditTabsActivity"
+            android:label="@string/title_activity_edit_tabs"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name="edu.ucsb.cs.cs185.inspirante.collectiondetails.CollectionDetailsActivity" />
+        <activity android:name="edu.ucsb.cs.cs185.inspirante.inspire.InspireActivity" />
+        <activity
+            android:name="edu.ucsb.cs.cs185.inspirante.Inbox.InboxActivity"
+            android:label="inbox_activity"
+            android:parentActivityName="edu.ucsb.cs.cs185.inspirante.MainActivity"/>
+        <activity
+            android:name="edu.ucsb.cs.cs185.inspirante.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name="edu.ucsb.cs.cs185.inspirante.share.ShareActivity" />
+        <activity android:name="edu.ucsb.cs.cs185.inspirante.tagandimages.TagAndImagesActivity"></activity>
+    </application>
+
+</manifest>
